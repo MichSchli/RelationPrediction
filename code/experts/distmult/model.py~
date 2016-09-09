@@ -1,0 +1,191 @@
+from theano import tensor as T
+import theano
+import numpy as np
+import pickle
+
+
+
+    
+class Model():
+
+    n_entities = None
+    n_relations = None
+    predict_function = None
+    
+    def __init__(self):
+        pass
+
+    def predict(self, triplets):
+        e1s, e2s, rels = self.expand_triplets(triplets)
+        return self.wrapper_predict(e1s, e2s, rels)
+
+    
+    def process_train_triplets(self, train_triplets):
+        e1s, e2s, rels = self.expand_triplets(train_triplets)
+        c_e1s, c_e2s = self.generate_corrupted_entries(train_triplets)
+
+        return e1s, e2s, rels, c_e1s, c_e2s
+    
+    def generate_corrupted_entries(self, triplets):
+        left_entries = [None]*len(triplets)
+        right_entries = [None]*len(triplets)
+        for e,triple in enumerate(triplets):
+            left_entries[e] = [0 if j != 2334 else 1 for j in range(14951)]
+            right_entries[e] = [0 if j != 5784 else 1 for j in range(14951)]
+        
+        return left_entries, right_entries
+
+    def expand_triplets(self, triplets):
+        e1s = [None]*len(triplets)
+        e2s = [None]*len(triplets)
+        rels = [None]*len(triplets)
+        for i,triplet in enumerate(triplets):
+            e1s[i] = [0 if j != triplet[0] else 1 for j in range(14951)]
+            e2s[i] = [0 if j != triplet[2] else 1 for j in range(14951)]
+            rels[i] = triplet[1]
+
+        return e1s, e2s, rels
+
+    def set_entity_count(self, count):
+        self.n_entities = count
+
+    def set_relation_count(self, count):
+        self.n_relations = count
+
+    def initialize_variables(self):
+        self.W_embedding = theano.shared(np.random.random((100, self.n_entities+1)))
+        self.W_relation = theano.shared(np.random.random((self.n_relations, 100)))
+
+    def get_weights(self):
+        return (self.W_embedding,self.W_relation)
+
+    
+    def print_status(self):
+        print(self.n_entities)
+        print(self.n_relations)
+    
+    def perceptron(self, W, v):
+        return T.dot(W, T.concatenate((v, T.ones(1))))
+
+    def nonlinearity(self, v):
+        return T.tanh(v)
+
+    def get_update_list(self, update):
+        return [(self.W_embedding, update[0]),
+                (self.W_relation, update[1])]
+    
+    def theano_loss(self, e1, e2, relation, c_e1, c_e2):
+        p_gold = self.theano_predict(e1, e2, relation)
+        p_c1 = self.theano_predict(c_e1, e2, relation)
+        p_c2 = self.theano_predict(e1, c_e2, relation)
+
+        l_c1 = T.max((p_c1 - p_gold + 1, 0))
+        l_c2 = T.max((p_c2 - p_gold + 1, 0))
+
+        return l_c1 + l_c2
+
+    def theano_predict(self, e1, e2, relation):
+        embed_1 = self.nonlinearity(self.perceptron(self.W_embedding, e1))
+        embed_2 = self.nonlinearity(self.perceptron(self.W_embedding, e2))
+
+        W_diag = self.W_relation[relation]
+        W = T.nlinalg.diag(W_diag)
+
+        score = T.dot(T.transpose(embed_1), T.dot(W, embed_2))
+        return score
+
+    
+
+    '''
+    To be replaced by inherited methods:
+    '''
+
+    def wrapper_predict(self, e1_onehot, e2_onehot, relation_id):
+        if self.predict_function is None:
+            E1s = T.imatrix('E1s')
+            E2s = T.imatrix('E2s')
+            Rs = T.ivector('Rs')
+        
+            input_variable_list = [E1s, E2s, Rs]
+            result,_ = theano.scan(self.theano_predict,
+                                   sequences=input_variable_list)
+
+            self.predict_function = theano.function(inputs=input_variable_list, outputs=result)
+
+
+        return self.predict_function(e1_onehot, e2_onehot, relation_id)
+
+    
+    def compute_batch_loss_function(self):
+        input_variable_list = self.get_theano_input_variables()
+        loss,_ = theano.scan(self.theano_loss,
+                             sequences=input_variable_list)
+
+        sumloss = T.sum(loss)
+        return theano.function(inputs=input_variable_list, outputs=sumloss)
+
+    
+    def save(self, filename):
+        store_package = (self.W_embedding.get_value(),
+                         self.W_relation.get_value(),
+                         self.n_entities,
+                         self.n_relations)
+
+        store_file = open(filename, 'wb')
+        pickle.dump(store_package, store_file)
+        store_file.close()
+
+    def load(self, filename):
+        store_file = open(filename, 'rb')
+        store_package = pickle.load(store_file)
+
+        self.W_embedding = theano.shared(store_package[0])
+        self.W_relation = theano.shared(store_package[1])
+        self.n_entities = store_package[2]
+        self.n_relations = store_package[3]
+        
+    
+    def get_theano_input_variables(self):
+        E1s = T.imatrix('E1s')
+        E2s = T.imatrix('E2s')
+
+        CorruptedE1s = T.imatrix('E1s')
+        CorruptedE2s = T.imatrix('E1s')
+
+        Rs = T.ivector('Rs')
+
+        return [E1s, E2s, Rs, CorruptedE1s, CorruptedE2s]
+    
+        
+
+
+
+
+
+
+
+
+def wrapper_train(e1_onehots, e2_onehots, relation_id, c_e1_onehots, c_e2_onehots):
+    We = T.dmatrix('We')
+    Wr = T.dmatrix('Wr')
+
+    E1s = T.imatrix('E1s')
+    E2s = T.imatrix('E2s')
+
+    CorruptedE1s = T.imatrix('E1s')
+    CorruptedE2s = T.imatrix('E1s')
+
+    Rs = T.ivector('Rs')
+
+    loss,_ = theano.scan(theano_loss,
+                         sequences=[E1s, E2s, Rs, CorruptedE1s, CorruptedE2s],
+                         non_sequences=[We, Wr])
+
+    c_graph = theano.function(inputs=[E1s, E2s, Rs, We, Wr, CorruptedE1s, CorruptedE2s], outputs=loss)
+
+    W_embed = np.random.random((100, 14951+1))
+    W_rel = np.random.random((10000, 100))
+    return c_graph(e1_onehots, e2_onehots, relation_id, W_embed, W_rel, c_e1_onehots, c_e2_onehots)
+
+
+
