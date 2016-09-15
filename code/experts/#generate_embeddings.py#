@@ -1,0 +1,8 @@
+parser = argparse.ArgumentParser(description="Generate a file containing entity embeddings .")
+parser.add_argument("--relations", help="Filepath for generated relation dictionary.", required=True)
+parser.add_argument("--entities", help="Filepath for generated entity dictionary.", required=True)
+parser.add_argument("--train_data", help="Filepath for formatted training data.", required=True)
+parser.add_argument("--validation_data", help="Filepath for formatted validation data.", required=True)
+parser.add_argument("--model_path", help="Filepath to store the trained model.", required=True)
+parser.add_argument("--algorithm", help="Algorithm to train.", required=True)
+args = parser.parse_args()

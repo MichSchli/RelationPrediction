@@ -1,7 +1,7 @@
 import imp
 import argparse
 import numpy as np
-from optimizers import RmsProp as Optimizer
+from optimizers import AdaGrad as Optimizer
 
 parser = argparse.ArgumentParser(description="Train a model on a given dataset.")
 parser.add_argument("--relations", help="Filepath for generated relation dictionary.", required=True)
@@ -27,5 +27,5 @@ model.set_relation_count(len(relations))
 model.initialize_variables()
 
 optimizer = Optimizer()
-optimizer.train(model, train_triplets, valid_triplets[:20000], args.model_path)
+optimizer.train(model, train_triplets, valid_triplets, args.model_path)
 

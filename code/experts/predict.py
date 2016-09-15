@@ -88,13 +88,23 @@ outfile = open(outfilepath, 'w+')
 for i,triplet in enumerate(valid_triplets[:10]):
     print(i)
     extended_triplets = [[i, triplet[1], triplet[2]] for i in range(len(entities))]
-    raw_predictions = list(sorted(enumerate(model.predict(extended_triplets)),key=lambda x: x[1], reverse=True))    
-    filtered_predictions = [item for item in raw_predictions if item[0] == triplet[0] or not included(positives, [item[0], triplet[1], triplet[2]])]
+    extended_triplets += [[triplet[0], triplet[1], i] for i in range(len(entities)) if i != triplet[2]]    
 
-    raw_correct = search_triplets(raw_predictions, triplet[0])
-    filtered_correct = search_triplets(filtered_predictions, triplet[0])
+    predictions = model.predict(extended_triplets)
+    score_gold = predictions[triplet[0]]
 
-    print(str(raw_correct[0]) +
-          '\t'+ str(filtered_correct[0]) +
-          '\t'+ str(raw_correct[1]))
-          #, file=outfile)
+    gold_raw_rank = 1
+    gold_filtered_rank = 1
+
+    for i in range(len(entities)*2-1):
+        if predictions[i] > score_gold:
+            gold_raw_rank += 1
+            if i < len(entities) and not included(positives, [i, triplet[1], triplet[2]]):
+                gold_filtered_rank += 1
+            elif i >= len(entities) and not included(positives, [triplet[0], triplet[1], i-len(entities)]):
+                gold_filtered_rank += 1
+
+    print(str(gold_raw_rank) +
+          '\t'+ str(gold_filtered_rank) +
+          '\t'+ str(score_gold)
+          , file=outfile)
