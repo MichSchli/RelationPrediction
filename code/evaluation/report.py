@@ -16,16 +16,16 @@ for line in open(args.filepath):
 
     number_of_samples += 1
     
-    mean_reciprocal_rank[0]+=1/(float(line[0])+1)
-    mean_reciprocal_rank[1]+=1/(float(line[1])+1)
+    mean_reciprocal_rank[0] += 1/(float(line[0]))
+    mean_reciprocal_rank[1] += 1/(float(line[1]))
 
-    hits_at_one[0] += 1 if int(line[0]) < 1 else 0
-    hits_at_three[0] += 1 if int(line[0]) < 3 else 0
-    hits_at_ten[0] += 1 if int(line[0]) < 10 else 0
+    hits_at_one[0] += 1 if int(line[0]) <= 1 else 0
+    hits_at_three[0] += 1 if int(line[0]) <= 3 else 0
+    hits_at_ten[0] += 1 if int(line[0]) <= 10 else 0
 
-    hits_at_one[1] += 1 if int(line[1]) < 1 else 0
-    hits_at_three[1] += 1 if int(line[1]) < 3 else 0
-    hits_at_ten[1] += 1 if int(line[1]) < 10 else 0
+    hits_at_one[1] += 1 if int(line[1]) <= 1 else 0
+    hits_at_three[1] += 1 if int(line[1]) <= 3 else 0
+    hits_at_ten[1] += 1 if int(line[1]) <= 10 else 0
     
 
 scores = []

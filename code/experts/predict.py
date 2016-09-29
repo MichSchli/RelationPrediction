@@ -82,29 +82,40 @@ def included(dic, triplet):
 
 model = algorithm.Model()
 model.load(args.model_path)
-model.print_status()
 
 outfile = open(outfilepath, 'w+')
-for i,triplet in enumerate(valid_triplets[:10]):
+for i,triplet in enumerate(test_triplets):
     print(i)
     extended_triplets = [[i, triplet[1], triplet[2]] for i in range(len(entities))]
-    extended_triplets += [[triplet[0], triplet[1], i] for i in range(len(entities)) if i != triplet[2]]    
+    extended_triplets += [[triplet[0], triplet[1], i] for i in range(len(entities))]    
 
+    positives_object_replaced = positives[triplet[0]][triplet[1]]
+    positives_subject_replaced = [i for i in range(len(entities)) if i in positives and triplet[1] in positives[i] and triplet[2] in positives[i][triplet[1]]]
+
+    #print(len(positives_object_replaced))
+    #print(len(positives_subject_replaced))
     predictions = model.predict(extended_triplets)
+    
     score_gold = predictions[triplet[0]]
-
+    print(score_gold)
+    
     gold_raw_rank = 1
     gold_filtered_rank = 1
 
-    for i in range(len(entities)*2-1):
-        if predictions[i] > score_gold:
-            gold_raw_rank += 1
-            if i < len(entities) and not included(positives, [i, triplet[1], triplet[2]]):
-                gold_filtered_rank += 1
-            elif i >= len(entities) and not included(positives, [triplet[0], triplet[1], i-len(entities)]):
-                gold_filtered_rank += 1
+    subjects_better = np.sum(predictions[:len(entities)] >= score_gold)
+    objects_better = np.sum(predictions[len(entities):] >= score_gold)
 
-    print(str(gold_raw_rank) +
-          '\t'+ str(gold_filtered_rank) +
+    subjects_better_filtered = subjects_better - np.sum(predictions[:len(entities)][positives_subject_replaced] >= score_gold)
+    objects_better_filtered = objects_better - np.sum(predictions[len(entities):][positives_object_replaced] >= score_gold)
+
+    print(subjects_better, objects_better, subjects_better_filtered, objects_better_filtered)
+    
+    print(str(subjects_better + 1) +
+          '\t'+ str(subjects_better_filtered + 1) +
+          '\t'+ str(score_gold)
+          , file=outfile)
+
+    print(str(objects_better + 1) +
+          '\t'+ str(objects_better_filtered + 1) +
           '\t'+ str(score_gold)
           , file=outfile)

@@ -2,11 +2,13 @@ import theano
 from theano import tensor as T
 import gc
 import numpy as np
+import random
 
 class AbstractBatchOptimizer():
 
-    max_iterations = 100
-    batch_size = 100
+    max_iterations = 100000
+    validate_after_iterations = 5000
+    batch_size = 4831
 
     def __init__(self):
         pass
@@ -17,29 +19,39 @@ class AbstractBatchOptimizer():
 
         validation_samples = model.process_train_triplets(valid_triplets, valid_triplets + train_triplets, disable_saving=True)
         previous_validation_loss = loss_function(*validation_samples)
+        train_loss = 0
+        report = 100
         
-        for i in range(self.max_iterations):     
-            print("Running optimizer at iteration "+str(i + 1)+". Current validation loss: "+str(previous_validation_loss), end="\n", flush=True)
-            
-            for idx_1, idx_2 in self.chunk_iterate(len(train_triplets)):
-                processed_samples = model.process_train_triplets(train_triplets[idx_1:idx_2], train_triplets)
-                train_loss, train_reg = update_function(*processed_samples)
+        for i in range(self.max_iterations):
+            if i % report == 0:
+                print("Running optimizer at iteration "+str(i + 1)+"...", end="\n", flush=True)
                 
-            validation_samples = model.process_train_triplets(valid_triplets, valid_triplets + train_triplets, disable_saving=True)
-            validation_loss = loss_function(*validation_samples)
-            if validation_loss >= previous_validation_loss:
-                #print("Stopping early. Validation loss: "+str(validation_loss))
-                #break
-                pass
-            #else:
-            previous_validation_loss = validation_loss
+            if i % self.validate_after_iterations == 0:
+                print("Current validation loss: "+str(previous_validation_loss))
+                
+            processed_samples = model.process_train_triplets(random.sample(train_triplets, self.batch_size), train_triplets)
+            train_loss += update_function(*processed_samples)
+
+            if i % report == 0:
+                print("Train loss: "+str(train_loss/report))
+                train_loss = 0
+
+            if i % self.validate_after_iterations == 0:
+                validation_loss = loss_function(*validation_samples)
+                
+                #if validation_loss >= previous_validation_loss:
+                #    print("Stopping early. Validation loss: "+str(validation_loss))
+                #    break
+                #else:
+                previous_validation_loss = validation_loss
+
             model.save(model_path)
 
                 
     def chunk_iterate(self, length):
         for i in range(0, length, self.batch_size):
             yield i, i+self.batch_size
-
+    
             
 class BatchGradientDescent(AbstractBatchOptimizer):
 
@@ -71,8 +83,7 @@ class BatchGradientDescent(AbstractBatchOptimizer):
 
 class Adam(AbstractBatchOptimizer):
 
-    learning_rate = 0.01
-    regularization_parameter = 0.01
+    learning_rate = 0.3
 
     epsillon = 10**(-8)
     beta_1 = 0.9
@@ -100,11 +111,8 @@ class Adam(AbstractBatchOptimizer):
         parameter_shapes = model.get_weight_shapes()
         self.initialize_moment_estimates(parameter_shapes)
         
-        loss = model.theano_batch_loss(input_variable_list) / self.batch_size
+        loss = model.theano_batch_loss(input_variable_list)
 
-        regularization = model.theano_l2_regularization()
-        loss += self.regularization_parameter * regularization
-        
         gradient = T.grad(loss, wrt=model.get_weights())
 
         m = [None]*len(gradient)
@@ -124,12 +132,12 @@ class Adam(AbstractBatchOptimizer):
             update_list[i+len(gradient)*2] = (self.v_previous[i], v[i])
 
         update_list[-1] = (self.iteration_number, self.iteration_number+1)
-        return theano.function(inputs=input_variable_list, outputs=[loss, regularization], updates=update_list)
+        return theano.function(inputs=input_variable_list, outputs=loss, updates=update_list)
 
     
 class RmsProp(AbstractBatchOptimizer):
 
-    learning_rate = 0.0001
+    learning_rate = 0.5
     regularization_parameter = 0.01
     epsillon = 10**(-8)
     decay_rate = 0.9
@@ -153,10 +161,7 @@ class RmsProp(AbstractBatchOptimizer):
         parameter_shapes = model.get_weight_shapes()
         self.initialize_running_average(parameter_shapes)        
         
-        loss = model.theano_batch_loss(input_variable_list) / self.batch_size
-        
-        regularization = model.theano_l2_regularization()
-        loss += self.regularization_parameter * regularization
+        loss = model.theano_batch_loss(input_variable_list)
         
         gradient = T.grad(loss, wrt=model.get_weights())
         
@@ -169,14 +174,14 @@ class RmsProp(AbstractBatchOptimizer):
             update_list[i] = (model.get_weights()[i], self.update_parameter(model.get_weights()[i], gradient[i], rmsgrad))            
             update_list[i+len(gradient)] = (self.running_average[i], new_running_average)
 
-        return theano.function(inputs=input_variable_list, outputs=[loss, regularization], updates=update_list)
+        return theano.function(inputs=input_variable_list, outputs=loss, updates=update_list)
 
 
 class AdaGrad(AbstractBatchOptimizer):
 
-    learning_rate = 0.1
-    regularization_parameter = 0.0001
+    learning_rate = 0.5
     epsillon = 10**(-8)
+    max_gradient_norm = 1.0
     
     def __init__(self):
         pass
@@ -197,12 +202,12 @@ class AdaGrad(AbstractBatchOptimizer):
         parameter_shapes = model.get_weight_shapes()
         self.initialize_running_average(parameter_shapes)        
         
-        loss = model.theano_batch_loss(input_variable_list) / self.batch_size
+        loss = model.theano_batch_loss(input_variable_list)
         
-        regularization = model.theano_l2_regularization()
-        loss += self.regularization_parameter * regularization
-        
-        gradient = T.grad(loss, wrt=model.get_weights())
+        gradient = list(T.grad(loss, wrt=model.get_weights()))
+        for i,grad in enumerate(gradient):
+            norm = T.sqrt((grad * grad).sum())
+            gradient[i] = grad * T.minimum(1, self.max_gradient_norm / norm)
         
         update_list = [None]*(len(gradient)*2)
         for i in range(len(gradient)):
@@ -212,12 +217,12 @@ class AdaGrad(AbstractBatchOptimizer):
             update_list[i] = (model.get_weights()[i], self.update_parameter(model.get_weights()[i], gradient[i], scaling))            
             update_list[i+len(gradient)] = (self.historical_gradient[i], new_historical_gradient)
 
-        return theano.function(inputs=input_variable_list, outputs=[loss, regularization], updates=update_list)
+        return theano.function(inputs=input_variable_list, outputs=loss, updates=update_list)
 
+    
 class AdaDelta(AbstractBatchOptimizer):
 
     learning_rate = 1.0
-    regularization_parameter = 0.0001
     epsillon = 10**(-8)
     decay_rate = 0.9
     
@@ -239,11 +244,7 @@ class AdaDelta(AbstractBatchOptimizer):
         parameter_shapes = model.get_weight_shapes()
         self.initialize_running_average(parameter_shapes)        
         
-        loss = model.theano_batch_loss(input_variable_list) / self.batch_size
-        
-        regularization = model.theano_l2_regularization()
-        loss += self.regularization_parameter * regularization
-        
+        loss = model.theano_batch_loss(input_variable_list)        
         gradient = T.grad(loss, wrt=model.get_weights())
         
         update_list = [None]*(len(gradient)*3)
@@ -253,12 +254,12 @@ class AdaDelta(AbstractBatchOptimizer):
             rms_updates = T.sqrt(self.historical_updates[i] + self.epsillon)
 
             update = - self.learning_rate * rms_updates / rms_gradient * gradient[i]
-            new_historical_update = self.decay_rate * self.historical_update[i] + (1 - self.decay_rate) * (update * update)
+            new_historical_update = self.decay_rate * self.historical_updates[i] + (1 - self.decay_rate) * (update * update)
 
             
             update_list[i] = (model.get_weights()[i], model.get_weights()[i] + update)            
             update_list[i+len(gradient)] = (self.historical_gradient[i], new_historical_gradient)
-            update_list[i+len(gradient)*2] = (self.historical_update[i], new_historical_update)
+            update_list[i+len(gradient)*2] = (self.historical_updates[i], new_historical_update)
 
 
-        return theano.function(inputs=input_variable_list, outputs=[loss, regularization], updates=update_list)
+        return theano.function(inputs=input_variable_list, outputs=loss, updates=update_list)
