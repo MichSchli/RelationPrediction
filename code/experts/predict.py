@@ -102,11 +102,17 @@ for i,triplet in enumerate(test_triplets):
     gold_raw_rank = 1
     gold_filtered_rank = 1
 
-    subjects_better = np.sum(predictions[:len(entities)] >= score_gold)
-    objects_better = np.sum(predictions[len(entities):] >= score_gold)
+    subjects_better = np.sum(predictions[:len(entities)] >= score_gold) - 1
+    objects_better = np.sum(predictions[len(entities):] >= score_gold) - 1
 
-    subjects_better_filtered = subjects_better - np.sum(predictions[:len(entities)][positives_subject_replaced] >= score_gold)
-    objects_better_filtered = objects_better - np.sum(predictions[len(entities):][positives_object_replaced] >= score_gold)
+    print("golds: "+str(np.sum(predictions[:len(entities)][positives_subject_replaced] >= 0)))
+    print("gold max: "+str(np.max(predictions[:len(entities)][positives_subject_replaced])))
+    print("gold better: "+str(np.sum(predictions[:len(entities)][positives_subject_replaced] >= score_gold)))
+    print("average: " +str(np.mean(predictions)))
+
+    
+    subjects_better_filtered = subjects_better - (np.sum(predictions[:len(entities)][positives_subject_replaced] >= score_gold)) + 1
+    objects_better_filtered = objects_better - (np.sum(predictions[len(entities):][positives_object_replaced] >= score_gold)) + 1
 
     print(subjects_better, objects_better, subjects_better_filtered, objects_better_filtered)
     

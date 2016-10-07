@@ -1,7 +1,7 @@
 import imp
 import argparse
 import numpy as np
-from optimizers import AdaGrad as Optimizer
+import Converge.optimize as Converge
 
 parser = argparse.ArgumentParser(description="Train a model on a given dataset.")
 parser.add_argument("--relations", help="Filepath for generated relation dictionary.", required=True)
@@ -21,11 +21,25 @@ valid_triplets = io.read_triplets_as_list(args.validation_data, args.entities, a
 entities = io.read_dictionary(args.entities)
 relations = io.read_dictionary(args.relations)
 
+print(args.model_path)
 model = algorithm.Model()
 model.set_entity_count(len(entities))
 model.set_relation_count(len(relations))
 model.initialize_variables()
 
-optimizer = Optimizer()
-optimizer.train(model, train_triplets, valid_triplets, args.model_path)
+model.set_model_path(args.model_path)
+#model.load(args.model_path)
 
+model.preprocess(train_triplets)
+
+optimizer_parameters = model.get_optimizer_parameters()
+optimizer_weights = model.get_optimizer_weights()
+optimizer_input = model.get_optimizer_input_variables()
+loss = model.get_optimizer_loss()
+
+if model.backend == 'theano':
+    optimizer = Converge.build(loss, optimizer_weights, optimizer_parameters, optimizer_input)
+elif model.backend == 'tensorflow':
+    optimizer = Converge.tfbuild(loss, optimizer_weights, optimizer_parameters, optimizer_input)
+    
+optimizer.fit(train_triplets, validation_data=valid_triplets)

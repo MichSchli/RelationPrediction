@@ -3,6 +3,7 @@ from theano import tensor as T
 import gc
 import numpy as np
 import random
+from Converge import optimize as converge
 
 class AbstractBatchOptimizer():
 
@@ -13,7 +14,31 @@ class AbstractBatchOptimizer():
     def __init__(self):
         pass
 
+    def converge_train(self, model, train_triplets, valid_triplets, model_path):
+        transform = lambda x: model.process_train_triplets(x, train_triplets+valid_triplets)
+        
+        parameters = [('Minibatches', {'batch_size':5, 'contiguous_sampling':False}),
+                      ('SampleTransformer', {'transform_function': transform}),
+                      ('IterationCounter', {'max_iterations':5000}),
+                      ('GradientClipping', {'max_norm':1}),
+                      ('Adam', {'learning_rate':0.05, 'historical_moment_weight':0.9, 'historical_gradient_weight':0.999}),
+                      ('ModelSaver', {'save_function': model.save, 'model_path': model_path})]
+
+        weights = model.get_weights()
+        input_variable_list = model.get_theano_input_variables()
+        loss = model.theano_batch_loss(input_variable_list)
+
+        opt = converge.build(loss,weights,input_variable_list, parameters)
+        
+        print(opt.loss(valid_triplets[:200]))
+        opt.fit(train_triplets)
+        print(opt.loss(valid_triplets[:200]))
+    
+    
     def train(self, model, train_triplets, valid_triplets, model_path):
+
+        self.converge_train(model, train_triplets, valid_triplets, model_path)
+        exit()
         update_function = self.compute_update_function(model)
         loss_function = model.compute_batch_loss_function()
 
@@ -141,6 +166,7 @@ class RmsProp(AbstractBatchOptimizer):
     regularization_parameter = 0.01
     epsillon = 10**(-8)
     decay_rate = 0.9
+    max_gradient_norm = 1.0
     
     def __init__(self):
         pass
@@ -163,8 +189,11 @@ class RmsProp(AbstractBatchOptimizer):
         
         loss = model.theano_batch_loss(input_variable_list)
         
-        gradient = T.grad(loss, wrt=model.get_weights())
-        
+        gradient = list(T.grad(loss, wrt=model.get_weights()))
+        for i,grad in enumerate(gradient):
+            norm = T.sqrt((grad * grad).sum())
+            gradient[i] = grad * T.minimum(1, self.max_gradient_norm / norm)
+            
         update_list = [None]*(len(gradient)*2)
         for i in range(len(gradient)):
             squared_gradient = gradient[i] * gradient[i]
@@ -225,6 +254,7 @@ class AdaDelta(AbstractBatchOptimizer):
     learning_rate = 1.0
     epsillon = 10**(-8)
     decay_rate = 0.9
+    max_gradient_norm = 1.0
     
     def __init__(self):
         pass
@@ -244,8 +274,12 @@ class AdaDelta(AbstractBatchOptimizer):
         parameter_shapes = model.get_weight_shapes()
         self.initialize_running_average(parameter_shapes)        
         
-        loss = model.theano_batch_loss(input_variable_list)        
-        gradient = T.grad(loss, wrt=model.get_weights())
+        loss = model.theano_batch_loss(input_variable_list)
+
+        gradient = list(T.grad(loss, wrt=model.get_weights()))
+        for i,grad in enumerate(gradient):
+            norm = T.sqrt((grad * grad).sum())
+            gradient[i] = grad * T.minimum(1, self.max_gradient_norm / norm)
         
         update_list = [None]*(len(gradient)*3)
         for i in range(len(gradient)):

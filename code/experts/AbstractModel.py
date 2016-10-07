@@ -20,6 +20,9 @@ class AbstractModel():
     def __init__(self):
         pass
 
+    def preprocess(self, triplets):
+        pass
+    
     def set_entity_count(self, count):
         self.n_entities = count
 
@@ -29,18 +32,18 @@ class AbstractModel():
     '''
     Execution:
     '''
-
+    '''
     def wrapper_predict(self, e1_onehot, e2_onehot, relation_id):
         if self.predict_function is None:
             self.predict_function = self.compute_batch_predict_function()
 
         return self.predict_function(e1_onehot, e2_onehot, relation_id)
 
-
+    '''
     '''
     Computation of theano functions:
     '''
-    
+    '''
     def compute_batch_predict_function(self):
         E1s = T.ivector('E1s')
         E2s = T.ivector('E2s')
@@ -55,5 +58,7 @@ class AbstractModel():
         input_variable_list = self.get_theano_input_variables()
         loss = self.theano_batch_loss(input_variable_list)
         return theano.function(inputs=input_variable_list, outputs=loss)
+
+    '''
 
 

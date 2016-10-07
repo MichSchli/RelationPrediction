@@ -15,10 +15,7 @@ class Model(abstract_model.AbstractModel):
     embedding_width = 200
     number_of_negative_samples = 10
     regularization_parameter = 0.01
-    batch_size = 4813
-    backend = 'theano'
 
-    model_path = "loltheanotest.lol"
     positives_forward = None
     positives_backward = None
     srng = None
@@ -30,11 +27,6 @@ class Model(abstract_model.AbstractModel):
         e1s, e2s, rels = self.expand_triplets(triplets)
         return self.wrapper_predict(e1s, e2s, rels)
 
-    def preprocess(self, triplets):
-        self.graph_edges = triplets
-        
-    def transform(self, triplets):
-        return self.process_train_triplets(triplets, self.graph_edges)
     
     def process_train_triplets(self, triplet_sample, all_triplets, disable_saving=False):
         new_labels = np.ones((len(triplet_sample) * (self.number_of_negative_samples + 1 ))).astype(np.float32) * -1
@@ -117,8 +109,17 @@ class Model(abstract_model.AbstractModel):
     def get_weight_shapes(self):
         return ((self.n_entities,self.embedding_width), (self.n_relations, self.embedding_width))
         
-    def get_optimizer_weights(self):
-        return [self.W_embedding,self.W_relation]
+    def get_weights(self):
+        return (self.W_embedding,self.W_relation)
+    
+    def nonlinearity(self, v):
+        return v #shared.lecunn_tanh(v)
+
+    def get_update_list(self, update):
+        #embedding_weight_length = T.sqrt(T.sum(update[0]*update[0], axis=1))
+        #update[0] = update[0] / embedding_weight_length
+        return [(self.W_embedding, update[0]),
+                (self.W_relation, update[1])]
 
     def theano_batch_predict(self, e1s, e2s, rs):
         
@@ -130,19 +131,42 @@ class Model(abstract_model.AbstractModel):
         PT = e1s_embed * conv_relations * e2s_embed
         return T.nnet.sigmoid(T.sum(PT, axis=1))
 
-    def get_optimizer_loss(self):
+
+    #def apply_embedding(self, v):
+    #    return self.nonlinearity(shared.apply_transform_to_elements(v, self.W_embedding)) 
+
+    def expand_relations(self, relation_id_list, with_dropout=False):
+        '''
+        if with_dropout:
+            if self.srng is None:
+                self.srng = RandomStreams(seed=12345)
+
+            mask = self.srng.binomial(n=1, p=0.5, size=self.W_relation.shape, dtype='float32')
+            W = self.W_relation * mask
+        else:
+            W = self.W_relation * 0.5
+        '''
+
+        W = self.W_relation
+        one_hot_representation = T.extra_ops.to_one_hot(relation_id_list, self.n_relations)
+        return T.dot(one_hot_representation, W)
+
+    def theano_batch_loss(self, input_variable_list):
         #if self.srng is None:
         #    self.srng = RandomStreams(seed=12345)
 
         #mask = self.srng.binomial(n=1, p=0.5, size=self.W_relation.shape, dtype='float32')
         W = self.W_relation #* mask * 2
         
-        e1s = self.W_embedding[self.Xs[:,0]]
-        rs = W[self.Xs[:,1]]
-        e2s = self.W_embedding[self.Xs[:,2]]
+        xs = input_variable_list[0]
+        ys = input_variable_list[1]
+
+        e1s = self.W_embedding[xs[:,0]]
+        rs = W[xs[:,1]]
+        e2s = self.W_embedding[xs[:,2]]
 
         energies = T.sum(e1s * rs * e2s, axis=1)
-        loss = T.nnet.softplus(-self.Ys * energies).mean()
+        loss = T.nnet.softplus(-ys * energies).mean()
         regularizer = T.sqr(e1s).mean() + T.sqr(rs).mean() + T.sqr(e2s).mean()
 
         return loss + self.regularization_parameter * regularizer
@@ -171,19 +195,9 @@ class Model(abstract_model.AbstractModel):
         self.n_relations = store_package[3]
         
     
-    def get_optimizer_input_variables(self):
-        self.Xs = T.matrix('Xs', dtype='int32')
-        self.Ys = T.vector('Ys', dtype='float32')
+    def get_theano_input_variables(self):
+        Xs = T.matrix('Xs', dtype='int32')
+        Ys = T.vector('Ys', dtype='float32')
 
-        return [self.Xs, self.Ys]
+        return [Xs, Ys]
     
-
-    def get_optimizer_parameters(self):
-        return [#('Minibatches', {'batch_size':self.batch_size, 'contiguous_sampling':False}),
-                ('SampleTransformer', {'transform_function': self.transform}),
-                ('IterationCounter', {'max_iterations':5000}),
-                #('GradientClipping', {'max_norm':1}),
-                #('GradientDescent', {'learning_rate':1.0}),
-                #('AdaGrad', {'learning_rate':0.5}),
-                ('Adam', {'learning_rate':0.5, 'historical_moment_weight':0.9, 'historical_gradient_weight':0.999}),
-                ('ModelSaver', {'save_function': self.save, 'model_path': self.model_path})]
