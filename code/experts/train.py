@@ -2,6 +2,7 @@ import imp
 import argparse
 import numpy as np
 import Converge.optimize as Converge
+import tensorflow as tf
 
 parser = argparse.ArgumentParser(description="Train a model on a given dataset.")
 parser.add_argument("--relations", help="Filepath for generated relation dictionary.", required=True)
@@ -40,6 +41,8 @@ loss = model.get_optimizer_loss()
 if model.backend == 'theano':
     optimizer = Converge.build(loss, optimizer_weights, optimizer_parameters, optimizer_input)
 elif model.backend == 'tensorflow':
+    model.session = tf.Session()
     optimizer = Converge.tfbuild(loss, optimizer_weights, optimizer_parameters, optimizer_input)
+    optimizer.set_session(model.session)
     
-optimizer.fit(train_triplets, validation_data=valid_triplets)
+optimizer.fit(train_triplets, validation_data=valid_triplets[:100])

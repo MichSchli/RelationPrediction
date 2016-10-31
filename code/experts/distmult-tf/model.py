@@ -5,6 +5,7 @@ import imp
 import tensorflow as tf
 
 abstract_model = imp.load_source('abstract_model', 'code/experts/AbstractModel.py')
+evaluation = imp.load_source('evaluation', 'code/evaluation/evaluation.py')
 shared = imp.load_source('shared', 'code/experts/shared.py')
 
 class Model():
@@ -19,7 +20,7 @@ class Model():
     n_entities = None
     n_relations = None
 
-    batch_size = 4831
+    batch_size = 10
     embedding_width = 200
     number_of_negative_samples = 10
     regularization_parameter = 0.01
@@ -132,13 +133,29 @@ class Model():
     def get_optimizer_parameters(self):
         return [('Minibatches', {'batch_size':self.batch_size, 'contiguous_sampling':False}),
                 ('SampleTransformer', {'transform_function': self.transform}),
-                ('IterationCounter', {'max_iterations':5000}),
+                ('IterationCounter', {'max_iterations':50000}),
                 ('GradientClipping', {'max_norm':1}),
                 #('GradientDescent', {'learning_rate':1.0}),
                 #('AdaGrad', {'learning_rate':0.5}),
-                ('Adam', {'learning_rate':0.1, 'historical_moment_weight':0.9, 'historical_gradient_weight':0.999}),
-                ('EarlyStopper', {'criteria':'loss', 'evaluate_every_n':500}),
-                ('ModelSaver', {'save_function': self.save, 'model_path': self.model_path})]
+                ('Adam', {'learning_rate':0.01, 'historical_moment_weight':0.9, 'historical_gradient_weight':0.999}),
+                ('TrainLossReporter', {'evaluate_every_n':10}),
+                ('EarlyStopper', {'criteria':'score_validation_data',
+                                  'evaluate_every_n':100,
+                                  'scoring_function':self.score_validation_data,
+                                  'comparator':lambda current, prev: current > prev,
+                                  'burnin':20000}),
+                ('ModelSaver', {'save_function': self.save,
+                                'model_path': self.model_path,
+                                'save_every_n':100})]
+
+    def score_validation_data(self, validation_data):
+        scorer = evaluation.Scorer()
+        scorer.register_data(self.graph_edges)
+        scorer.register_data(validation_data)
+        scorer.register_model(self)
+
+        score_summary = scorer.compute_scores(validation_data, verbose=True).get_summary()
+        return score_summary.results['Filtered'][score_summary.mrr_string()]
     
     def initialize_variables(self):
         embedding_initial = np.random.randn(self.n_entities, self.embedding_width).astype(np.float32)
@@ -182,16 +199,46 @@ class Model():
         sess.run(init_op)
 
         return sess.run(self.get_prediction(X), feed_dict={X:triples})
+
+    #Fast, ugly, eval:
+
+    def initiate_eval(self):
+        self.X = tf.placeholder(tf.int32, shape=[None,3])
+        init_op = tf.initialize_all_variables()
+        self.session.run(init_op)
+
+    def compute_o(self):
+        e1s = tf.nn.embedding_lookup(self.W_embedding, self.X[:,0])
+        rs = tf.nn.embedding_lookup(self.W_relation, self.X[:,1])
+        
+        thingy2 = tf.matmul(e1s*rs, tf.transpose(self.W_embedding))
+        return tf.nn.sigmoid(thingy2)
+        
+    def compute_s(self):
+        rs = tf.nn.embedding_lookup(self.W_relation, self.X[:,1])
+        e2s = tf.nn.embedding_lookup(self.W_embedding, self.X[:,2])
+
+        thingy1 = tf.transpose(tf.matmul(self.W_embedding, tf.transpose(rs*e2s)))
+        return tf.nn.sigmoid(thingy1)
+    
+    def score_all_subjects(self, tup):
+        return self.session.run(self.compute_s(), feed_dict={self.X:tup})
+
+    def score_all_objects(self, tup):
+        return self.session.run(self.compute_o(), feed_dict={self.X:tup})
+
     
     '''
     To be replaced by inherited methods:
     '''
     
-    def save(self, filename, variables):
-        store_package = (variables[0],
-                         variables[1],
-                         self.n_entities,
-                         self.n_relations)
+    def save(self, filename):
+        store_package = self.session.run([self.W_embedding,
+                                          self.W_relation])
+
+        store_package += [self.n_entities,
+                         self.n_relations]
+
 
         store_file = open(filename, 'wb')
         pickle.dump(store_package, store_file)
@@ -208,10 +255,4 @@ class Model():
 
         self.model_path = filename
 
-        
-    def get_theano_input_variables(self):
-        Xs = T.matrix('Xs', dtype='int32')
-        Ys = T.vector('Ys', dtype='float32')
-
-        return [Xs, Ys]
     
