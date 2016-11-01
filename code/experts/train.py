@@ -9,6 +9,7 @@ parser.add_argument("--relations", help="Filepath for generated relation diction
 parser.add_argument("--entities", help="Filepath for generated entity dictionary.", required=True)
 parser.add_argument("--train_data", help="Filepath for formatted training data.", required=True)
 parser.add_argument("--validation_data", help="Filepath for formatted validation data.", required=True)
+parser.add_argument("--test_data", help="Filepath for formatted test data (only for filtering).", required=True)
 parser.add_argument("--model_path", help="Filepath to store the trained model.", required=True)
 parser.add_argument("--algorithm", help="Algorithm to train.", required=True)
 args = parser.parse_args()
@@ -18,6 +19,7 @@ algorithm = imp.load_source('algorithm', 'code/experts/'+args.algorithm+'/model.
 
 train_triplets = io.read_triplets_as_list(args.train_data, args.entities, args.relations)
 valid_triplets = io.read_triplets_as_list(args.validation_data, args.entities, args.relations)
+test_triplets = io.read_triplets_as_list(args.test_data, args.entities, args.relations)
 
 entities = io.read_dictionary(args.entities)
 relations = io.read_dictionary(args.relations)
@@ -33,6 +35,9 @@ model.set_model_path(args.model_path)
 
 model.preprocess(train_triplets)
 
+#CAREFUL
+model.set_test_data(test_triplets)
+
 optimizer_parameters = model.get_optimizer_parameters()
 optimizer_weights = model.get_optimizer_weights()
 optimizer_input = model.get_optimizer_input_variables()
@@ -45,4 +50,4 @@ elif model.backend == 'tensorflow':
     optimizer = Converge.tfbuild(loss, optimizer_weights, optimizer_parameters, optimizer_input)
     optimizer.set_session(model.session)
     
-optimizer.fit(train_triplets, validation_data=valid_triplets[:100])
+optimizer.fit(train_triplets, validation_data=valid_triplets)

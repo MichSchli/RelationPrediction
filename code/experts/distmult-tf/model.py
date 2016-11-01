@@ -20,7 +20,7 @@ class Model():
     n_entities = None
     n_relations = None
 
-    batch_size = 10
+    batch_size = 10000
     embedding_width = 200
     number_of_negative_samples = 10
     regularization_parameter = 0.01
@@ -138,19 +138,24 @@ class Model():
                 #('GradientDescent', {'learning_rate':1.0}),
                 #('AdaGrad', {'learning_rate':0.5}),
                 ('Adam', {'learning_rate':0.01, 'historical_moment_weight':0.9, 'historical_gradient_weight':0.999}),
-                ('TrainLossReporter', {'evaluate_every_n':10}),
+                ('TrainLossReporter', {'evaluate_every_n':100}),
                 ('EarlyStopper', {'criteria':'score_validation_data',
-                                  'evaluate_every_n':100,
+                                  'evaluate_every_n':2000,
                                   'scoring_function':self.score_validation_data,
                                   'comparator':lambda current, prev: current > prev,
                                   'burnin':20000}),
                 ('ModelSaver', {'save_function': self.save,
                                 'model_path': self.model_path,
-                                'save_every_n':100})]
+                                'save_every_n':2000})]
 
+
+    def set_test_data(self, test_data):
+        self.test_data = test_data
+        
     def score_validation_data(self, validation_data):
         scorer = evaluation.Scorer()
         scorer.register_data(self.graph_edges)
+        scorer.register_data(self.test_data)
         scorer.register_data(validation_data)
         scorer.register_model(self)
 

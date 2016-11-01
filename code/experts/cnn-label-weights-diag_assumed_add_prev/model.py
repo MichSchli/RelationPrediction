@@ -294,11 +294,14 @@ class Model():
 
     #Fast, ugly, eval:
 
+    def set_test_data(self, test_data):
+        self.test_data = test_data
     
     def score_validation_data(self, validation_data):
         scorer = evaluation.Scorer()
         scorer.register_data(self.graph_edges)
         scorer.register_data(validation_data)
+        scorer.register_data(test_data)
         scorer.register_model(self)
 
         score_summary = scorer.compute_scores(validation_data, verbose=True).get_summary()
