@@ -1,0 +1,24 @@
+
+class Parser():
+
+    def __init__(self, optimizer_settings):
+        self.settings = optimizer_settings
+
+    def get_parametrization(self):
+        p = [('Minibatches', {'batch_size':self.batch_size, 'contiguous_sampling':False}),
+            ('SampleTransformer', {'transform_function': self.transform}),
+            ('IterationCounter', {'max_iterations':50000}),
+                ('GradientClipping', {'max_norm':1}),
+                ('Adam', {'learning_rate':0.01,
+                          'historical_moment_weight':0.9,
+                          'historical_gradient_weight':0.999}),
+                ('TrainLossReporter', {'evaluate_every_n':5}),
+                ('EarlyStopper', {'criteria':'score_validation_data',
+                                  'evaluate_every_n':100,
+                                  'scoring_function':self.score_validation_data,
+                                  'comparator':lambda current, prev: current > prev,
+                                  'burnin':20000}),
+                ('ModelSaver', {'save_function': self.save,
+                                'model_path': self.model_path,
+                                'save_every_n':100})]
+        return [p for p in params if p is not None]

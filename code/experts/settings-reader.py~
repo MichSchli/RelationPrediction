@@ -1,0 +1,7 @@
+class Settings():
+
+    def __init__(self, filename):
+        pass
+
+def read(filename):
+    return Settings(filename)

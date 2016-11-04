@@ -33,8 +33,8 @@ class Model():
     positives_forward = None
     positives_backward = None
 
-    message_dropout_probability = 0.3
-    prev_dropout_probability = 0.3
+    message_dropout_probability = 0.5
+    prev_dropout_probability = 0.5
     
     '''
     Initialization methods:
@@ -230,7 +230,7 @@ class Model():
             #Construct new vertex embeddings:
             mean_message = tf.sparse_tensor_dense_matmul(self.MTR, M_prime)
 
-            vertex_embedding = mean_message #tf.matmul(mean_message, W_layer_l)
+            vertex_embedding = tf.matmul(mean_message, W_layer_l)
 
             if training:
                 activated_embedding = tf.nn.dropout(activated_embedding, self.prev_dropout_probability)
