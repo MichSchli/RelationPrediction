@@ -31,8 +31,8 @@ relations = io.read_dictionary(args.relations)
 Handle settings:
 '''
 
-settings_reader = imp.load_source('settings_reader', 'code/experts/settings_reader.py')
-settings = settings_reader.read('code/experts/settings/'+args.algorithm+'.exp')
+settings_reader = imp.load_source('settings_reader', 'code/common/settings_reader.py')
+settings = settings_reader.read('settings/'+args.algorithm+'.exp')
 
 encoder_settings = settings['Encoder']
 decoder_settings = settings['Decoder']

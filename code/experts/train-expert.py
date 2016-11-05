@@ -15,7 +15,7 @@ parser.add_argument("--algorithm", help="Algorithm to train.", required=True)
 args = parser.parse_args()
 
 io = imp.load_source('io', 'code/common/io.py')
-auxilliaries = imp.load_source('auxilliaries', 'code/experts/auxilliaries.py')
+auxilliaries = imp.load_source('auxilliaries', 'code/common/auxilliaries.py')
 evaluation = imp.load_source('evaluation', 'code/evaluation/evaluation.py')
 
 '''
@@ -32,8 +32,8 @@ relations = io.read_dictionary(args.relations)
 Handle settings:
 '''
 
-settings_reader = imp.load_source('settings_reader', 'code/experts/settings_reader.py')
-settings = settings_reader.read('code/experts/settings/'+args.algorithm+'.exp')
+settings_reader = imp.load_source('settings_reader', 'code/common/settings_reader.py')
+settings = settings_reader.read('settings/'+args.algorithm+'.exp')
 
 encoder_settings = settings['Encoder']
 decoder_settings = settings['Decoder']
@@ -79,7 +79,7 @@ loss = expert.get_train_loss()
 Get parameters for optimizer:
 '''
 
-optimizer_parameter_parsing = imp.load_source('optimizer_parameter_parser', 'code/experts/optimizer_parameter_parser.py')
+optimizer_parameter_parsing = imp.load_source('optimizer_parameter_parser', 'code/common/optimizer_parameter_parser.py')
 opp = optimizer_parameter_parsing.Parser(optimizer_settings)
 opp.set_save_function(expert.save)
 
