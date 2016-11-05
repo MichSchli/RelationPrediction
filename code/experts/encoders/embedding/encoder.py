@@ -1,7 +1,10 @@
 import numpy as np
 import tensorflow as tf
+import imp
 
-class Encoder():
+abstract = imp.load_source('abstract_encoder', 'code/experts/encoders/abstract_encoder.py')
+
+class Encoder(abstract.Encoder):
 
     settings = None
     
@@ -13,11 +16,7 @@ class Encoder():
         self.embedding_width = int(self.settings['EmbeddingWidth'])
         self.regularization_parameter = float(self.settings['RegularizationParameter'])
 
-    def initialize_test(self):
-        self.X = tf.placeholder(tf.int32, shape=[None,3])
-
-    def preprocess(self, triplets):
-        pass
+    
     
     def initialize_train(self):
         embedding_initial = np.random.randn(self.entity_count, self.embedding_width).astype(np.float32)        
@@ -36,9 +35,6 @@ class Encoder():
     
     def get_weights(self):
         return [self.W_embedding, self.W_relation]
-
-    def get_input_variables(self):
-        return [self.X]
 
     def encode(self, training=True):
         self.e1s = tf.nn.embedding_lookup(self.W_embedding, self.X[:,0])

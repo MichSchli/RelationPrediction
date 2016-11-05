@@ -3,8 +3,11 @@ import tensorflow as tf
 from scipy.sparse import csr_matrix, coo_matrix
 import scipy.sparse as sps
 import scipy
+import imp
 
-class Encoder():
+abstract = imp.load_source('abstract_encoder', 'code/experts/encoders/abstract_message_based_graph_encoder.py')
+
+class Encoder(abstract.Encoder):
 
     settings = None
     
