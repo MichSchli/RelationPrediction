@@ -38,4 +38,5 @@ def read_triplets_as_list(filename, entity_dict, relation_dict):
 
     return l
 
+
 #print(read_triplets_as_list('data/FB15k/freebase_mtr100_mte100-train.txt', 'data/FB15k/entities.dict', 'data/FB15k/relations.dict'))
