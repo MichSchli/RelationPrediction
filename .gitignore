@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Backup files from emacs:
+*~
+
+
 # C extensions
 *.so
 
