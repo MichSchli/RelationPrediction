@@ -1,0 +1,28 @@
+[Encoder]
+	Name=embedding
+	RegularizationParameter=0.1
+
+[Decoder]
+	Name=distmult
+
+[Shared]
+	EmbeddingWidth=200
+
+[Optimizer]
+	Minibatches=Yes
+	MaxGradientNorm=1
+	ReportTrainLossEvery=5	
+	BatchSize=10
+
+	[EarlyStopping]
+		CheckEvery=100
+		BurninPhaseDuration=2000
+
+	[Algorithm]
+		Name=Adam
+		learning_rate=0.01
+
+[General]
+	NegativeSampleRate=10
+	Backend=tensorflow
+
