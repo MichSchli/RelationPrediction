@@ -16,7 +16,7 @@ for triplet in source_triplets:
 
 tuples = sorted(d.items(), key=lambda x: x[1], reverse=True)
 
-limited_relations = [source_relations[t[0]] for t in tuples[:10]]
+limited_relations = [source_relations[t[0]] for t in tuples[-1000:]]
 
 limited_triplets = [t for t in source_triplets if t[1] in limited_relations]
 limited_triplets_valid = [t for t in source_triplets_valid if t[1] in limited_relations]
