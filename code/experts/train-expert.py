@@ -24,6 +24,7 @@ Load in the data:
 
 train_triplets = io.read_triplets_as_list(args.train_data, args.entities, args.relations)
 valid_triplets = io.read_triplets_as_list(args.validation_data, args.entities, args.relations)
+test_triplets = io.read_triplets_as_list(args.test_data, args.entities, args.relations)
 
 entities = io.read_dictionary(args.entities)
 relations = io.read_dictionary(args.relations)
@@ -87,6 +88,7 @@ def score_validation_data(validation_data):
     scorer = evaluation.Scorer()
     scorer.register_data(train_triplets)
     scorer.register_data(valid_triplets)
+    scorer.register_data(test_triplets)
     scorer.register_model(expert)
 
     score_summary = scorer.compute_scores(validation_data, verbose=True).get_summary()

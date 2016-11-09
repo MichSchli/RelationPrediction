@@ -5,10 +5,7 @@ DATASET=$2
 
 TRAIN_FILE='data/'$DATASET'/train.txt'
 VALIDATION_FILE='data'/$DATASET'/valid.txt'
-
-#No access to test allowed at training time:
-TEST_FILE='data/'$DATASET'/valid.txt'
-
+TEST_FILE='data/'$DATASET'/test.txt'
 ENTITY_DICTIONARY='data/'$DATASET'/entities.dict'
 RELATION_DICTIONARY='data/'$DATASET/'relations.dict'
 MODEL_PATH="models/$1.model"
