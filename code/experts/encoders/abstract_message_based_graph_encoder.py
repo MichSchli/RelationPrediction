@@ -17,9 +17,9 @@ class Encoder(abstract.Encoder):
         
         relations = triplets[1]
 
-        sender_indices = np.hstack((triplets[0], triplets[2])).astype(np.int32)
-        receiver_indices = np.hstack((triplets[2], triplets[0])).astype(np.int32)
-        message_types = np.hstack((triplets[1], triplets[1]+self.relation_count)).astype(np.int32)
+        sender_indices = np.hstack((triplets[0], triplets[2], np.arange(self.entity_count))).astype(np.int32)
+        receiver_indices = np.hstack((triplets[2], triplets[0], np.arange(self.entity_count))).astype(np.int32)
+        message_types = np.hstack((triplets[1]+1, triplets[1]+self.relation_count+1, np.zeros(self.entity_count))).astype(np.int32)
 
         message_indices = np.arange(receiver_indices.shape[0], dtype=np.int32)
         values = np.ones_like(receiver_indices, dtype=np.int32)

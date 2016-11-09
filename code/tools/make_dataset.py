@@ -2,8 +2,9 @@ import imp
 
 io = imp.load_source('io', 'code/common/io.py')
 
-source_triplets = list(io.read_triplets('data/FB15k/freebase_mtr100_mte100-train.txt'))
-source_triplets_valid = io.read_triplets('data/FB15k/freebase_mtr100_mte100-valid.txt')
+source_triplets = list(io.read_triplets('data/FB15k/train.txt'))
+source_triplets_valid = list(io.read_triplets('data/FB15k/valid.txt'))
+source_triplets_test = list(io.read_triplets('data/FB15k/test.txt'))
 
 source_relations = io.read_dictionary('data/FB15k/relations.dict')
 
@@ -20,15 +21,20 @@ limited_relations = [source_relations[t[0]] for t in tuples[-1000:]]
 
 limited_triplets = [t for t in source_triplets if t[1] in limited_relations]
 limited_triplets_valid = [t for t in source_triplets_valid if t[1] in limited_relations]
+limited_triplets_test = [t for t in source_triplets_test if t[1] in limited_relations]
 
 print(len(limited_triplets))
 print(len(limited_triplets_valid))
+print(len(limited_triplets_test))
 
 out_train = open('out_train.txt', 'w+')
 for line in limited_triplets:
     out_train.write('\t'.join(line)+'\n')
 
-
 out_valid = open('out_valid.txt', 'w+')
 for line in limited_triplets_valid:
     out_valid.write('\t'.join(line)+'\n')
+
+out_test = open('out_test.txt', 'w+')
+for line in limited_triplets_test:
+    out_test.write('\t'.join(line)+'\n')
