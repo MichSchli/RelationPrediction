@@ -42,6 +42,7 @@ optimizer_settings = settings['Optimizer']
 
 general_settings.put('EntityCount', len(entities))
 general_settings.put('RelationCount', len(relations))
+general_settings.put('EdgeCount', len(train_triplets))
 
 encoder_settings.merge(shared_settings)
 encoder_settings.merge(general_settings)

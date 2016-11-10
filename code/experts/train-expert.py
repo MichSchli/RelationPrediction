@@ -44,6 +44,7 @@ optimizer_settings = settings['Optimizer']
 
 general_settings.put('EntityCount', len(entities))
 general_settings.put('RelationCount', len(relations))
+general_settings.put('EdgeCount', len(train_triplets))
 
 encoder_settings.merge(shared_settings)
 encoder_settings.merge(general_settings)
@@ -100,6 +101,8 @@ if 'NegativeSampleRate' in general_settings:
     ns = auxilliaries.NegativeSampler(int(general_settings['NegativeSampleRate']), general_settings['EntityCount'])
     opp.set_sample_transform_function(ns.transform)
 
+opp.set_additional_ops(expert.get_additional_ops())
+    
 optimizer_parameters = opp.get_parametrization()
 
 

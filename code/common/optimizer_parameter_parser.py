@@ -4,6 +4,7 @@ class Parser():
     sample_transform_function = None
     save_function = None
     early_stopping_score_function = None
+    additional_ops = []
     
     def __init__(self, optimizer_settings):
         self.settings = optimizer_settings
@@ -25,6 +26,9 @@ class Parser():
 
     def set_early_stopping_score_function(self, function):
         self.early_stopping_score_function = function
+
+    def set_additional_ops(self, ops):
+        self.additional_ops = ops
 
     def sample_transform(self):
         if self.sample_transform_function is not None:
@@ -101,13 +105,20 @@ class Parser():
             'model_path': self.settings['ModelPath'],
             'save_every_n': n})
 
+
+    def get_additional_ops(self):
+        return [('AdditionalOp', {'op': op}) for op in self.additional_ops]
     
     def get_parametrization(self):
         params = [self.minibatches(),
                   self.sample_transform(),
                   self.iteration_counter(),
-                  self.gradient_clipping(),
-                  self.optimization_algorithm(),
+                  self.gradient_clipping()
+        ]
+
+        params += self.get_additional_ops()
+
+        params += [self.optimization_algorithm(),
                   self.train_loss_reporter(),
                   self.early_stopping(),
                   self.model_saving()

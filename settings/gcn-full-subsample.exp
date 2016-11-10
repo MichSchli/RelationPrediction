@@ -1,0 +1,30 @@
+[Encoder]
+	Name=gcn-full-subsample
+	RegularizationParameter=0.01
+	MessageDropoutProbability=0.3
+	SubsampleSize=50
+
+[Decoder]
+	Name=distmult
+
+[Shared]
+	EmbeddingWidth=100
+
+[Optimizer]
+	Minibatches=Yes
+	MaxGradientNorm=1
+	ReportTrainLossEvery=100
+	BatchSize=1000
+
+	[EarlyStopping]
+		CheckEvery=1000
+		BurninPhaseDuration=2000
+
+	[Algorithm]
+		Name=Adam
+		learning_rate=0.0001
+
+[General]
+	NegativeSampleRate=10
+	Backend=tensorflow
+

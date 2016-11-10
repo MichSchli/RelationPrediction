@@ -5,6 +5,9 @@ class Decoder():
     def __init__(self, decoder_settings):
         self.settings = decoder_settings
 
+    def get_additional_ops(self):
+        return []
+    
     def initialize_train(self):
         self.Y = tf.placeholder(tf.float32, shape=[None])
 

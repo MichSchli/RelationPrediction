@@ -55,6 +55,9 @@ class Expert():
     Methods to return handles for weights and input.
     '''
 
+    def get_additional_ops(self):
+        return self.encoder.get_additional_ops() + self.decoder.get_additional_ops()
+    
     def get_train_input_variables(self):
         return self.encoder.get_input_variables() + [self.decoder.get_gold_input_variable()]
     

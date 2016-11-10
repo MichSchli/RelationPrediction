@@ -5,6 +5,9 @@ class Encoder():
     def __init__(self, encoder_settings):
         self.settings = encoder_settings
 
+    def get_additional_ops(self):
+        return []
+    
     def get_input_variables(self):
         return [self.X]
 
