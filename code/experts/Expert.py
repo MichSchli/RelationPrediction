@@ -1,5 +1,5 @@
 import pickle
-
+import theano
 '''
 Class representing an (encoder, decoder)-pair.
 '''
@@ -67,6 +67,14 @@ class Expert():
     def get_weights(self):
         return self.encoder.get_weights() + self.decoder.get_weights()
 
+    def get_weight_values(self):
+        weights = self.get_weights()
+
+        if self.settings['Backend'] == 'tensorflow':
+            return self.session.run(weights)
+        elif self.settings['Backend'] == 'theano':
+            return [w.get_value() for w in weights]
+
     def assign_weights(self, weights):
         split = self.encoder.parameter_count()
         self.encoder.assign_weights(weights[:split])
@@ -101,20 +109,34 @@ class Expert():
         all_object_codes = self.encoder.get_all_object_codes()
         return self.decoder.fast_decode_all_objects(code, all_object_codes)
 
+    score_all_subjects_graph = None
+    score_all_objects_graph = None
+
     #Hacky
     def score_all_subjects(self, triples):
-        return self.session.run(self.get_all_subject_scores(), feed_dict={self.encoder.X:triples})
+        if self.settings['Backend'] == 'tensorflow':
+            return self.session.run(self.get_all_subject_scores(), feed_dict={self.encoder.X:triples})
+        elif self.settings['Backend'] == 'theano':
+            if self.score_all_subjects_graph is None:
+                self.score_all_subjects_graph = theano.function(inputs=self.get_test_input_variables(), outputs=self.get_all_subject_scores())
+
+            return self.score_all_subjects_graph(triples)
 
     def score_all_objects(self, triples):
-        return self.session.run(self.get_all_object_scores(), feed_dict={self.encoder.X:triples})
+        if self.settings['Backend'] == 'tensorflow':
+            return self.session.run(self.get_all_object_scores(), feed_dict={self.encoder.X:triples})
+        elif self.settings['Backend'] == 'theano':
+            if self.score_all_objects_graph is None:
+                self.score_all_objects_graph = theano.function(inputs=self.get_test_input_variables(), outputs=self.get_all_object_scores())
 
+            return self.score_all_objects_graph(triples)
     
     '''
     Model persistence methods:
     '''
-    
+
     def save(self, filename):
-        store_package = self.session.run(self.get_weights())
+        store_package = self.get_weight_values()
         
         store_package += [self.entity_count,
                           self.relation_count]

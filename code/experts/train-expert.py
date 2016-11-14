@@ -58,8 +58,8 @@ optimizer_settings.merge(general_settings)
 Construct the expert:
 '''
 
-encoder = imp.load_source('Encoder', 'code/experts/encoders/'+encoder_settings['Name']+'/encoder.py')
-decoder = imp.load_source('Decoder', 'code/experts/decoders/'+decoder_settings['Name']+'/decoder.py')
+encoder = imp.load_source('Encoder', 'code/experts/encoders/'+encoder_settings['Name']+'/encoder-'+general_settings['Backend']+'.py')
+decoder = imp.load_source('Decoder', 'code/experts/decoders/'+decoder_settings['Name']+'/decoder-'+general_settings['Backend']+'.py')
 expert = imp.load_source('Expert', 'code/experts/Expert.py')
 
 encoder = encoder.Encoder(encoder_settings)
@@ -111,10 +111,10 @@ Train with Converge:
 '''
 
 if general_settings['Backend'] == 'theano':
-    optimizer = Converge.build(loss, optimizer_weights, optimizer_parameters, optimizer_input)
+    optimizer = Converge.build_theano(loss, optimizer_weights, optimizer_parameters, optimizer_input)
 elif general_settings['Backend'] == 'tensorflow':
     expert.session = tf.Session()
-    optimizer = Converge.tfbuild(loss, optimizer_weights, optimizer_parameters, optimizer_input)
+    optimizer = Converge.build_tensorflow(loss, optimizer_weights, optimizer_parameters, optimizer_input)
     optimizer.set_session(expert.session)
     
 optimizer.fit(train_triplets, validation_data=valid_triplets)

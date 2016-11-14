@@ -49,13 +49,14 @@ encoder_settings.merge(general_settings)
 decoder_settings.merge(shared_settings)
 decoder_settings.merge(general_settings)
 
+optimizer_settings.merge(general_settings)
 
 '''
 Construct the expert:
 '''
 
-encoder = imp.load_source('Encoder', 'code/experts/encoders/'+encoder_settings['Name']+'/encoder.py')
-decoder = imp.load_source('Decoder', 'code/experts/decoders/'+decoder_settings['Name']+'/decoder.py')
+encoder = imp.load_source('Encoder', 'code/experts/encoders/'+encoder_settings['Name']+'/encoder-'+general_settings['Backend']+'.py')
+decoder = imp.load_source('Decoder', 'code/experts/decoders/'+decoder_settings['Name']+'/decoder-'+general_settings['Backend']+'.py')
 expert = imp.load_source('Expert', 'code/experts/Expert.py')
 
 encoder = encoder.Encoder(encoder_settings)

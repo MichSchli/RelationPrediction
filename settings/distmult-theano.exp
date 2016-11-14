@@ -11,18 +11,18 @@
 [Optimizer]
 	Minibatches=Yes
 	MaxGradientNorm=1
-	ReportTrainLossEvery=20	
-	BatchSize=10
+	ReportTrainLossEvery=500	
+	BatchSize=1000
 
 	[EarlyStopping]
-		CheckEvery=100
+		CheckEvery=5000
 		BurninPhaseDuration=2000
 
 	[Algorithm]
 		Name=Adam
-		learning_rate=0.001
+		learning_rate=0.01
 
 [General]
 	NegativeSampleRate=10
-	Backend=tensorflow
+	Backend=theano
 
