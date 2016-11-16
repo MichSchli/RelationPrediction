@@ -1,20 +1,19 @@
 import imp
 import numpy as np
 import tensorflow as tf
+import theano
+from theano import tensor as T
 from scipy.sparse import csr_matrix, coo_matrix
 import scipy.sparse as sps
 import scipy
+from theano import sparse
 
 abstract = imp.load_source('abstract_encoder', 'code/experts/encoders/abstract_encoder.py')
 
-class Encoder(abstract.Encoder):
+class AMBGE():
 
-    def __init__(self):
-        pass
-
-    def preprocess(self, triplets):
+    def __preprocess__(self, triplets):
         triplets = np.array(triplets).transpose()
-        
         relations = triplets[1]
 
         sender_indices = np.hstack((triplets[0], triplets[2], np.arange(self.entity_count))).astype(np.int32)
@@ -30,14 +29,40 @@ class Encoder(abstract.Encoder):
         degree_matrix = sps.lil_matrix((self.entity_count, self.entity_count))
         degree_matrix.setdiag(degrees)
 
-        scaled_message_to_receiver_matrix = degree_matrix * message_to_receiver_matrix
-        rows, cols, vals = sps.find(scaled_message_to_receiver_matrix)
+        scaled_vertex_to_edge_sparse = (degree_matrix * message_to_receiver_matrix).astype(np.float32)
+        edge_to_vertex_list = receiver_indices.astype(np.int32)
+        edge_to_relation_list = message_types.astype(np.int32)
+    
+        return scaled_vertex_to_edge_sparse, edge_to_vertex_list, edge_to_relation_list
+
+class TheanoEncoder(AMBGE, abstract.Encoder):
+
+    def __init__(self):
+        pass
+
+    def preprocess(self, triplets):
+        scaled_vertex_to_edge_sparse, edge_to_vertex_list, edge_to_relation_list = self.__preprocess__(triplets)
+
+        self.V_to_E = scaled_vertex_to_edge_sparse
+        self.E_to_V = edge_to_vertex_list #T.TensorConstant('int32', edge_to_vertex_list)
+        self.E_to_R = edge_to_relation_list #T.TensorConstant('int32', edge_to_relation_list)
+
+        
+
+class TensorflowEncoder(AMBGE, abstract.Encoder):
+
+    def __init__(self):
+        pass
+
+    def preprocess(self, triplets):
+        scaled_vertex_to_edge_sparse, edge_to_vertex_list, edge_to_relation_list = self.__preprocess__(triplets)
+        rows, cols, vals = sps.find(scaled_vertex_to_edge_sparse)
 
         #Create TF message-to-receiver matrix:
         self.MTR = tf.SparseTensor(np.array([rows,cols]).transpose(), vals.astype(np.float32), [self.entity_count, receiver_indices.shape[0]])
 
         #Create TF sender-to-message matrix:
-        self.STM = tf.constant(sender_indices, dtype=np.int32)
+        self.STM = tf.constant(edge_to_vertex_list, dtype=np.int32)
 
         #Create TF message type list:
-        self.R = tf.constant(message_types, dtype=np.int32)
+        self.R = tf.constant(edge_to_relation_list, dtype=np.int32)

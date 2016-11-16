@@ -105,7 +105,7 @@ opp.set_additional_ops(expert.get_additional_ops())
     
 optimizer_parameters = opp.get_parametrization()
 
-
+print(optimizer_parameters)
 '''
 Train with Converge:
 '''
