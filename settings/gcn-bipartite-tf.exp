@@ -1,7 +1,7 @@
 [Encoder]
 	Name=gcn-intermediate-full
 	RegularizationParameter=0.1
-	NumberOfConvolutions = 2
+	NumberOfConvolutions = 4
 
 [Decoder]
 	Name=distmult
@@ -10,10 +10,9 @@
 	EmbeddingWidth=200
 
 [Optimizer]
-	Minibatches=Yes
+	Minibatches=No
 	MaxGradientNorm=1
 	ReportTrainLossEvery=5	
-	BatchSize=10
 
 	[EarlyStopping]
 		CheckEvery=100
@@ -21,7 +20,7 @@
 
 	[Algorithm]
 		Name=Adam
-		learning_rate=0.01
+		learning_rate=0.0001
 
 [General]
 	NegativeSampleRate=10
