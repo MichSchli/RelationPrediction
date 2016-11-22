@@ -7,7 +7,7 @@ import imp
 
 abstract = imp.load_source('abstract_encoder', 'code/experts/encoders/abstract_message_based_graph_encoder.py')
 
-class Encoder(abstract.Encoder):
+class Encoder(abstract.TensorflowEncoder):
 
     settings = None
     vertex_embedding = None

@@ -59,7 +59,7 @@ class TensorflowEncoder(AMBGE, abstract.Encoder):
         rows, cols, vals = sps.find(scaled_vertex_to_edge_sparse)
 
         #Create TF message-to-receiver matrix:
-        self.MTR = tf.SparseTensor(np.array([rows,cols]).transpose(), vals.astype(np.float32), [self.entity_count, receiver_indices.shape[0]])
+        self.MTR = tf.SparseTensor(np.array([rows,cols]).transpose(), vals.astype(np.float32), [self.entity_count, edge_to_vertex_list.shape[0]])
 
         #Create TF sender-to-message matrix:
         self.STM = tf.constant(edge_to_vertex_list, dtype=np.int32)
