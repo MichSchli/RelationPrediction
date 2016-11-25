@@ -97,11 +97,6 @@ class Expert():
     '''
 
     def get_all_subject_scores(self):
-        print("hey")
-        print("hey")
-        print("hey")
-        print("hey")
-        print("hey")
         code = self.encoder.encode(training=False)
         all_subject_codes = self.encoder.get_all_subject_codes()
         return self.decoder.fast_decode_all_subjects(code, all_subject_codes)
