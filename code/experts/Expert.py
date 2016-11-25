@@ -34,10 +34,7 @@ class Expert():
     def set_model_path(self, model_path):
         self.model_path = model_path
 
-    def preprocess(self, train_triplets, valid_triplets):
-        self.train_triplets = train_triplets
-        self.valid_triplets = valid_triplets
-
+    def preprocess(self, train_triplets):
         self.encoder.preprocess(train_triplets)
         self.decoder.preprocess(train_triplets)
 
@@ -100,6 +97,11 @@ class Expert():
     '''
 
     def get_all_subject_scores(self):
+        print("hey")
+        print("hey")
+        print("hey")
+        print("hey")
+        print("hey")
         code = self.encoder.encode(training=False)
         all_subject_codes = self.encoder.get_all_subject_codes()
         return self.decoder.fast_decode_all_subjects(code, all_subject_codes)
@@ -115,7 +117,11 @@ class Expert():
     #Hacky
     def score_all_subjects(self, triples):
         if self.settings['Backend'] == 'tensorflow':
-            return self.session.run(self.get_all_subject_scores(), feed_dict={self.encoder.X:triples})
+            if self.score_all_subjects_graph is None:
+                self.score_all_subjects_graph = self.get_all_subject_scores()
+
+            return self.session.run(self.score_all_subjects_graph, feed_dict={self.encoder.X:triples})
+        
         elif self.settings['Backend'] == 'theano':
             if self.score_all_subjects_graph is None:
                 self.score_all_subjects_graph = theano.function(inputs=self.get_test_input_variables(), outputs=self.get_all_subject_scores())
@@ -124,7 +130,11 @@ class Expert():
 
     def score_all_objects(self, triples):
         if self.settings['Backend'] == 'tensorflow':
-            return self.session.run(self.get_all_object_scores(), feed_dict={self.encoder.X:triples})
+            if self.score_all_objects_graph is None:
+                self.score_all_objects_graph = self.get_all_object_scores()
+
+            return self.session.run(self.score_all_objects_graph, feed_dict={self.encoder.X:triples})
+        
         elif self.settings['Backend'] == 'theano':
             if self.score_all_objects_graph is None:
                 self.score_all_objects_graph = theano.function(inputs=self.get_test_input_variables(), outputs=self.get_all_object_scores())

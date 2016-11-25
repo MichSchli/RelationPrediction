@@ -55,6 +55,16 @@ optimizer_settings.put('ModelPath', args.model_path)
 optimizer_settings.merge(general_settings)
 
 '''
+Filter if we need to:
+'''
+'''
+relation_filter = auxilliaries.RelationFilter(100)
+relation_filter.register(train_triplets, list(range(len(relations))))
+filtered_train_triplets = relation_filter.filter(train_triplets)
+
+encoder_settings.put('RelationCount', 100)
+'''
+'''
 Construct the expert:
 '''
 
@@ -70,7 +80,7 @@ expert = expert.Expert(encoder, decoder, optimizer_settings)
 Initialize for training:
 '''
 
-expert.preprocess(train_triplets, valid_triplets)
+expert.preprocess(train_triplets)
 expert.initialize_train()
 
 optimizer_weights = expert.get_weights()
@@ -85,13 +95,13 @@ optimizer_parameter_parsing = imp.load_source('optimizer_parameter_parser', 'cod
 opp = optimizer_parameter_parsing.Parser(optimizer_settings)
 opp.set_save_function(expert.save)
 
-def score_validation_data(validation_data):
-    scorer = evaluation.Scorer()
-    scorer.register_data(train_triplets)
-    scorer.register_data(valid_triplets)
-    scorer.register_data(test_triplets)
-    scorer.register_model(expert)
+scorer = evaluation.Scorer()
+scorer.register_data(train_triplets)
+scorer.register_data(valid_triplets)
+scorer.register_data(test_triplets)
+scorer.register_model(expert)
 
+def score_validation_data(validation_data):
     score_summary = scorer.compute_scores(validation_data, verbose=True).get_summary()
     return score_summary.results['Filtered'][score_summary.mrr_string()]
 
