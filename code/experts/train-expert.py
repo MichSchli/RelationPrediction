@@ -102,7 +102,7 @@ scorer.register_data(test_triplets)
 scorer.register_model(expert)
 
 def score_validation_data(validation_data):
-    score_summary = scorer.compute_scores(validation_data, verbose=True).get_summary()
+    score_summary = scorer.compute_scores(validation_data, verbose=False).get_summary()
     return score_summary.results['Filtered'][score_summary.mrr_string()]
 
 opp.set_early_stopping_score_function(score_validation_data)
