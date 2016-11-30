@@ -10,8 +10,12 @@ from theano import sparse
 
 abstract = imp.load_source('abstract_encoder', 'code/experts/encoders/abstract_encoder.py')
 
-class AMBGE():
+class AMBGE(abstract.Encoder):
 
+    def __init__(self, settings):
+        abstract.Encoder.__init__(self, settings)
+        self.use_global_normalization = bool(settings['UseGlobalNorm'])
+    
     def __preprocess__(self, triplets):
         triplets = np.array(triplets).transpose()
         relations = triplets[1]
@@ -20,25 +24,36 @@ class AMBGE():
         receiver_indices = np.hstack((triplets[2], triplets[0], np.arange(self.entity_count))).astype(np.int32)
         message_types = np.hstack((triplets[1]+1, triplets[1]+self.relation_count+1, np.zeros(self.entity_count))).astype(np.int32)
 
-        message_indices = np.arange(receiver_indices.shape[0], dtype=np.int32)
-        values = np.ones_like(receiver_indices, dtype=np.int32)
+        if not self.use_global_normalization:
+            counts = {}
+            mrs = np.vstack((receiver_indices, message_types)).transpose()
 
+            for mr in mrs:
+                mr = tuple(mr)
+                if mr in vals:
+                    counts[mr] += 1
+                else:
+                    counts[mr] = 1
+
+            values = np.array([1/counts[tuple(mr)] for mr in mrs]).astype(np.int32)
+        else:
+            values = np.ones_like(receiver_indices, dtype=np.int32)        
+        
+        message_indices = np.arange(message_types.shape[0], dtype=np.int32)
         message_to_receiver_matrix = coo_matrix((values, (receiver_indices, message_indices)), shape=(self.entity_count, receiver_indices.shape[0]), dtype=np.float32).tocsr()
 
-        degrees = (1 / message_to_receiver_matrix.sum(axis=1)).tolist()
-        degree_matrix = sps.lil_matrix((self.entity_count, self.entity_count))
-        degree_matrix.setdiag(degrees)
+        if self.use_global_normalization:
+            degrees = (1 / message_to_receiver_matrix.sum(axis=1)).tolist()
+            degree_matrix = sps.lil_matrix((self.entity_count, self.entity_count))
+            degree_matrix.setdiag(degrees)
+            message_to_receiver_matrix = (degree_matrix * message_to_receiver_matrix).astype(np.float32)
 
-        scaled_vertex_to_edge_sparse = (degree_matrix * message_to_receiver_matrix).astype(np.float32)
         edge_to_vertex_list = receiver_indices.astype(np.int32)
         edge_to_relation_list = message_types.astype(np.int32)
     
-        return scaled_vertex_to_edge_sparse, edge_to_vertex_list, edge_to_relation_list
+        return message_to_receiver_matrix, edge_to_vertex_list, edge_to_relation_list
 
-class TheanoEncoder(AMBGE, abstract.Encoder):
-
-    def __init__(self):
-        pass
+class TheanoEncoder(AMBGE):
 
     def preprocess(self, triplets):
         scaled_vertex_to_edge_sparse, edge_to_vertex_list, edge_to_relation_list = self.__preprocess__(triplets)
@@ -49,10 +64,8 @@ class TheanoEncoder(AMBGE, abstract.Encoder):
 
         
 
-class TensorflowEncoder(AMBGE, abstract.Encoder):
+class TensorflowEncoder(AMBGE):
 
-    def __init__(self):
-        pass
 
     def preprocess(self, triplets):
         scaled_vertex_to_edge_sparse, edge_to_vertex_list, edge_to_relation_list = self.__preprocess__(triplets)

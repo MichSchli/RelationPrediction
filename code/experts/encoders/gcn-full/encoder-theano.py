@@ -14,12 +14,14 @@ class Encoder(abstract.TheanoEncoder):
     vertex_embedding = None
     
     def __init__(self, encoder_settings):
+        abstract.TheanoEncoder.__init__(self, encoder_settings)
         self.settings = encoder_settings
 
-        self.entity_count = int(self.settings['EntityCount'])
-        self.relation_count = int(self.settings['RelationCount'])
         self.embedding_width = int(self.settings['EmbeddingWidth'])
-        self.n_convolutions = int(self.settings['NumberOfConvolutions'])    
+        self.n_convolutions = int(self.settings['NumberOfConvolutions'])
+        self.regularization_parameter = float(self.settings['RegularizationParameter'])
+        self.dropout_probability = float(self.settings['DropoutProbability'])
+
 
     
     def initialize_test(self):
@@ -36,11 +38,25 @@ class Encoder(abstract.TheanoEncoder):
         self.W_embedding = theano.shared(embedding_initial)
         self.W_relation = theano.shared(relation_initial)
         self.W_types = [theano.shared(t) for t in type_initials]
+
+    def apply_dropouts(self, layer, dropout_probability):
+        if self.srng is None:
+            self.srng = RandomStreams(seed=12345)
+
+        keep_probability = 1 - dropout_probability
+
+        mask = self.srng.binomial(n=1, p=keep_probability, size=layer.shape, dtype='float32')
+        output = layer * T.cast(mask, theano.config.floatX) / keep_probability
+        return output
         
     def get_vertex_embedding(self, training=False):
         activated_embedding = self.W_embedding
 
         for W_type in self.W_types:
+            # Apply layer-wise dropout:
+            if training:
+                activated_embedding = self.apply_dropouts(activated_embedding, self.dropout_probability)
+            
             #Fetch 
             MessageTransforms = W_type[self.E_to_R]
 
@@ -85,11 +101,8 @@ class Encoder(abstract.TheanoEncoder):
         return self.e1s, self.rs, self.e2s
 
     def get_regularization(self):
-        #regularization = tf.reduce_mean(tf.square(self.e1s))
-        #regularization += tf.reduce_mean(tf.square(self.rs))
-        #regularization += tf.reduce_mean(tf.square(self.e2s))
-
-        return 0 #self.regularization_parameter * regularization
+        regularization = T.sqr(self.e1s).mean() + T.sqr(self.rs).mean() + T.sqr(self.e2s).mean()
+        return self.regularization_parameter * regularization
 
     def parameter_count(self):
         return 2 + self.n_convolutions

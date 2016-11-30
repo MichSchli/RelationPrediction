@@ -1,13 +1,16 @@
 [Encoder]
 	Name=gcn-full
-	RegularizationParameter=0.0
+	RegularizationParameter=0.01
 	NumberOfConvolutions=2
+	DropoutProbability=0.1
+	UseGlobalNorm=False
+
 
 [Decoder]
 	Name=distmult
 
 [Shared]
-	EmbeddingWidth=10
+	EmbeddingWidth=100
 
 [Optimizer]
 	Minibatches=No
@@ -23,6 +26,6 @@
 		learning_rate=0.01
 
 [General]
-	NegativeSampleRate=10
+	NegativeSampleRate=2
 	Backend=theano
 

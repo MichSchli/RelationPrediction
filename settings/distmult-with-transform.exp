@@ -12,7 +12,7 @@
 	Minibatches=Yes
 	MaxGradientNorm=1
 	ReportTrainLossEvery=100	
-	BatchSize=2000
+	BatchSize=5000
 
 	[EarlyStopping]
 		CheckEvery=2000
@@ -20,7 +20,7 @@
 
 	[Algorithm]
 		Name=Adam
-		learning_rate=0.001
+		learning_rate=0.002
 
 [General]
 	NegativeSampleRate=10

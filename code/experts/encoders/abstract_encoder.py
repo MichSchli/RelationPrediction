@@ -5,6 +5,9 @@ class Encoder():
     def __init__(self, encoder_settings):
         self.settings = encoder_settings
 
+        self.entity_count = int(self.settings['EntityCount'])
+        self.relation_count = int(self.settings['RelationCount'])
+
     def get_additional_ops(self):
         return []
     
