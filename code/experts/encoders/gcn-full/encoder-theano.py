@@ -28,10 +28,11 @@ class Encoder(abstract.TheanoEncoder):
         self.X = T.matrix('X', dtype='int32')
     
     def initialize_train(self):
-        embedding_initial = np.random.randn(self.entity_count, self.embedding_width).astype(np.float32)        
-        relation_initial = np.random.randn(self.relation_count, self.embedding_width).astype(np.float32)
-        type_initials = [np.random.randn(self.relation_count*2+1, self.embedding_width, self.embedding_width).astype(np.float32)
-                                for _ in range(self.n_convolutions)]
+        embedding_initial = np.sqrt(2.0) * np.random.randn(self.entity_count, self.embedding_width).astype(np.float32)        
+        relation_initial = np.sqrt(2.0) * np.random.randn(self.relation_count, self.embedding_width).astype(np.float32)
+        type_initials = [np.sqrt(2.0 / self.embedding_width) *
+                         np.random.randn(self.relation_count*2+1, self.embedding_width, self.embedding_width).astype(np.float32)
+                         for _ in range(self.n_convolutions)]
 
         self.X = T.matrix('X', dtype='int32')
 
