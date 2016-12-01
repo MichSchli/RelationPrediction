@@ -36,6 +36,8 @@ Handle settings:
 settings_reader = imp.load_source('settings_reader', 'code/common/settings_reader.py')
 settings = settings_reader.read('settings/'+args.algorithm+'.exp')
 
+print(settings)
+
 encoder_settings = settings['Encoder']
 decoder_settings = settings['Decoder']
 shared_settings = settings['Shared']
@@ -115,7 +117,6 @@ opp.set_additional_ops(expert.get_additional_ops())
     
 optimizer_parameters = opp.get_parametrization()
 
-print(optimizer_parameters)
 '''
 Train with Converge:
 '''

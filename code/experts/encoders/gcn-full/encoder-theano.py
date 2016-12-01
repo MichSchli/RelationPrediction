@@ -56,15 +56,19 @@ class Encoder(abstract.TheanoEncoder):
             # Apply layer-wise dropout:
             if training:
                 activated_embedding = self.apply_dropouts(activated_embedding, self.dropout_probability)
-            
-            #Fetch 
-            MessageTransforms = W_type[self.E_to_R]
 
-            #Gather values from vertices in message matrix:
-            MessageValues = activated_embedding[self.E_to_V]
-            Messages = T.batched_dot(MessageTransforms, MessageValues)
+            mean_messages = T.zeros_like(activated_embedding)
+            print(len(self.E_to_R))
+            for e_to_r, e_to_v, v_to_e in zip(self.E_to_R, self.E_to_V, self.V_to_E):
+                #Fetch 
+                MessageTransforms = W_type[e_to_r]
 
-            mean_messages = theano.sparse.dot(self.V_to_E, Messages)
+                #Gather values from vertices in message matrix:
+                MessageValues = activated_embedding[e_to_v]
+
+                #Transform according to 
+                Messages = T.batched_dot(MessageTransforms, MessageValues)
+                mean_messages += theano.sparse.dot(v_to_e, Messages)
 
             vertex_embedding = mean_messages
             activated_embedding = T.nnet.relu(mean_messages)
