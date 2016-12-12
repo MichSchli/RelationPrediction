@@ -13,7 +13,7 @@ abstract = imp.load_source('abstract_encoder', 'code/experts/encoders/abstract_e
 
 class AMBGE(abstract.Encoder):
 
-    graph_batch_size = 200000
+    graph_batch_size = 1000000
     n_slices = None
     
     def __init__(self, settings):
