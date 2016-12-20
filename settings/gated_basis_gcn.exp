@@ -1,13 +1,14 @@
 [Encoder]
 	Name=gated_basis_gcn
-	DropoutKeepProbability=0.999
+	DropoutKeepProbability=0.8
 
 [Decoder]
 	Name=bilinear-diag
 	RegularizationParameter=0.01
 
 [Shared]
-	EmbeddingWidth=100
+	EmbeddingWidth=30
+	EmbeddingWidthOut=200
 
 [Optimizer]
 	Minibatches=No

@@ -10,12 +10,13 @@ class LinearTransform(Model):
 
     def parse_settings(self):
         self.embedding_width = int(self.settings['EmbeddingWidth'])
+        self.embedding_width_out = int(self.settings['EmbeddingWidthOut'])
 
     def local_initialize_train(self):
-        transform_matrix = np.random.normal(0, np.sqrt(1 / (2 * self.embedding_width)),
-                                                 size=(self.embedding_width, self.embedding_width)).astype(np.float32)
+        transform_matrix = np.random.normal(0, np.sqrt(1 / (self.embedding_width + self.embedding_width_out)),
+                                                 size=(self.embedding_width, self.embedding_width_out)).astype(np.float32)
 
-        transform_bias = np.zeros(self.embedding_width).astype(np.float32)
+        transform_bias = np.zeros(self.embedding_width_out).astype(np.float32)
 
         self.W = tf.Variable(transform_matrix)
         self.b = tf.Variable(transform_bias)
