@@ -1,25 +1,26 @@
 [Encoder]
-	Name=embedding
+	Name=gated_basis_gcn
+	DropoutKeepProbability=0.999
 
 [Decoder]
 	Name=bilinear-diag
 	RegularizationParameter=0.01
 
 [Shared]
-	EmbeddingWidth=200
+	EmbeddingWidth=100
 
 [Optimizer]
 	Minibatches=No
 	MaxGradientNorm=1
-	ReportTrainLossEvery=5
+	ReportTrainLossEvery=20
 
 	[EarlyStopping]
-		CheckEvery=20
-		BurninPhaseDuration=100
+		CheckEvery=1000
+		BurninPhaseDuration=200
 
 	[Algorithm]
 		Name=Adam
-		learning_rate=0.01
+		learning_rate=0.001
 
 [General]
-	NegativeSampleRate=10
+	NegativeSampleRate=1
