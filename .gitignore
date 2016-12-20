@@ -14,6 +14,7 @@ venv/
 
 # Pycharm files
 *.pyc
+.idea/
 
 # C extensions
 *.so
