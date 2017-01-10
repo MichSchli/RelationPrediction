@@ -6,6 +6,8 @@ from decoders.bilinear_diag import BilinearDiag
 from common.graph_representations import Representation
 from encoders.simple_gated_basis_gcn import SimpleGatedBasisGcn
 
+from decoders.nonlinear_transform import NonlinearTransform
+
 
 def build_encoder(encoder_settings, triples):
     if encoder_settings['Name'] == "embedding":
@@ -22,13 +24,18 @@ def build_encoder(encoder_settings, triples):
 
         first_layer = SimpleGatedBasisGcn(encoder_settings, graph)
         second_layer = SimpleGatedBasisGcn(encoder_settings, graph, next_component=first_layer)
-        transform = LinearTransform(second_layer, encoder_settings)
-        return RelationEmbedding(transform, encoder_settings)
+
+        #TODO
+        #transform = LinearTransform(second_layer, encoder_settings)
+
+        return RelationEmbedding(second_layer, encoder_settings)
     else:
         return None
 
 def build_decoder(encoder, decoder_settings):
     if decoder_settings['Name'] == "bilinear-diag":
         return BilinearDiag(encoder, decoder_settings)
+    elif decoder_settings['Name'] == "nonlinear-transform":
+        return NonlinearTransform(encoder, decoder_settings)
     else:
         return None

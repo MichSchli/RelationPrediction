@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aa2b33e7-0e4c-4368-a8bb-e5268fe13a76" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code/encoders/simple_gated_basis_gcn.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings/simple_gated_basis_gcn.exp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code/decoders/nonlinear_transform.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/common/model_builder.py" afterPath="$PROJECT_DIR$/code/common/model_builder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run-train.sh" afterPath="$PROJECT_DIR$/run-train.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/encoders/relation_embedding.py" afterPath="$PROJECT_DIR$/code/encoders/relation_embedding.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/simple_gated_basis_gcn.exp" afterPath="$PROJECT_DIR$/settings/simple_gated_basis_gcn.exp" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,38 +21,54 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="run-train.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/run-train.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="17" lean-forward="false" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="simple_gated_basis_gcn.exp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings/simple_gated_basis_gcn.exp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="16" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+            <state relative-caret-position="345">
+              <caret line="23" column="25" lean-forward="false" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/model.py">
+      <file leaf-file-name="bilinear_diag.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/decoders/bilinear_diag.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="448">
+              <caret line="56" column="45" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gated_basis_gcn.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/encoders/gated_basis_gcn.py">
+      <file leaf-file-name="nonlinear_transform.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/code/decoders/nonlinear_transform.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="73" column="41" lean-forward="true" selection-start-line="73" selection-start-column="41" selection-end-line="73" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="relation_embedding.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/encoders/relation_embedding.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="64" lean-forward="false" selection-start-line="9" selection-start-column="64" selection-end-line="9" selection-end-column="64" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="embedding.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/encoders/embedding.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -63,12 +79,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="simple_gated_basis_gcn.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/code/encoders/simple_gated_basis_gcn.py">
+      <file leaf-file-name="linear_transform.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/encoders/linear_transform.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="58" column="38" lean-forward="true" selection-start-line="58" selection-start-column="38" selection-end-line="92" selection-end-column="60" />
-              <folding />
+            <state relative-caret-position="330">
+              <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,21 +101,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="optimizer_parameter_parser.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/common/optimizer_parameter_parser.py">
+      <file leaf-file-name="model_builder.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="388">
+              <caret line="27" column="13" lean-forward="false" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="model_builder.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
+      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+            <state relative-caret-position="210">
+              <caret line="44" column="31" lean-forward="false" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -106,11 +126,9 @@
       <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-450">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="465">
+              <caret line="92" column="16" lean-forward="true" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -155,10 +173,14 @@
         <option value="$PROJECT_DIR$/../NewLinkPrediction/code/encoders/linear_transform.py" />
         <option value="$PROJECT_DIR$/../NewLinkPrediction/code/encoders/relation_embedding.py" />
         <option value="$PROJECT_DIR$/../NewLinkPrediction/settings/gated_basis_gcn.exp" />
-        <option value="$PROJECT_DIR$/code/common/model_builder.py" />
-        <option value="$PROJECT_DIR$/settings/simple_gated_basis_gcn.exp" />
         <option value="$PROJECT_DIR$/run-train.sh" />
         <option value="$PROJECT_DIR$/code/encoders/simple_gated_basis_gcn.py" />
+        <option value="$PROJECT_DIR$/code/decoders/nonlinear-transform.py" />
+        <option value="$PROJECT_DIR$/code/common/model_builder.py" />
+        <option value="$PROJECT_DIR$/code/encoders/relation_embedding.py" />
+        <option value="$PROJECT_DIR$/code/model.py" />
+        <option value="$PROJECT_DIR$/settings/simple_gated_basis_gcn.exp" />
+        <option value="$PROJECT_DIR$/code/decoders/nonlinear_transform.py" />
       </list>
     </option>
   </component>
@@ -674,23 +696,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/code/experts/encoders/gcn-full-project/encoder-theano.py" />
-    <entry file="file://$PROJECT_DIR$/scripts/test.sh" />
-    <entry file="file://$PROJECT_DIR$/code/experts/encoders/gcn-full-subsample/encoder.py" />
-    <entry file="file://$PROJECT_DIR$/code/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/common/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/evaluation/__init__.py" />
     <entry file="file://$PROJECT_DIR$/code/experts/__init__.py" />
     <entry file="file://$PROJECT_DIR$/code/tools/__init__.py" />
@@ -734,17 +739,17 @@
     <entry file="file://$PROJECT_DIR$/../NewLinkPrediction/code/encoders/relation_embedding.py" />
     <entry file="file://$PROJECT_DIR$/../NewLinkPrediction/code/encoders/linear_transform.py" />
     <entry file="file://$PROJECT_DIR$/../NewLinkPrediction/settings/gated_basis_gcn.exp" />
-    <entry file="file://$PROJECT_DIR$/code/train.py">
+    <entry file="file://$PROJECT_DIR$/code/encoders/gated_basis_gcn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-450">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/model.py">
+    <entry file="file://$PROJECT_DIR$/code/common/optimizer_parameter_parser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -752,7 +757,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/encoders/gated_basis_gcn.py">
+    <entry file="file://$PROJECT_DIR$/run-train.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="17" lean-forward="false" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/simple_gated_basis_gcn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/decoders/bilinear_diag.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="56" column="45" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/embedding.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -770,43 +801,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/common/optimizer_parameter_parser.py">
+    <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="388">
+          <caret line="27" column="13" lean-forward="false" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/relation_embedding.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="64" lean-forward="false" selection-start-line="9" selection-start-column="64" selection-end-line="9" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="92" column="16" lean-forward="true" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
+    <entry file="file://$PROJECT_DIR$/code/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        <state relative-caret-position="210">
+          <caret line="44" column="31" lean-forward="false" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/linear_transform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/settings/simple_gated_basis_gcn.exp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="16" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+        <state relative-caret-position="345">
+          <caret line="23" column="25" lean-forward="false" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run-train.sh">
+    <entry file="file://$PROJECT_DIR$/code/decoders/nonlinear_transform.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="17" lean-forward="false" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/encoders/simple_gated_basis_gcn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="58" column="38" lean-forward="true" selection-start-line="58" selection-start-column="38" selection-end-line="92" selection-end-column="60" />
-          <folding />
+        <state relative-caret-position="253">
+          <caret line="73" column="41" lean-forward="true" selection-start-line="73" selection-start-column="41" selection-end-line="73" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

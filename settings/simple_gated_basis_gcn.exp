@@ -3,12 +3,12 @@
 	DropoutKeepProbability=0.8
 
 [Decoder]
-	Name=bilinear-diag
+	Name=nonlinear-transform
 	RegularizationParameter=0.01
+	DecoderDimension=100
 
 [Shared]
 	EmbeddingWidth=30
-	EmbeddingWidthOut=200
 
 [Optimizer]
 	Minibatches=No
@@ -21,7 +21,7 @@
 
 	[Algorithm]
 		Name=Adam
-		learning_rate=0.001
+		learning_rate=0.1
 
 [General]
 	NegativeSampleRate=1
