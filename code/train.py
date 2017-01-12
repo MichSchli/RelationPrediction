@@ -3,6 +3,7 @@ import tensorflow as tf
 from Converge.optimize import build_tensorflow
 from common import settings_reader, io, model_builder, optimizer_parameter_parser, evaluation, auxilliaries
 from model import Model
+import numpy as np
 
 parser = argparse.ArgumentParser(description="Train a model on a given dataset.")
 parser.add_argument("--settings", help="Filepath for settings file.", required=True)
@@ -81,7 +82,18 @@ opp.set_early_stopping_score_function(score_validation_data)
 
 if 'NegativeSampleRate' in general_settings:
     ns = auxilliaries.NegativeSampler(int(general_settings['NegativeSampleRate']), general_settings['EntityCount'])
-    opp.set_sample_transform_function(ns.transform)
+
+    def t_func(x): #horrible hack!!!
+        arr = np.array(x)
+        sample = np.random.randint(0, len(x), size=20)
+        dec_train = arr[sample]
+        enc_train = np.delete(arr, sample, axis=0)
+
+
+        t = ns.transform(dec_train)
+        return (enc_train, t[0], t[1])
+
+    opp.set_sample_transform_function(t_func)
 
 optimizer_parameters = opp.get_parametrization()
 

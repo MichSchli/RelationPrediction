@@ -9,8 +9,8 @@ class LinearTransform(Model):
     W_embedding = None
 
     def parse_settings(self):
-        self.embedding_width = int(self.settings['EmbeddingWidth'])
-        self.embedding_width_out = int(self.settings['EmbeddingWidthOut'])
+        self.embedding_width = int(self.settings['InternalEncoderDimension'])
+        self.embedding_width_out = int(self.settings['CodeDimension'])
 
     def local_initialize_train(self):
         transform_matrix = np.random.normal(0, np.sqrt(1 / (self.embedding_width + self.embedding_width_out)),

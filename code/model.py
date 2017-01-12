@@ -8,6 +8,7 @@ class Model:
     score_all_subjects_graph = None
     score_all_objects_graph = None
     session = None
+    next_component=None
 
     def __init__(self, next_component, settings):
         self.next_component = next_component
@@ -28,18 +29,21 @@ class Model:
         if self.score_all_subjects_graph is None:
             self.score_all_subjects_graph = self.predict_all_subject_scores()
 
-        return self.session.run(self.score_all_subjects_graph, feed_dict={self.get_test_input_variables()[0]: triplets})
+        return self.session.run(self.score_all_subjects_graph, feed_dict={self.get_test_input_variables()[0]: self.train_triplets,
+                                                                          self.get_test_input_variables()[1]: triplets})
 
     def score_all_objects(self, triplets):
         if self.score_all_objects_graph is None:
             self.score_all_objects_graph = self.predict_all_object_scores()
 
-        return self.session.run(self.score_all_objects_graph, feed_dict={self.get_test_input_variables()[0]: triplets})
+        return self.session.run(self.score_all_objects_graph, feed_dict={self.get_test_input_variables()[0]: self.train_triplets,
+                                                                         self.get_test_input_variables()[1]: triplets})
 
     '''
     '''
 
     def preprocess(self, triplets):
+        self.train_triplets = triplets
         pass #return self.__local_run_delegate__('preprocess', triplets)
 
     def initialize_train(self):
@@ -74,6 +78,9 @@ class Model:
 
     def predict_all_object_scores(self):
         return self.__delegate__('predict_all_object_scores')
+
+    def get_graph(self):
+        return self.__delegate__('get_graph')
 
     '''
     Delegate function to the highest-level component with a definition:

@@ -1,5 +1,5 @@
 [Encoder]
-	Name=simple_gated_basis_gcn
+	Name=gcn
 	DropoutKeepProbability=0.8
 	InternalEncoderDimension=30
 

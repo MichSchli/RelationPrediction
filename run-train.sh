@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 DATASET="Toy"
-SETTINGS="simple_gated_basis_gcn.exp"
+SETTINGS="simple_gcn.exp"
 
 SCRIPT_DIR=$(dirname $(readlink -f $0))
 

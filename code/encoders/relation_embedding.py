@@ -7,7 +7,7 @@ class RelationEmbedding(Model):
     W_relation = None
 
     def parse_settings(self):
-        self.embedding_width = int(self.settings['EmbeddingWidth'])
+        self.embedding_width = int(self.settings['CodeDimension'])
 
     def local_initialize_train(self):
         relation_initial = np.random.randn(self.relation_count, self.embedding_width).astype(np.float32)

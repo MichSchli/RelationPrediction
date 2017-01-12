@@ -15,7 +15,7 @@ class SimpleGatedBasisGcn(Model):
         self.onehot_input = next_component is None
 
     def parse_settings(self):
-        self.embedding_width = int(self.settings['EmbeddingWidth'])
+        self.embedding_width = int(self.settings['InternalEncoderDimension'])
         self.dropout_keep_probability = float(self.settings['DropoutKeepProbability'])
 
     def local_initialize_train(self):
