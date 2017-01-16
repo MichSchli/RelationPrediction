@@ -70,11 +70,13 @@ class MessageGraph():
             mtr_indices = tf.to_int64(tf.transpose(tf.pack([self.receiver_indices, message_indices])))
             mtr_shape = tf.to_int64(tf.pack([self.vertex_count, self.edge_count]))
 
-            tensor = tf.SparseTensor(indices=mtr_indices,
+            # TODO HARDCODED GLOBAL NORM WHERE I SHOULDNT
+            tensor = tf.sparse_softmax(tf.SparseTensor(indices=mtr_indices,
                                    values=mtr_values,
-                                   shape=mtr_shape)
+                                   shape=mtr_shape))
 
             return tensor
+
 
 
 

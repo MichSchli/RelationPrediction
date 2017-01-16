@@ -85,7 +85,7 @@ if 'NegativeSampleRate' in general_settings:
 
     def t_func(x): #horrible hack!!!
         arr = np.array(x)
-        sample = np.random.randint(0, len(x), size=20)
+        sample = np.random.randint(0, len(x), size=5000)
         dec_train = arr[sample]
         enc_train = np.delete(arr, sample, axis=0)
 

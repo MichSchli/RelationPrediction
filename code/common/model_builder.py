@@ -12,6 +12,8 @@ from encoders.bipartite_gcn import BipartiteGcn
 
 from encoders.gcn import GCN
 
+from encoders.gcn_diag import DiagGcn
+
 
 def build_encoder(encoder_settings, triples):
     if encoder_settings['Name'] == "embedding":
@@ -23,6 +25,14 @@ def build_encoder(encoder_settings, triples):
         second_layer = GCN(encoder_settings, graph, next_component=first_layer)
         transform = LinearTransform(second_layer, encoder_settings)
         return RelationEmbedding(transform, encoder_settings)
+    elif encoder_settings['Name'] == "gcn_diag":
+        graph = Representation(triples, encoder_settings)
+
+        first_layer = DiagGcn(encoder_settings, graph, next_component=graph, onehot_input=True)
+        second_layer = DiagGcn(encoder_settings, graph, next_component=first_layer)
+        transform = LinearTransform(second_layer, encoder_settings)
+        return RelationEmbedding(transform, encoder_settings)
+
     elif encoder_settings['Name'] == "gated_basis_gcn":
         graph = Representation(triples, encoder_settings)
 
