@@ -1,7 +1,7 @@
 [Encoder]
 	Name=gcn_diag
 	DropoutKeepProbability=1.0
-	InternalEncoderDimension=30
+	InternalEncoderDimension=100
 
 [Decoder]
 	Name=bilinear-diag
@@ -16,7 +16,7 @@
 	ReportTrainLossEvery=20
 
 	[EarlyStopping]
-		CheckEvery=1000
+		CheckEvery=60
 		BurninPhaseDuration=200
 
 	[Algorithm]

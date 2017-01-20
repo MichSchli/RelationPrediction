@@ -72,7 +72,6 @@ scorer.register_data(valid_triplets)
 scorer.register_data(test_triplets)
 scorer.register_model(model)
 
-
 def score_validation_data(validation_data):
     score_summary = scorer.compute_scores(validation_data, verbose=False).get_summary()
     return score_summary.results['Filtered'][score_summary.mrr_string()]
@@ -85,13 +84,15 @@ if 'NegativeSampleRate' in general_settings:
 
     def t_func(x): #horrible hack!!!
         arr = np.array(x)
-        sample = np.random.randint(0, len(x), size=5000)
-        dec_train = arr[sample]
-        enc_train = np.delete(arr, sample, axis=0)
+        if not encoder.needs_graph():
+            return ns.transform(arr)
+        else:
+            sample = np.random.choice(len(x), size=20, replace=False)
+            dec_train = arr[sample]
+            enc_train = np.delete(arr, sample, axis=0)
 
-
-        t = ns.transform(dec_train)
-        return (enc_train, t[0], t[1])
+            t = ns.transform(arr)
+            return (arr, t[0], t[1])
 
     opp.set_sample_transform_function(t_func)
 

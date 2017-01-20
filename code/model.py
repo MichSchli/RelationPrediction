@@ -29,15 +29,25 @@ class Model:
         if self.score_all_subjects_graph is None:
             self.score_all_subjects_graph = self.predict_all_subject_scores()
 
-        return self.session.run(self.score_all_subjects_graph, feed_dict={self.get_test_input_variables()[0]: self.train_triplets,
-                                                                          self.get_test_input_variables()[1]: triplets})
+        if self.needs_graph():
+            d = {self.get_test_input_variables()[0]: self.train_triplets,
+                 self.get_test_input_variables()[1]: triplets}
+        else:
+            d = {self.get_test_input_variables()[0]: triplets}
+
+        return self.session.run(self.score_all_subjects_graph, feed_dict=d)
 
     def score_all_objects(self, triplets):
         if self.score_all_objects_graph is None:
             self.score_all_objects_graph = self.predict_all_object_scores()
 
-        return self.session.run(self.score_all_objects_graph, feed_dict={self.get_test_input_variables()[0]: self.train_triplets,
-                                                                         self.get_test_input_variables()[1]: triplets})
+        if self.needs_graph():
+            d = {self.get_test_input_variables()[0]: self.train_triplets,
+                 self.get_test_input_variables()[1]: triplets}
+        else:
+            d = {self.get_test_input_variables()[0]: triplets}
+
+        return self.session.run(self.score_all_objects_graph, feed_dict=d)
 
     '''
     '''
@@ -81,6 +91,12 @@ class Model:
 
     def get_graph(self):
         return self.__delegate__('get_graph')
+
+    def needs_graph(self):
+        if self.next_component is None:
+            return False
+        else:
+            return self.next_component.needs_graph()
 
     '''
     Delegate function to the highest-level component with a definition:

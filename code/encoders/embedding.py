@@ -12,7 +12,7 @@ class Embedding(Model):
         Model.__init__(self, None, settings)
 
     def parse_settings(self):
-        self.embedding_width = int(self.settings['EmbeddingWidth'])
+        self.embedding_width = int(self.settings['CodeDimension'])
 
     def local_initialize_train(self):
         embedding_initial = np.random.randn(self.entity_count, self.embedding_width).astype(np.float32)

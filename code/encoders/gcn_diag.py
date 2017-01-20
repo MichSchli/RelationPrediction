@@ -9,6 +9,9 @@ class DiagGcn(Model):
     onehot_input = True
     vertex_embedding_function = {'train':None, 'test':None}
 
+    def needs_graph(self):
+        return True
+
     def __init__(self, settings, graph_representation, next_component=None, onehot_input=False):
         Model.__init__(self, next_component, settings)
         self.graph_representation = graph_representation
@@ -64,7 +67,7 @@ class DiagGcn(Model):
         if self.vertex_embedding_function[mode] is None:
             sender_features = self.get_vertex_features(mode=mode)
             messages = self.compute_messages(sender_features)
-            self.vertex_embedding_function[mode] = self.collect_messages(messages)
+            self.vertex_embedding_function[mode] = self.collect_messages(messages)  + self.B_message
 
         return self.vertex_embedding_function[mode]
 
@@ -75,7 +78,7 @@ class DiagGcn(Model):
 
         terms = tf.mul(sender_terms, type_diags)
 
-        messages = tf.nn.relu(terms + self.B_message)
+        messages = terms
         return messages
 
     def collect_messages(self, messages):

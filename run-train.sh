@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DATASET="Toy"
+DATASET="DegreeData"
 SETTINGS="gcn_diag.exp"
 
 SCRIPT_DIR=$(dirname $(readlink -f $0))

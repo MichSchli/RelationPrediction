@@ -37,9 +37,9 @@ def build_encoder(encoder_settings, triples):
         graph = Representation(triples, encoder_settings)
 
         first_layer = GatedBasisGcn(encoder_settings, graph)
-        second_layer = GatedBasisGcn(encoder_settings, graph, next_component=first_layer)
-        transform = LinearTransform(second_layer, encoder_settings)
-        return RelationEmbedding(transform, encoder_settings)
+        #second_layer = GatedBasisGcn(encoder_settings, graph, next_component=first_layer)
+        #transform = LinearTransform(second_layer, encoder_settings)
+        return RelationEmbedding(first_layer, encoder_settings)
 
     elif encoder_settings['Name'] == "simple_gated_basis_gcn":
         graph = Representation(triples, encoder_settings)

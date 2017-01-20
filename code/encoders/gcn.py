@@ -9,6 +9,9 @@ class GCN(Model):
     onehot_input = True
     vertex_embedding_function = {'train':None, 'test':None}
 
+    def needs_graph(self):
+        return True
+
     def __init__(self, settings, graph_representation, next_component=None, onehot_input=False):
         Model.__init__(self, next_component, settings)
         self.graph_representation = graph_representation

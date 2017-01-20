@@ -6,21 +6,19 @@
 	RegularizationParameter=0.01
 
 [Shared]
-	EmbeddingWidth=200
+	CodeDimension=20
 
 [Optimizer]
-	Minibatches=Yes
 	MaxGradientNorm=1
-	ReportTrainLossEvery=50
-	BatchSize=5000
+	ReportTrainLossEvery=20
+	Minibatches=No
 
 	[EarlyStopping]
-		CheckEvery=500
-		BurninPhaseDuration=50000
+		CheckEvery=60
 
 	[Algorithm]
 		Name=Adam
-		learning_rate=0.001
+		learning_rate=0.01
 
 [General]
-	NegativeSampleRate=4
+	NegativeSampleRate=1
