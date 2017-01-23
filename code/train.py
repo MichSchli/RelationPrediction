@@ -70,10 +70,12 @@ scorer = evaluation.Scorer()
 scorer.register_data(train_triplets)
 scorer.register_data(valid_triplets)
 scorer.register_data(test_triplets)
+scorer.register_degrees(train_triplets)
 scorer.register_model(model)
 
 def score_validation_data(validation_data):
     score_summary = scorer.compute_scores(validation_data, verbose=False).get_summary()
+    score_summary.dump_degrees('dumps/degrees.in', 'dumps/degrees.out')
     return score_summary.results['Filtered'][score_summary.mrr_string()]
 
 
