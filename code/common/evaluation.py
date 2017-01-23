@@ -13,8 +13,18 @@ class Summary():
             self.results['Raw'][self.hits_string(h)] = self.get_hits_at_n(raw_ranks,h)
             self.results['Filtered'][self.hits_string(h)] = self.get_hits_at_n(filtered_ranks,h)
 
-        self.results['Raw'][self.degree_string()] = self.get_degree_scores(raw_ranks, in_degrees, out_degrees)
-        self.results['Filtered'][self.degree_string()] = self.get_degree_scores(filtered_ranks, in_degrees, out_degrees)
+        self.results['Raw'][self.degree_string()] = self.get_individual_degree_scores(raw_ranks, in_degrees, out_degrees)
+        self.results['Filtered'][self.degree_string()] = self.get_individual_degree_scores(filtered_ranks, in_degrees, out_degrees)
+
+    def get_individual_degree_scores(self, ranks, in_degrees, out_degrees):
+        in_res = [0] * len(in_degrees)
+        out_res = [0] * len(out_degrees)
+
+        for i in range(len(in_res)):
+            in_res[i] = (in_degrees[i], 1/ranks[i])
+            out_res[i] = (out_degrees[i], 1/ranks[i])
+
+        return in_res, out_res
 
     def get_degree_scores(self, ranks, in_degrees, out_degrees):
         in_buckets = [0]*max(in_degrees)
