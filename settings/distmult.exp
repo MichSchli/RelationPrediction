@@ -6,15 +6,15 @@
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=20
+	CodeDimension=50
 
 [Optimizer]
 	MaxGradientNorm=1
-	ReportTrainLossEvery=20
+	ReportTrainLossEvery=100
 	Minibatches=No
 
 	[EarlyStopping]
-		CheckEvery=60
+		CheckEvery=500
 
 	[Algorithm]
 		Name=Adam
@@ -22,3 +22,4 @@
 
 [General]
 	NegativeSampleRate=1
+	GraphSplitSize=20000

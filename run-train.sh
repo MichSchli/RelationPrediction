@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 DATASET="DegreeData"
-SETTINGS="gcn_diag.exp"
+SETTINGS="distmult.exp"
 
 SCRIPT_DIR=$(dirname $(readlink -f $0))
 

@@ -81,20 +81,27 @@ def score_validation_data(validation_data):
 
 opp.set_early_stopping_score_function(score_validation_data)
 
+if 'GraphSplitSize' in general_settings:
+    split_size = int(general_settings['GraphSplitSize'])
+    graph_split_ids = np.random.choice(len(train_triplets), size=split_size, replace=False)
+
+    graph_split = np.array(train_triplets)[graph_split_ids]
+    gradient_split = np.delete(train_triplets, graph_split_ids, axis=0)
+else:
+    graph_split = train_triplets
+    gradient_split = train_triplets
+
 if 'NegativeSampleRate' in general_settings:
     ns = auxilliaries.NegativeSampler(int(general_settings['NegativeSampleRate']), general_settings['EntityCount'])
+    ns.set_known_positives(train_triplets)
 
     def t_func(x): #horrible hack!!!
         arr = np.array(x)
         if not encoder.needs_graph():
-            return ns.transform(arr)
+            return ns.transform_exclusive(arr)
         else:
-            sample = np.random.choice(len(x), size=20, replace=False)
-            dec_train = arr[sample]
-            enc_train = np.delete(arr, sample, axis=0)
-
-            t = ns.transform(arr)
-            return (arr, t[0], t[1])
+            t = ns.transform_exclusive(arr)
+            return (graph_split, t[0], t[1])
 
     opp.set_sample_transform_function(t_func)
 
@@ -104,16 +111,14 @@ optimizer_parameters = opp.get_parametrization()
 Initialize for training:
 '''
 
-model.preprocess(train_triplets)
+# Hack for validation evaluation:
+model.preprocess(graph_split)
+
 model.initialize_train()
 
 optimizer_weights = model.get_weights()
 optimizer_input = model.get_train_input_variables()
 loss = model.get_loss(mode='train')
-
-print(loss)
-print(optimizer_input)
-print(optimizer_weights)
 
 '''
 Train with Converge:
@@ -123,4 +128,4 @@ model.session = tf.Session()
 optimizer = build_tensorflow(loss, optimizer_weights, optimizer_parameters, optimizer_input)
 optimizer.set_session(model.session)
 
-optimizer.fit(train_triplets, validation_data=valid_triplets)
+optimizer.fit(gradient_split, validation_data=valid_triplets)

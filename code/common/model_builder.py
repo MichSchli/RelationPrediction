@@ -12,7 +12,9 @@ from encoders.bipartite_gcn import BipartiteGcn
 
 from encoders.gcn import GCN
 
-from encoders.gcn_diag import DiagGcn
+from encoders.message_gcns.gcn_diag import DiagGcn
+
+from encoders.message_gcns.gcn_diag_sigmoid_gate import DiagGcnSigmoidGate
 
 
 def build_encoder(encoder_settings, triples):
@@ -28,10 +30,18 @@ def build_encoder(encoder_settings, triples):
     elif encoder_settings['Name'] == "gcn_diag":
         graph = Representation(triples, encoder_settings)
 
-        first_layer = DiagGcn(encoder_settings, graph, next_component=graph, onehot_input=True)
-        second_layer = DiagGcn(encoder_settings, graph, next_component=first_layer)
-        transform = LinearTransform(second_layer, encoder_settings)
-        return RelationEmbedding(transform, encoder_settings)
+        first_layer = DiagGcn(encoder_settings, graph, next_component=graph, onehot_input=True, use_nonlinearity=False)
+        #second_layer = DiagGcn(encoder_settings, graph, next_component=first_layer, use_nonlinearity=True)
+        #transform = LinearTransform(second_layer, encoder_settings)
+        return RelationEmbedding(first_layer, encoder_settings)
+
+    elif encoder_settings['Name'] == "gcn_diag_sigmoid_gate":
+        graph = Representation(triples, encoder_settings)
+
+        first_layer = DiagGcnSigmoidGate(encoder_settings, graph, next_component=graph, onehot_input=True)
+        #second_layer = DiagGcnSigmoidGate(encoder_settings, graph, next_component=first_layer)
+        #transform = LinearTransform(second_layer, encoder_settings)
+        return RelationEmbedding(first_layer, encoder_settings)
 
     elif encoder_settings['Name'] == "gated_basis_gcn":
         graph = Representation(triples, encoder_settings)

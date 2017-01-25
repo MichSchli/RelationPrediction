@@ -2,14 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aa2b33e7-0e4c-4368-a8bb-e5268fe13a76" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code/tools/make_degree_dataset.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/code/tools/make_dataset.py" afterPath="$PROJECT_DIR$/code/tools/make_split_dataset.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code/encoders/message_gcns/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code/encoders/message_gcns/gcn_bias_plus_full_no_transform.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_no_transform.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_plus_full_no_transform.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_sigmoid_gate.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code/encoders/message_gcns/message_gcn.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings/gcn_diag_sigmoid_gate.exp" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/code/encoders/gcn_diag.py" afterPath="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/common/auxilliaries.py" afterPath="$PROJECT_DIR$/code/common/auxilliaries.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/common/model_builder.py" afterPath="$PROJECT_DIR$/code/common/model_builder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/encoders/embedding.py" afterPath="$PROJECT_DIR$/code/encoders/embedding.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/encoders/gcn.py" afterPath="$PROJECT_DIR$/code/encoders/gcn.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/encoders/gcn_diag.py" afterPath="$PROJECT_DIR$/code/encoders/gcn_diag.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/model.py" afterPath="$PROJECT_DIR$/code/model.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/tools/make_degree_dataset.py" afterPath="$PROJECT_DIR$/code/tools/make_degree_dataset.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/train.py" afterPath="$PROJECT_DIR$/code/train.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run-train.sh" afterPath="$PROJECT_DIR$/run-train.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/distmult.exp" afterPath="$PROJECT_DIR$/settings/distmult.exp" />
@@ -38,43 +43,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="model_builder.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
+      <file leaf-file-name="distmult.exp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/distmult.exp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="41" column="44" lean-forward="false" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+            <state relative-caret-position="360">
+              <caret line="24" column="24" lean-forward="false" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="make_split_dataset.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/tools/make_split_dataset.py">
+      <file leaf-file-name="model_builder.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="606">
-              <caret line="86" column="13" lean-forward="false" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
+            <state relative-caret-position="240">
+              <caret line="32" column="12" lean-forward="true" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
               <folding>
-                <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#0#40#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gcn_diag.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/encoders/gcn_diag.py">
+      <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="69" column="100" lean-forward="false" selection-start-line="69" selection-start-column="100" selection-end-line="69" selection-end-column="100" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="make_degree_dataset.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/tools/make_degree_dataset.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="66" column="127" lean-forward="false" selection-start-line="66" selection-start-column="127" selection-end-line="66" selection-end-column="127" />
+            <state relative-caret-position="1635">
+              <caret line="114" column="28" lean-forward="false" selection-start-line="114" selection-start-column="28" selection-end-line="114" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -83,50 +78,62 @@
       <file leaf-file-name="gcn_diag.exp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings/gcn_diag.exp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="26" lean-forward="false" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+            <state relative-caret-position="390">
+              <caret line="26" column="24" lean-forward="true" selection-start-line="26" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/code/train.py">
+      <file leaf-file-name="auxilliaries.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/common/auxilliaries.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="94" column="23" lean-forward="false" selection-start-line="94" selection-start-column="23" selection-end-line="94" selection-end-column="23" />
+            <state relative-caret-position="720">
+              <caret line="49" column="44" lean-forward="false" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#0#18#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gcn.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/encoders/gcn.py">
+      <file leaf-file-name="evaluation.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/common/evaluation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="12" selection-end-column="19" />
+            <state relative-caret-position="1200">
+              <caret line="80" column="37" lean-forward="false" selection-start-line="80" selection-start-column="37" selection-end-line="80" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="simple_gated_basis_gcn.exp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings/simple_gated_basis_gcn.exp">
+      <file leaf-file-name="gcn_diag.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="27" lean-forward="true" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="30" />
+            <state relative-caret-position="495">
+              <caret line="36" column="72" lean-forward="true" selection-start-line="36" selection-start-column="72" selection-end-line="36" selection-end-column="72" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gcn_diag_plus_full_no_transform.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_plus_full_no_transform.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="24" column="13" lean-forward="true" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="distmult.exp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings/distmult.exp">
+      <file leaf-file-name="gcn_diag_sigmoid_gate.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_sigmoid_gate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="20" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+            <state relative-caret-position="705">
+              <caret line="50" column="58" lean-forward="false" selection-start-line="50" selection-start-column="58" selection-end-line="50" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -147,15 +154,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/scripts/train.sh" />
-        <option value="$PROJECT_DIR$/code/experts/train-expert.py" />
-        <option value="$PROJECT_DIR$/code/__init__.py" />
-        <option value="$PROJECT_DIR$/code/common/__init__.py" />
-        <option value="$PROJECT_DIR$/code/evaluation/__init__.py" />
-        <option value="$PROJECT_DIR$/code/experts/__init__.py" />
-        <option value="$PROJECT_DIR$/code/tools/__init__.py" />
-        <option value="$PROJECT_DIR$/__init__.py" />
-        <option value="$PROJECT_DIR$/../NewLinkPrediction/code/run-train.sh" />
         <option value="$PROJECT_DIR$/../NewLinkPrediction/code/decoders/bilinear-diag.py" />
         <option value="$PROJECT_DIR$/../NewLinkPrediction/code/decoders/abstract_decoder.py" />
         <option value="$PROJECT_DIR$/../NewLinkPrediction/settings/gated-basis-gcn.exp" />
@@ -190,12 +188,23 @@
         <option value="$PROJECT_DIR$/code/model.py" />
         <option value="$PROJECT_DIR$/code/encoders/gcn.py" />
         <option value="$PROJECT_DIR$/code/tools/make_degree_dataset.py" />
-        <option value="$PROJECT_DIR$/settings/distmult.exp" />
-        <option value="$PROJECT_DIR$/run-train.sh" />
-        <option value="$PROJECT_DIR$/code/common/model_builder.py" />
+        <option value="$PROJECT_DIR$/code/common/evaluation.py" />
         <option value="$PROJECT_DIR$/code/encoders/gcn_diag.py" />
+        <option value="$PROJECT_DIR$/code/encoders/gcn_diag_sigmoid_gate.py" />
+        <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag.py" />
+        <option value="$PROJECT_DIR$/code/encoders/message_gcns/message_gcn.py" />
+        <option value="$PROJECT_DIR$/code/common/model_builder.py" />
+        <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_plus_full.py" />
+        <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_no_transform.py" />
+        <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_plus_full_no_transform.py" />
+        <option value="$PROJECT_DIR$/settings/gcn_diag_sigmoid_gate.exp" />
+        <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_sigmoid_gate.py" />
+        <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_bias_plus_full_no_transform.py" />
+        <option value="$PROJECT_DIR$/code/common/auxilliaries.py" />
         <option value="$PROJECT_DIR$/settings/gcn_diag.exp" />
         <option value="$PROJECT_DIR$/code/train.py" />
+        <option value="$PROJECT_DIR$/run-train.sh" />
+        <option value="$PROJECT_DIR$/settings/distmult.exp" />
       </list>
     </option>
   </component>
@@ -320,7 +329,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -375,25 +383,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LinkPrediction" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LinkPrediction" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extras" />
+              <option name="myItemId" value="encoders" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -412,6 +402,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="encoders" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="message_gcns" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -453,6 +447,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -461,13 +456,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/code/tools" />
+      <recent name="$PROJECT_DIR$/code/encoders/message_gcns" />
       <recent name="$PROJECT_DIR$/settings" />
       <recent name="$PROJECT_DIR$/code/encoders" />
+      <recent name="$PROJECT_DIR$/code/tools" />
       <recent name="$PROJECT_DIR$/../NewLinkPrediction/code/encoders" />
-      <recent name="$PROJECT_DIR$/../NewLinkPrediction/code/decoders" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/code/encoders/message_gcns" />
       <recent name="$PROJECT_DIR$/code/extras" />
       <recent name="$PROJECT_DIR$/../NewLinkPrediction" />
     </key>
@@ -701,8 +697,8 @@
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Bash.run-train.sh (1)" />
-        <item index="1" class="java.lang.String" itemvalue="Python.make_dataset" />
-        <item index="2" class="java.lang.String" itemvalue="Bash.run-train.sh" />
+        <item index="1" class="java.lang.String" itemvalue="Bash.run-train.sh" />
+        <item index="2" class="java.lang.String" itemvalue="Python.make_dataset" />
         <item index="3" class="java.lang.String" itemvalue="Python.train" />
         <item index="4" class="java.lang.String" itemvalue="Python.model_builder" />
       </list>
@@ -754,14 +750,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../NewLinkPrediction/code/expert.py" />
-    <entry file="file://$PROJECT_DIR$/code/experts/decoders/abstract_decoder.py" />
-    <entry file="file://$PROJECT_DIR$/code/experts/decoders/distmult/decoder-tensorflow.py" />
-    <entry file="file://$PROJECT_DIR$/code/experts/train-expert.py" />
-    <entry file="file://$PROJECT_DIR$/code/experts/Expert.py" />
-    <entry file="file://$PROJECT_DIR$/code/experts/test-expert.py" />
-    <entry file="file://$PROJECT_DIR$/code/experts/encoders/gcn-edge-feature/encoder-tensorflow.py" />
-    <entry file="file://$PROJECT_DIR$/../NewLinkPrediction/code/common/io.py" />
     <entry file="file://$PROJECT_DIR$/../NewLinkPrediction/code/train.py" />
     <entry file="file://$PROJECT_DIR$/../NewLinkPrediction/settings/distmult.exp" />
     <entry file="file://$PROJECT_DIR$/../NewLinkPrediction/run-train.sh" />
@@ -775,13 +763,6 @@
     <entry file="file://$PROJECT_DIR$/../NewLinkPrediction/code/encoders/relation_embedding.py" />
     <entry file="file://$PROJECT_DIR$/../NewLinkPrediction/code/encoders/linear_transform.py" />
     <entry file="file://$PROJECT_DIR$/../NewLinkPrediction/settings/gated_basis_gcn.exp" />
-    <entry file="file://$PROJECT_DIR$/code/decoders/nonlinear_transform.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/encoders/diag_gcn.py" />
     <entry file="file://$PROJECT_DIR$/code/common/settings_reader.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -797,24 +778,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/common/optimizer_parameter_parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1142">
-          <caret line="15" column="42" lean-forward="true" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/lib/python3.5/site-packages/tensorflow/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/common/evaluation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1785">
-          <caret line="119" column="54" lean-forward="false" selection-start-line="119" selection-start-column="54" selection-end-line="119" selection-end-column="54" />
         </state>
       </provider>
     </entry>
@@ -832,48 +799,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/encoders/linear_transform.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="11" column="65" lean-forward="false" selection-start-line="11" selection-start-column="65" selection-end-line="11" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/encoders/relation_embedding.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="63" lean-forward="false" selection-start-line="9" selection-start-column="63" selection-end-line="9" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/encoders/bipartite_gcn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="23" lean-forward="false" selection-start-line="1" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/encoders/gated_basis_gcn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/decoders/bilinear_diag.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="33" column="4" lean-forward="false" selection-start-line="33" selection-start-column="4" selection-end-line="41" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/encoders/embedding.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" column="63" lean-forward="false" selection-start-line="14" selection-start-column="63" selection-end-line="14" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings/bipartite_gcn.exp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -885,23 +810,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1455">
           <caret line="99" column="8" lean-forward="false" selection-start-line="99" selection-start-column="8" selection-end-line="104" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="43" column="29" lean-forward="false" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/common/auxilliaries.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="19" selection-end-column="64" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -909,7 +817,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
           <caret line="32" column="23" lean-forward="true" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -917,24 +824,179 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="606">
           <caret line="86" column="13" lean-forward="false" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="43" column="29" lean-forward="false" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/code/tools/make_degree_dataset.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="48" column="70" lean-forward="false" selection-start-line="48" selection-start-column="70" selection-end-line="48" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/tools/make_single_label_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1755">
+          <caret line="121" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/simple_gated_basis_gcn.exp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="14" lean-forward="false" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/common/optimizer_parameter_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="42" lean-forward="false" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/message_gcn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="32" column="73" lean-forward="false" selection-start-line="32" selection-start-column="73" selection-end-line="32" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_plus_full.py" />
+    <entry file="file://$PROJECT_DIR$/code/encoders/embedding.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/gcn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="30" column="6" lean-forward="true" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/linear_transform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="11" column="65" lean-forward="false" selection-start-line="11" selection-start-column="65" selection-end-line="11" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/gcn_diag_sigmoid_gate.exp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="21" lean-forward="false" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_no_transform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="6" column="24" lean-forward="false" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_bias_plus_full_no_transform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="38" column="8" lean-forward="true" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/gated_basis_gcn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1622">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/relation_embedding.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="66" column="127" lean-forward="false" selection-start-line="66" selection-start-column="127" selection-end-line="66" selection-end-column="127" />
+          <caret line="14" column="31" lean-forward="false" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/bipartite_gcn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="23" lean-forward="false" selection-start-line="1" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/decoders/bilinear_diag.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="48" column="0" lean-forward="true" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings/distmult.exp">
+    <entry file="file://$PROJECT_DIR$/code/decoders/nonlinear_transform.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="20" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        <state relative-caret-position="825">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/common/evaluation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="80" column="37" lean-forward="false" selection-start-line="80" selection-start-column="37" selection-end-line="80" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/common/auxilliaries.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="49" column="44" lean-forward="false" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="36" column="72" lean-forward="true" selection-start-line="36" selection-start-column="72" selection-end-line="36" selection-end-column="72" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_sigmoid_gate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="50" column="58" lean-forward="false" selection-start-line="50" selection-start-column="58" selection-end-line="50" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_plus_full_no_transform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="24" column="13" lean-forward="true" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1635">
+          <caret line="114" column="28" lean-forward="false" selection-start-line="114" selection-start-column="28" selection-end-line="114" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -947,52 +1009,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings/simple_gated_basis_gcn.exp">
+    <entry file="file://$PROJECT_DIR$/settings/gcn_diag.exp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="27" lean-forward="true" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="30" />
+        <state relative-caret-position="390">
+          <caret line="26" column="24" lean-forward="true" selection-start-line="26" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/encoders/gcn.py">
+    <entry file="file://$PROJECT_DIR$/settings/distmult.exp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="12" selection-end-column="19" />
+        <state relative-caret-position="360">
+          <caret line="24" column="24" lean-forward="false" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="41" column="44" lean-forward="false" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/encoders/gcn_diag.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="69" column="100" lean-forward="false" selection-start-line="69" selection-start-column="100" selection-end-line="69" selection-end-column="100" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/gcn_diag.exp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="26" lean-forward="false" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="94" column="23" lean-forward="false" selection-start-line="94" selection-start-column="23" selection-end-line="94" selection-end-column="23" />
+        <state relative-caret-position="240">
+          <caret line="32" column="12" lean-forward="true" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>

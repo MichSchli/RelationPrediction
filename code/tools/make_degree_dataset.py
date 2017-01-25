@@ -46,7 +46,7 @@ def shrink_graph(triplets, target_entities, target_edges, n_target_edges):
     target_edges_sub = np.where(triplets[:,0] == entity)
     target_edges_obj = np.where(triplets[:,2] == entity)
 
-    if target_edges_sub[0].shape[0] + target_edges_obj[0].shape[0] > 500:
+    if target_edges_sub[0].shape[0] + target_edges_obj[0].shape[0] > 200:
         return shrink_graph(triplets, target_entities, target_edges, n_target_edges)
 
     new_objs = triplets[target_edges_sub][:,2]
@@ -64,43 +64,8 @@ def shrink_graph(triplets, target_entities, target_edges, n_target_edges):
     return shrink_graph(triplets, new_target_entities, new_target_edges, n_target_edges)
 
 
-subgraph = shrink_graph(np.array(source_triplets), np.array([random.choice(list(reversed_entities.keys()))]), np.array([]), 500)
+train_edges = shrink_graph(np.array(source_triplets), np.array([random.choice(list(reversed_entities.keys()))]), np.array([]), 30000)
 print("Subgraph isolated.")
-
-
-#Create dictionary:
-d = {}
-
-for edge in subgraph:
-    if edge[0] not in d:
-        d[edge[0]] = []
-
-    if edge[2] not in d:
-        d[edge[2]] = []
-
-    if np.random.binomial(1, 0.8):
-        d[edge[0]].append(edge[2])
-        #d[edge[2]].append(edge[0])
-
-for k in d:
-    d[k] = np.unique(d[k])
-
-d2 = {}
-
-for k in d:
-    d2[k] = []
-    for e in d[k]:
-        d2[k].extend(d[e])
-
-    d2[k] = np.unique(d2[k])
-
-train_edges = []
-
-for k in d2:
-    for e in d2[k]:
-        train_edges.append([k, '2nd_order_edge', e])
-
-train_edges = np.array(train_edges)
 
 sample = np.random.choice(train_edges.shape[0], size=500, replace=False)
 valid_edges = train_edges[sample]

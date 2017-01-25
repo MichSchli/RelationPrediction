@@ -12,6 +12,9 @@ legacy/
 # Virtual environment
 venv/
 
+# Dump file
+dumps/
+
 # Pycharm files
 *.pyc
 .idea/

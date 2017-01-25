@@ -1,14 +1,14 @@
 [Encoder]
-	Name=gcn_diag
-	DropoutKeepProbability=0.9
-	InternalEncoderDimension=50
+	Name=gcn_diag_sigmoid_gate
+	DropoutKeepProbability=0.7
+	InternalEncoderDimension=100
 
 [Decoder]
 	Name=bilinear-diag
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=50
+	CodeDimension=100
 
 [Optimizer]
 	Minibatches=No
@@ -25,4 +25,3 @@
 
 [General]
 	NegativeSampleRate=1
-	GraphSplitSize=20000
