@@ -47,16 +47,19 @@ class MessageGcn(Model):
             sender_features = self.get_vertex_features(mode=mode)
 
             messages = self.compute_messages(sender_features)
+            if self.onehot_input:
+                self_loop_messages = self.compute_self_loop_messages(tf.range(self.entity_count))
+            else:
+                self_loop_messages = self.compute_self_loop_messages(self.next_component.get_all_codes(mode=mode)[0])
 
             if mode == 'train':
                 messages = tf.nn.dropout(messages, self.dropout_keep_probability)
+                self_loop_messages = tf.nn.dropout(self_loop_messages, self.dropout_keep_probability)
 
-            summed_messages = self.sum_messages(messages)
-
-            if self.use_nonlinearity:
-                summed_messages = tf.nn.relu(summed_messages)
-
-            self.vertex_embedding_function[mode] = summed_messages
+            if self.onehot_input:
+                self.vertex_embedding_function[mode] = self.combine_messages(messages, self_loop_messages, tf.range(self.entity_count))
+            else:
+                self.vertex_embedding_function[mode] = self.combine_messages(messages, self_loop_messages, self.next_component.get_all_codes(mode=mode)[0])
 
         return self.vertex_embedding_function[mode]
 

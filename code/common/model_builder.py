@@ -30,10 +30,10 @@ def build_encoder(encoder_settings, triples):
     elif encoder_settings['Name'] == "gcn_diag":
         graph = Representation(triples, encoder_settings)
 
-        first_layer = DiagGcn(encoder_settings, graph, next_component=graph, onehot_input=True, use_nonlinearity=False)
+        first_layer = DiagGcn(encoder_settings, graph, next_component=graph, onehot_input=True, use_nonlinearity=True)
         #second_layer = DiagGcn(encoder_settings, graph, next_component=first_layer, use_nonlinearity=True)
-        #transform = LinearTransform(second_layer, encoder_settings)
-        return RelationEmbedding(first_layer, encoder_settings)
+        transform = LinearTransform(first_layer, encoder_settings)
+        return RelationEmbedding(transform, encoder_settings)
 
     elif encoder_settings['Name'] == "gcn_diag_sigmoid_gate":
         graph = Representation(triples, encoder_settings)

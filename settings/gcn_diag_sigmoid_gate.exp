@@ -8,12 +8,12 @@
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=100
+	CodeDimension=50
 
 [Optimizer]
 	Minibatches=No
 	MaxGradientNorm=1
-	ReportTrainLossEvery=100
+	ReportTrainLossEvery=50
 
 	[EarlyStopping]
 		CheckEvery=1000

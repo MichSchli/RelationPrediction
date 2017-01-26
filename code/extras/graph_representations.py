@@ -20,9 +20,9 @@ class MessageGraph():
 
     def process(self, triplets):
         triplets = tf.transpose(triplets)
-        self.sender_indices = tf.concat(0, [triplets[0], triplets[2], tf.range(self.vertex_count)])
-        self.receiver_indices = tf.concat(0, [triplets[2], triplets[0], tf.range(self.vertex_count)])
-        self.message_types = tf.concat(0, [triplets[1] + 1, triplets[1] + self.label_count + 1, np.zeros(self.vertex_count)])
+        self.sender_indices = tf.concat(0, [triplets[0], triplets[2]])
+        self.receiver_indices = tf.concat(0, [triplets[2], triplets[0]])
+        self.message_types = tf.concat(0, [triplets[1], triplets[1] + self.label_count])
         self.edge_count = tf.shape(self.sender_indices)[0]
 
     def get_sender_indices(self):
@@ -78,37 +78,21 @@ class MessageGraph():
             return tensor
 
 
-
-
-
-
 class Representation(Model):
 
     normalization="global"
-    graph = None
+    #graph = None
     X = None
 
     def __init__(self, triples, settings, bipartite=False):
         self.triples = np.array(triples)
         self.entity_count = settings['EntityCount']
         self.relation_count = settings['RelationCount']
-        self.edge_count = self.triples.shape[0]*2+self.entity_count
-        self.process(self.triples)
-        print(self.edge_count)
+        self.edge_count = self.triples.shape[0]*2
+        #self.process(self.triples)
 
-        self.graph = None#MessageGraph(triples, self.entity_count, self.relation_count)
+        #self.graph = None#MessageGraph(triples, self.entity_count, self.relation_count)
 
-    '''
-    def get_sender_indices(self):
-        return self.sender_indices
-
-    def get_type_indices(self):
-        return self.message_types
-
-    def get_receiver_indices(self):
-        return self.receiver_indices
-
-    '''
 
     def get_graph(self):
         return MessageGraph(self.X, self.entity_count, self.relation_count)
@@ -122,6 +106,7 @@ class Representation(Model):
     def local_get_test_input_variables(self):
         return [self.X]
 
+    '''
     def compute_normalized_values(self, receiver_indices, message_types):
         if self.normalization == "global":
             mrs = receiver_indices
@@ -152,8 +137,8 @@ class Representation(Model):
 
     def process(self, triplets):
         triplets = triplets.transpose()
-        self.sender_indices = np.hstack((triplets[0], triplets[2], np.arange(self.entity_count))).astype(np.int32)
-        self.receiver_indices = np.hstack((triplets[2], triplets[0], np.arange(self.entity_count))).astype(np.int32)
+        self.sender_indices = np.hstack((triplets[0], triplets[2])).astype(np.int32)
+        self.receiver_indices = np.hstack((triplets[2], triplets[0])).astype(np.int32)
         self.message_types = np.hstack(
-            (triplets[1] + 1, triplets[1] + self.relation_count + 1, np.zeros(self.entity_count))).astype(np.int32)
-
+            (triplets[1], triplets[1] + self.relation_count)).astype(np.int32)
+    '''

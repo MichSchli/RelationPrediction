@@ -81,6 +81,7 @@ def score_validation_data(validation_data):
 
 opp.set_early_stopping_score_function(score_validation_data)
 
+'''
 if 'GraphSplitSize' in general_settings:
     split_size = int(general_settings['GraphSplitSize'])
     graph_split_ids = np.random.choice(len(train_triplets), size=split_size, replace=False)
@@ -90,6 +91,7 @@ if 'GraphSplitSize' in general_settings:
 else:
     graph_split = train_triplets
     gradient_split = train_triplets
+'''
 
 if 'NegativeSampleRate' in general_settings:
     ns = auxilliaries.NegativeSampler(int(general_settings['NegativeSampleRate']), general_settings['EntityCount'])
@@ -98,9 +100,15 @@ if 'NegativeSampleRate' in general_settings:
     def t_func(x): #horrible hack!!!
         arr = np.array(x)
         if not encoder.needs_graph():
-            return ns.transform_exclusive(arr)
+            return ns.transform(arr)
         else:
-            t = ns.transform_exclusive(arr)
+            split_size = int(general_settings['GraphSplitSize'])
+            graph_split_ids = np.random.choice(len(train_triplets), size=split_size, replace=False)
+
+            graph_split = arr[graph_split_ids]
+            gradient_split = np.delete(arr, graph_split_ids, axis=0)
+
+            t = ns.transform(gradient_split)
             return (graph_split, t[0], t[1])
 
     opp.set_sample_transform_function(t_func)
@@ -112,7 +120,7 @@ Initialize for training:
 '''
 
 # Hack for validation evaluation:
-model.preprocess(graph_split)
+model.preprocess(train_triplets)
 
 model.initialize_train()
 
@@ -128,4 +136,4 @@ model.session = tf.Session()
 optimizer = build_tensorflow(loss, optimizer_weights, optimizer_parameters, optimizer_input)
 optimizer.set_session(model.session)
 
-optimizer.fit(gradient_split, validation_data=valid_triplets)
+optimizer.fit(train_triplets, validation_data=valid_triplets)
