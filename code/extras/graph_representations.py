@@ -20,9 +20,10 @@ class MessageGraph():
 
     def process(self, triplets):
         triplets = tf.transpose(triplets)
-        self.sender_indices = tf.concat(0, [triplets[0], triplets[2]])
-        self.receiver_indices = tf.concat(0, [triplets[2], triplets[0]])
-        self.message_types = tf.concat(0, [triplets[1], triplets[1] + self.label_count])
+        self.sender_indices = triplets[0]
+        self.receiver_indices = triplets[2]
+        self.message_types = triplets[1]
+
         self.edge_count = tf.shape(self.sender_indices)[0]
 
     def get_sender_indices(self):
@@ -34,6 +35,7 @@ class MessageGraph():
     def get_receiver_indices(self):
         return self.receiver_indices
 
+    '''
     def compute_normalized_values(self, receiver_indices, message_types):
         if self.normalization[0] == "global":
             mrs = receiver_indices
@@ -61,19 +63,61 @@ class MessageGraph():
         mtr_shape = [self.vertex_count, self.edge_count]
 
         return mtr_indices, mtr_values, mtr_shape
+    '''
 
-    def incidence_matrix(self, normalization):
-        if normalization[0] == "none" or True:
+    def forward_incidence_matrix(self, normalization):
+        if normalization[0] == "global":
             mtr_values = tf.to_float(tf.ones_like(self.receiver_indices))
             message_indices = tf.range(self.edge_count)
 
             mtr_indices = tf.to_int64(tf.transpose(tf.pack([self.receiver_indices, message_indices])))
             mtr_shape = tf.to_int64(tf.pack([self.vertex_count, self.edge_count]))
 
-            # TODO HARDCODED GLOBAL NORM WHERE I SHOULDNT
             tensor = tf.sparse_softmax(tf.SparseTensor(indices=mtr_indices,
                                    values=mtr_values,
                                    shape=mtr_shape))
+
+            return tensor
+        elif normalization[0] == "local":
+            mtr_values = tf.to_float(tf.ones_like(self.receiver_indices))
+            message_indices = tf.range(self.edge_count)
+
+            mtr_indices = tf.to_int64(tf.transpose(tf.pack([self.message_types, self.receiver_indices, message_indices])))
+            mtr_shape = tf.to_int64(tf.pack([self.label_count*2, self.vertex_count, self.edge_count]))
+
+            tensor = tf.sparse_softmax(tf.SparseTensor(indices=mtr_indices,
+                                   values=mtr_values,
+                                   shape=mtr_shape))
+
+            tensor = tf.sparse_reduce_sum_sparse(tensor, 0)
+
+            return tensor
+
+    def backward_incidence_matrix(self, normalization):
+        if normalization[0] == "global":
+            mtr_values = tf.to_float(tf.ones_like(self.sender_indices))
+            message_indices = tf.range(self.edge_count)
+
+            mtr_indices = tf.to_int64(tf.transpose(tf.pack([self.sender_indices, message_indices])))
+            mtr_shape = tf.to_int64(tf.pack([self.vertex_count, self.edge_count]))
+
+            tensor = tf.sparse_softmax(tf.SparseTensor(indices=mtr_indices,
+                                   values=mtr_values,
+                                   shape=mtr_shape))
+
+            return tensor
+        elif normalization[0] == "local":
+            mtr_values = tf.to_float(tf.ones_like(self.sender_indices))
+            message_indices = tf.range(self.edge_count)
+
+            mtr_indices = tf.to_int64(tf.transpose(tf.pack([self.message_types, self.sender_indices, message_indices])))
+            mtr_shape = tf.to_int64(tf.pack([self.label_count*2, self.vertex_count, self.edge_count]))
+
+            tensor = tf.sparse_softmax(tf.SparseTensor(indices=mtr_indices,
+                                   values=mtr_values,
+                                   shape=mtr_shape))
+
+            tensor = tf.sparse_reduce_sum_sparse(tensor, 0)
 
             return tensor
 

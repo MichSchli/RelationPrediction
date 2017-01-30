@@ -11,8 +11,6 @@
 [Optimizer]
 	MaxGradientNorm=1
 	ReportTrainLossEvery=100
-	Minibatches=Yes
-	BatchSize=20000
 
 	[EarlyStopping]
 		CheckEvery=500

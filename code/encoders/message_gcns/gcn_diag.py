@@ -50,7 +50,7 @@ class DiagGcn(MessageGcn):
         return self.dot_or_lookup(vertex_features, self.V_self)
 
 
-    def combine_messages(self, messages, self_loop_messages, vertex_features):
+    def combine_messages(self, messages, self_loop_messages, vertex_features, mode='train'):
         mtr = self.get_graph().incidence_matrix(normalization=('global', 'recalculated'))
         collected_messages = tf.sparse_tensor_dense_matmul(mtr, messages)
 

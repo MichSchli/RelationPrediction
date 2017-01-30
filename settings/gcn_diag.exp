@@ -1,22 +1,21 @@
 [Encoder]
 	Name=gcn_diag
-	DropoutKeepProbability=0.9
-	InternalEncoderDimension=50
+	DropoutKeepProbability=0.8
+	InternalEncoderDimension=100
 
 [Decoder]
 	Name=bilinear-diag
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=50
+	CodeDimension=100
 
 [Optimizer]
-	Minibatches=No
 	MaxGradientNorm=1
-	ReportTrainLossEvery=100
+	ReportTrainLossEvery=50
 
 	[EarlyStopping]
-		CheckEvery=1000
+		CheckEvery=250
 		BurninPhaseDuration=5000
 
 	[Algorithm]
@@ -25,4 +24,4 @@
 
 [General]
 	NegativeSampleRate=1
-	GraphSplitSize=20000
+	GraphSplitSize=15000

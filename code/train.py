@@ -93,6 +93,8 @@ else:
     gradient_split = train_triplets
 '''
 
+print(len(train_triplets))
+
 if 'NegativeSampleRate' in general_settings:
     ns = auxilliaries.NegativeSampler(int(general_settings['NegativeSampleRate']), general_settings['EntityCount'])
     ns.set_known_positives(train_triplets)
@@ -105,10 +107,10 @@ if 'NegativeSampleRate' in general_settings:
             split_size = int(general_settings['GraphSplitSize'])
             graph_split_ids = np.random.choice(len(train_triplets), size=split_size, replace=False)
 
-            graph_split = arr[graph_split_ids]
-            gradient_split = np.delete(arr, graph_split_ids, axis=0)
+            graph_split = np.array(train_triplets)[graph_split_ids]
+            #gradient_split = np.delete(train_triplets, graph_split_ids, axis=0)
 
-            t = ns.transform(gradient_split)
+            t = ns.transform(arr)
             return (graph_split, t[0], t[1])
 
     opp.set_sample_transform_function(t_func)
@@ -119,14 +121,16 @@ optimizer_parameters = opp.get_parametrization()
 Initialize for training:
 '''
 
+graph = np.array(train_triplets)
+
 # Hack for validation evaluation:
-model.preprocess(train_triplets)
+model.preprocess(graph)
 
 model.initialize_train()
 
 optimizer_weights = model.get_weights()
 optimizer_input = model.get_train_input_variables()
-loss = model.get_loss(mode='train')
+loss = model.get_loss(mode='train') + model.get_regularization()
 
 '''
 Train with Converge:

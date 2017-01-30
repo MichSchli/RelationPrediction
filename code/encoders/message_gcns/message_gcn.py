@@ -25,17 +25,21 @@ class MessageGcn(Model):
     Methods for message GCN:
     '''
 
-    def get_vertex_features(self, mode='train'):
-        sender_index_vector = self.get_graph().get_sender_indices()
+    def get_vertex_features(self, senders=True, mode='train'):
+        if senders:
+            index_vector = self.get_graph().get_sender_indices()
+        else:
+            index_vector = self.get_graph().get_receiver_indices()
+
         if self.onehot_input:
-            return sender_index_vector
+            return index_vector
         else:
             #At the moment we use message level dropout, so disabled here
             #code = tf.nn.dropout(self.next_component.get_all_codes(mode=mode)[0], self.dropout_keep_probability)
             code = self.next_component.get_all_codes(mode=mode)[0]
-            sender_codes = tf.nn.embedding_lookup(code, sender_index_vector)
+            vertex_codes = tf.nn.embedding_lookup(code, index_vector)
 
-            return sender_codes
+            return vertex_codes
 
     def get_all_codes(self, mode='train'):
         collected_messages = self.compute_vertex_embeddings(mode=mode)
@@ -44,22 +48,32 @@ class MessageGcn(Model):
 
     def compute_vertex_embeddings(self, mode='train'):
         if self.vertex_embedding_function[mode] is None:
-            sender_features = self.get_vertex_features(mode=mode)
+            sender_features = self.get_vertex_features(senders=True, mode=mode)
+            receiver_features = self.get_vertex_features(senders=False, mode=mode)
 
-            messages = self.compute_messages(sender_features)
+            forward_messages, backward_messages = self.compute_messages(sender_features, receiver_features)
             if self.onehot_input:
                 self_loop_messages = self.compute_self_loop_messages(tf.range(self.entity_count))
             else:
                 self_loop_messages = self.compute_self_loop_messages(self.next_component.get_all_codes(mode=mode)[0])
 
             if mode == 'train':
-                messages = tf.nn.dropout(messages, self.dropout_keep_probability)
+                forward_messages = tf.nn.dropout(forward_messages, self.dropout_keep_probability)
+                backward_messages = tf.nn.dropout(backward_messages, self.dropout_keep_probability)
                 self_loop_messages = tf.nn.dropout(self_loop_messages, self.dropout_keep_probability)
 
             if self.onehot_input:
-                self.vertex_embedding_function[mode] = self.combine_messages(messages, self_loop_messages, tf.range(self.entity_count))
+                self.vertex_embedding_function[mode] = self.combine_messages(forward_messages,
+                                                                             backward_messages,
+                                                                             self_loop_messages,
+                                                                             tf.range(self.entity_count),
+                                                                             mode=mode)
             else:
-                self.vertex_embedding_function[mode] = self.combine_messages(messages, self_loop_messages, self.next_component.get_all_codes(mode=mode)[0])
+                self.vertex_embedding_function[mode] = self.combine_messages(forward_messages,
+                                                                             backward_messages,
+                                                                             self_loop_messages,
+                                                                             self.next_component.get_all_codes(mode=mode)[0],
+                                                                             mode=mode)
 
         return self.vertex_embedding_function[mode]
 
