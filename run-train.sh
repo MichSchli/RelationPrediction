@@ -15,6 +15,6 @@ ARGUMENT_STRING="--settings "$SETTINGS_PATH" --dataset "$DATASET_PATH
 
 source $VIRTUALENV_PATH"/bin/activate"
 
-python -u $TRAIN_PATH $ARGUMENT_STRING
+$VIRTUALENV_PATH"/bin/python3.5" -u $TRAIN_PATH $ARGUMENT_STRING
 
 deactivate

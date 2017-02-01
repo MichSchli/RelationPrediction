@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="aa2b33e7-0e4c-4368-a8bb-e5268fe13a76" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py" afterPath="$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run-train.sh" afterPath="$PROJECT_DIR$/run-train.sh" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,8 +21,8 @@
       <file leaf-file-name="run-train.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run-train.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="14" lean-forward="false" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
+            <state relative-caret-position="255">
+              <caret line="17" column="32" lean-forward="false" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -30,7 +31,7 @@
       <file leaf-file-name="model_builder.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
+            <state relative-caret-position="285">
               <caret line="37" column="76" lean-forward="false" selection-start-line="37" selection-start-column="76" selection-end-line="37" selection-end-column="76" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
@@ -82,8 +83,8 @@
       <file leaf-file-name="gcn_basis.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="12" column="31" lean-forward="false" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+            <state relative-caret-position="360">
+              <caret line="87" column="25" lean-forward="false" selection-start-line="87" selection-start-column="25" selection-end-line="87" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -185,9 +186,9 @@
         <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_diego.py" />
         <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_no_transform.py" />
         <option value="$PROJECT_DIR$/code/encoders/embedding.py" />
-        <option value="$PROJECT_DIR$/run-train.sh" />
         <option value="$PROJECT_DIR$/settings/gcn_diag.exp" />
         <option value="$PROJECT_DIR$/code/common/model_builder.py" />
+        <option value="$PROJECT_DIR$/run-train.sh" />
         <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py" />
       </list>
     </option>
@@ -999,14 +1000,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_bias_plus_full_no_transform.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="38" column="8" lean-forward="false" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -1025,14 +1018,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run-train.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="14" lean-forward="false" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_no_transform.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -1041,13 +1026,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_bias_plus_full_no_transform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="38" column="8" lean-forward="false" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
+        <state relative-caret-position="285">
           <caret line="37" column="76" lean-forward="false" selection-start-line="37" selection-start-column="76" selection-end-line="37" selection-end-column="76" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run-train.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="32" lean-forward="false" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1061,8 +1062,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="12" column="31" lean-forward="false" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+        <state relative-caret-position="360">
+          <caret line="87" column="25" lean-forward="false" selection-start-line="87" selection-start-column="25" selection-end-line="87" selection-end-column="25" />
           <folding />
         </state>
       </provider>

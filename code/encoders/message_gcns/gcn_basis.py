@@ -73,16 +73,22 @@ class BasisGcn(MessageGcn):
         #sender_terms = tf.reshape(sender_terms, [-1, forward_shape[1], forward_shape[2]])
         #receiver_terms = tf.reshape(receiver_terms, [-1, backward_shape[1], backward_shape[2]])
 
+        msg_shape = (200000,self.embedding_width)
+
         def calc_f(previous_sum, new):
             term = self.dot_or_lookup(sender_features, self.V_proj_sender_forward[new])
-            return previous_sum + tf.expand_dims(forward_type_scaling[:,new], -1) * term
+            summed = previous_sum + tf.expand_dims(forward_type_scaling[:,new], -1) * term
+            summed.set_shape(msg_shape)
+            return summed
 
         def calc_b(previous_sum, new):
             term = self.dot_or_lookup(sender_features, self.V_proj_sender_backward[new])
-            return previous_sum + tf.expand_dims(backward_type_scaling[:,new], -1) * term
+            summed = previous_sum + tf.expand_dims(backward_type_scaling[:,new], -1) * term
+            summed.set_shape(msg_shape)
+            return summed
 
-        forward_messages = tf.foldr(calc_f, list(range(self.n_coefficients)), parallel_iterations=1, initializer=tf.zeros((tf.shape(message_types)[0], self.embedding_width)))
-        backward_messages = tf.foldr(calc_b, list(range(self.n_coefficients)), parallel_iterations=1, initializer=tf.zeros((tf.shape(message_types)[0], self.embedding_width)))
+        forward_messages = tf.foldl(calc_f, list(range(self.n_coefficients)), parallel_iterations=1, initializer=tf.zeros(msg_shape))
+        backward_messages = tf.foldl(calc_b, list(range(self.n_coefficients)), parallel_iterations=1, initializer=tf.zeros(msg_shape))
 
         #forward_messages = tf.reduce_sum(sender_terms * tf.expand_dims(forward_type_scaling,-1), 1)
         #backward_messages = tf.reduce_sum(receiver_terms * tf.expand_dims(backward_type_scaling, -1), 1)
