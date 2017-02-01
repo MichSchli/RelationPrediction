@@ -9,8 +9,13 @@ class BasisGcn(MessageGcn):
     def parse_settings(self):
         self.embedding_width = int(self.settings['InternalEncoderDimension'])
         self.dropout_keep_probability = float(self.settings['DropoutKeepProbability'])
+        self.graph_split_size = int(self.settings['GraphSplitSize'])
 
-        self.n_coefficients = 4
+        self.n_coefficients = 3
+
+    def local_set_variable(self, name, value):
+        if name == 'GraphSplitSize':
+            self.graph_split_size = value
 
     def local_initialize_train(self):
         vertex_feature_dimension = self.entity_count if self.onehot_input else self.embedding_width
@@ -73,7 +78,7 @@ class BasisGcn(MessageGcn):
         #sender_terms = tf.reshape(sender_terms, [-1, forward_shape[1], forward_shape[2]])
         #receiver_terms = tf.reshape(receiver_terms, [-1, backward_shape[1], backward_shape[2]])
 
-        msg_shape = (200000,self.embedding_width)
+        msg_shape = (self.graph_split_size, self.embedding_width)
 
         def calc_f(previous_sum, new):
             term = self.dot_or_lookup(sender_features, self.V_proj_sender_forward[new])

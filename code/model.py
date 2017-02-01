@@ -62,6 +62,9 @@ class Model:
     def get_weights(self):
         return self.__local_expand_delegate__('get_weights')
 
+    def set_variable(self, name, value):
+        return self.__local_run_delegate__('set_variable', name, value)
+
     def get_train_input_variables(self):
         return self.__local_expand_delegate__('get_train_input_variables')
 
