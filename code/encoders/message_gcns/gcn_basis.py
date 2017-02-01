@@ -10,7 +10,7 @@ class BasisGcn(MessageGcn):
         self.embedding_width = int(self.settings['InternalEncoderDimension'])
         self.dropout_keep_probability = float(self.settings['DropoutKeepProbability'])
 
-        self.n_coefficients = 20
+        self.n_coefficients = 4
 
     def local_initialize_train(self):
         vertex_feature_dimension = self.entity_count if self.onehot_input else self.embedding_width
