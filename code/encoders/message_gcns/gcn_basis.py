@@ -11,7 +11,7 @@ class BasisGcn(MessageGcn):
         self.dropout_keep_probability = float(self.settings['DropoutKeepProbability'])
         self.graph_split_size = int(self.settings['GraphSplitSize'])
 
-        self.n_coefficients = 3
+        self.n_coefficients = 6
 
     def local_set_variable(self, name, value):
         if name == 'GraphSplitSize':
@@ -20,7 +20,7 @@ class BasisGcn(MessageGcn):
     def local_initialize_train(self):
         vertex_feature_dimension = self.entity_count if self.onehot_input else self.embedding_width
         type_matrix_shape = (self.relation_count, self.n_coefficients)
-        vertex_matrix_shape = (self.n_coefficients, vertex_feature_dimension, self.embedding_width)
+        vertex_matrix_shape = (vertex_feature_dimension, self.n_coefficients, self.embedding_width)
         type_diag_shape = (self.relation_count, self.embedding_width)
 
         glorot_var_combined = np.sqrt(3/(vertex_matrix_shape[1] + vertex_matrix_shape[2]))
@@ -66,19 +66,21 @@ class BasisGcn(MessageGcn):
         backward_type_scaling = tf.nn.embedding_lookup(self.V_types_backward, message_types)
 
         #Flatten matrices:
-        #forward_shape = tf.shape(self.V_proj_sender_forward)
-        #backward_shape = tf.shape(self.V_proj_sender_backward)
+        forward_shape = tf.shape(self.V_proj_sender_forward)
+        backward_shape = tf.shape(self.V_proj_sender_backward)
 
-        #flatten_forward = tf.reshape(self.V_proj_sender_forward, [forward_shape[0], forward_shape[1]* forward_shape[2]])
-        #flatten_backward = tf.reshape(self.V_proj_sender_backward, [backward_shape[0], backward_shape[1]* backward_shape[2]])
+        flatten_forward = tf.reshape(self.V_proj_sender_forward, [forward_shape[0], forward_shape[1]* forward_shape[2]])
+        flatten_backward = tf.reshape(self.V_proj_sender_backward, [backward_shape[0], backward_shape[1]* backward_shape[2]])
 
-        #sender_terms = self.dot_or_lookup(sender_features, flatten_forward)
-        #receiver_terms = self.dot_or_lookup(receiver_features, flatten_backward)
+        sender_terms = self.dot_or_lookup(sender_features, flatten_forward)
+        receiver_terms = self.dot_or_lookup(receiver_features, flatten_backward)
 
-        #sender_terms = tf.reshape(sender_terms, [-1, forward_shape[1], forward_shape[2]])
-        #receiver_terms = tf.reshape(receiver_terms, [-1, backward_shape[1], backward_shape[2]])
+        sender_terms = tf.reshape(sender_terms, [-1, forward_shape[1], forward_shape[2]])
+        receiver_terms = tf.reshape(receiver_terms, [-1, backward_shape[1], backward_shape[2]])
 
+        '''
         msg_shape = (self.graph_split_size, self.embedding_width)
+        print(msg_shape)
 
         def calc_f(previous_sum, new):
             term = self.dot_or_lookup(sender_features, self.V_proj_sender_forward[new])
@@ -94,9 +96,10 @@ class BasisGcn(MessageGcn):
 
         forward_messages = tf.foldl(calc_f, list(range(self.n_coefficients)), parallel_iterations=1, initializer=tf.zeros(msg_shape))
         backward_messages = tf.foldl(calc_b, list(range(self.n_coefficients)), parallel_iterations=1, initializer=tf.zeros(msg_shape))
+        '''
 
-        #forward_messages = tf.reduce_sum(sender_terms * tf.expand_dims(forward_type_scaling,-1), 1)
-        #backward_messages = tf.reduce_sum(receiver_terms * tf.expand_dims(backward_type_scaling, -1), 1)
+        forward_messages = tf.reduce_sum(sender_terms * tf.expand_dims(forward_type_scaling,-1), 1)
+        backward_messages = tf.reduce_sum(receiver_terms * tf.expand_dims(backward_type_scaling, -1), 1)
 
         return forward_messages, backward_messages
 

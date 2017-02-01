@@ -1,14 +1,14 @@
 [Encoder]
 	Name=gcn_diag
-	DropoutKeepProbability=0.8
-	InternalEncoderDimension=100
+	DropoutKeepProbability=1.0
+	InternalEncoderDimension=200
 
 [Decoder]
 	Name=bilinear-diag
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=100
+	CodeDimension=200
 
 [Optimizer]
 	MaxGradientNorm=1
