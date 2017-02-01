@@ -8,14 +8,18 @@ class Embedding(Model):
 
     W_embedding = None
 
-    def __init__(self, settings):
-        Model.__init__(self, None, settings)
+    def __init__(self, settings, next_component=None):
+        Model.__init__(self, next_component, settings)
 
     def parse_settings(self):
         self.embedding_width = int(self.settings['CodeDimension'])
 
     def local_initialize_train(self):
-        embedding_initial = np.random.randn(self.entity_count, self.embedding_width).astype(np.float32)
+        vertex_matrix_shape = (self.entity_count, self.embedding_width)
+        glorot_var_combined = np.sqrt(3 / (vertex_matrix_shape[0] + vertex_matrix_shape[1]))
+
+        embedding_initial = np.random.normal(0, glorot_var_combined, size=vertex_matrix_shape).astype(np.float32)
+        #np.random.randn(self.entity_count, self.embedding_width).astype(np.float32)
 
         self.W_embedding = tf.Variable(embedding_initial)
 

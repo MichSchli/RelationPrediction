@@ -18,6 +18,8 @@ from encoders.message_gcns.gcn_diag_diego import DiagGcnDiego
 from encoders.message_gcns.gcn_diag_sigmoid_gate import DiagGcnSigmoidGate
 from encoders.message_gcns.gcn_basis import BasisGcn
 
+from encoders.message_gcns.gcn_diag_no_transform import DiagGcnNoTransform
+
 
 def build_encoder(encoder_settings, triples):
     if encoder_settings['Name'] == "embedding":
@@ -32,9 +34,9 @@ def build_encoder(encoder_settings, triples):
     elif encoder_settings['Name'] == "gcn_diag":
         graph = Representation(triples, encoder_settings)
 
-
+        #embedding = Embedding(encoder_settings, next_component=graph)
         first_layer = BasisGcn(encoder_settings, graph, next_component=graph, onehot_input=True, use_nonlinearity=False)
-        #second_layer = DiagGcn(encoder_settings, graph, next_component=first_layer, use_nonlinearity=True)
+        #second_layer = BasisGcn(encoder_settings, graph, next_component=first_layer, use_nonlinearity=False)
         #transform = LinearTransform(first_layer, encoder_settings)
         return RelationEmbedding(first_layer, encoder_settings)
 
