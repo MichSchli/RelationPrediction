@@ -1,22 +1,22 @@
 [Encoder]
-	Name=gcn_diag_sigmoid_gate
-	DropoutKeepProbability=0.7
-	InternalEncoderDimension=100
+	Name=gcn_basis
+	DropoutKeepProbability=1.0
+	InternalEncoderDimension=200
+	NumberOfBasisFunctions=5
 
 [Decoder]
 	Name=bilinear-diag
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=50
+	CodeDimension=200
 
 [Optimizer]
-	Minibatches=No
 	MaxGradientNorm=1
-	ReportTrainLossEvery=50
+	ReportTrainLossEvery=100
 
 	[EarlyStopping]
-		CheckEvery=1000
+		CheckEvery=500
 		BurninPhaseDuration=5000
 
 	[Algorithm]
@@ -25,3 +25,4 @@
 
 [General]
 	NegativeSampleRate=1
+	GraphSplitSize=20000

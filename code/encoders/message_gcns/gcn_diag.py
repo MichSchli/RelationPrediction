@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+from common.shared_functions import dot_or_lookup, glorot_variance, make_tf_variable, make_tf_bias
 
 from encoders.message_gcns.message_gcn import MessageGcn
 
@@ -11,50 +12,43 @@ class DiagGcn(MessageGcn):
         self.dropout_keep_probability = float(self.settings['DropoutKeepProbability'])
 
     def local_initialize_train(self):
-        vertex_feature_dimension = self.entity_count if self.onehot_input else self.embedding_width
-        type_matrix_shape = (self.relation_count * 2, self.embedding_width)
-        vertex_matrix_shape = (vertex_feature_dimension, self.embedding_width)
+        type_matrix_shape = (self.relation_count, self.embedding_width)
+        vertex_matrix_shape = (self.embedding_width, self.embedding_width)
 
-        glorot_var_combined = np.sqrt(3/(vertex_matrix_shape[0]*2 + vertex_matrix_shape[1]))
+        glorot_var_self = glorot_variance(vertex_matrix_shape)
+        self.V_self = make_tf_variable(0, glorot_var_self, vertex_matrix_shape)
+
         type_init_var = 1
+        self.V_types_f = make_tf_variable(0, type_init_var, type_matrix_shape)
+        self.V_types_b = make_tf_variable(0, type_init_var, type_matrix_shape)
 
-        self_initial = np.random.normal(0, glorot_var_combined, size=vertex_matrix_shape).astype(np.float32)
-        vertex_projection_sender_initial = np.random.normal(0, glorot_var_combined, size=vertex_matrix_shape).astype(np.float32)
-
-        type_initial = np.random.normal(0, type_init_var, size=type_matrix_shape).astype(np.float32)
-
-        message_bias = np.zeros(self.embedding_width).astype(np.float32)
-
-        self.V_proj_sender = tf.Variable(vertex_projection_sender_initial)
-        self.V_self = tf.Variable(self_initial)
-        self.V_types = tf.Variable(type_initial)
-
-        self.B_message = tf.Variable(message_bias)
-
+        self.B_message = make_tf_bias(self.embedding_width)
 
     def local_get_weights(self):
-        return [self.V_proj_sender, self.V_types, self.V_self,
+        return [self.V_types_f, self.V_types_b, self.V_self,
                 self.B_message]
 
-    def compute_messages(self, sender_features):
-        sender_terms = self.dot_or_lookup(sender_features, self.V_proj_sender)
+    def compute_messages(self, sender_features, receiver_features):
         message_types = self.get_graph().get_type_indices()
-        type_diags = tf.nn.embedding_lookup(self.V_types, message_types)
+        type_diags_f = tf.nn.embedding_lookup(self.V_types_f, message_types)
+        type_diags_b = tf.nn.embedding_lookup(self.V_types_b, message_types)
 
-        terms = tf.mul(sender_terms, type_diags)
+        terms_f = tf.mul(sender_features, type_diags_f)
+        terms_b = tf.mul(receiver_features, type_diags_b)
 
-        messages = terms
-        return messages
+        return terms_f, terms_b
 
     def compute_self_loop_messages(self, vertex_features):
-        return self.dot_or_lookup(vertex_features, self.V_self)
+        return dot_or_lookup(vertex_features, self.V_self, onehot_input=self.onehot_input)
 
+    def combine_messages(self, forward_messages, backward_messages, self_loop_messages, previous_code, mode='train'):
+        mtr_f = self.get_graph().forward_incidence_matrix(normalization=('global', 'recalculated'))
+        mtr_b = self.get_graph().backward_incidence_matrix(normalization=('global', 'recalculated'))
 
-    def combine_messages(self, messages, self_loop_messages, vertex_features, mode='train'):
-        mtr = self.get_graph().incidence_matrix(normalization=('global', 'recalculated'))
-        collected_messages = tf.sparse_tensor_dense_matmul(mtr, messages)
+        collected_messages_f = tf.sparse_tensor_dense_matmul(mtr_f, forward_messages)
+        collected_messages_b = tf.sparse_tensor_dense_matmul(mtr_b, backward_messages)
 
-        new_embedding = self_loop_messages + collected_messages + self.B_message
+        new_embedding = self_loop_messages + collected_messages_f + collected_messages_b + self.B_message
 
         if self.use_nonlinearity:
             new_embedding = tf.nn.relu(new_embedding)

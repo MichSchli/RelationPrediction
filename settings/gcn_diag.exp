@@ -12,10 +12,10 @@
 
 [Optimizer]
 	MaxGradientNorm=1
-	ReportTrainLossEvery=100
+	ReportTrainLossEvery=20
 
 	[EarlyStopping]
-		CheckEvery=500
+		CheckEvery=60
 		BurninPhaseDuration=5000
 
 	[Algorithm]
@@ -24,4 +24,4 @@
 
 [General]
 	NegativeSampleRate=1
-	GraphSplitSize=200000
+	GraphSplitSize=20000

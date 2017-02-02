@@ -1,24 +1,16 @@
-from encoders.embedding import Embedding
-from encoders.gated_basis_gcn import GatedBasisGcn
 from encoders.relation_embedding import RelationEmbedding
-from encoders.linear_transform import LinearTransform
+from encoders.affine_transform import AffineTransform
 from decoders.bilinear_diag import BilinearDiag
 from extras.graph_representations import Representation
-from encoders.simple_gated_basis_gcn import SimpleGatedBasisGcn
 
 from decoders.nonlinear_transform import NonlinearTransform
 
 from encoders.bipartite_gcn import BipartiteGcn
 
-from encoders.gcn import GCN
-
 from encoders.message_gcns.gcn_diag import DiagGcn
-from encoders.message_gcns.gcn_diag_diego import DiagGcnDiego
 
-from encoders.message_gcns.gcn_diag_sigmoid_gate import DiagGcnSigmoidGate
 from encoders.message_gcns.gcn_basis import BasisGcn
 
-from encoders.message_gcns.gcn_diag_no_transform import DiagGcnNoTransform
 
 
 def build_encoder(encoder_settings, triples):
@@ -32,6 +24,24 @@ def build_encoder(encoder_settings, triples):
         transform = LinearTransform(second_layer, encoder_settings)
         return RelationEmbedding(transform, encoder_settings)
     elif encoder_settings['Name'] == "gcn_diag":
+        graph = Representation(triples, encoder_settings)
+
+        input_shape = [int(encoder_settings['EntityCount']),
+                       int(encoder_settings['InternalEncoderDimension'])]
+
+        embedding = AffineTransform(input_shape,
+                                    encoder_settings,
+                                    next_component=graph,
+                                    onehot_input=True,
+                                    use_bias=True,
+                                    use_nonlinearity=True)
+
+        first_layer = DiagGcn(encoder_settings, graph, next_component=embedding, onehot_input=False, use_nonlinearity=False)
+        #second_layer = BasisGcn(encoder_settings, graph, next_component=first_layer, use_nonlinearity=False)
+        #transform = LinearTransform(first_layer, encoder_settings)
+        return RelationEmbedding(first_layer, encoder_settings)
+
+    elif encoder_settings['Name'] == "gcn_basis":
         graph = Representation(triples, encoder_settings)
 
         #embedding = Embedding(encoder_settings, next_component=graph)

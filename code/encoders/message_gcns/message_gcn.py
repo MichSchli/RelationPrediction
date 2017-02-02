@@ -84,12 +84,3 @@ class MessageGcn(Model):
     def get_all_object_codes(self, mode='train'):
         return self.compute_vertex_embeddings(mode=mode)
 
-    '''
-    General methods, should be moved
-    '''
-
-    def dot_or_lookup(self, features, weights):
-        if self.onehot_input:
-            return tf.nn.embedding_lookup(weights, features)
-        else:
-            return tf.matmul(features, weights)
