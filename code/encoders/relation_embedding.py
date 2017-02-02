@@ -3,14 +3,17 @@ import tensorflow as tf
 from model import Model
 
 class RelationEmbedding(Model):
-    embedding_width = None
-    W_relation = None
+    shape=None
+
+    def __init__(self, shape, settings, next_component=None):
+        Model.__init__(self, next_component, settings)
+        self.shape = shape
 
     def parse_settings(self):
         self.embedding_width = int(self.settings['CodeDimension'])
 
     def local_initialize_train(self):
-        relation_initial = np.random.randn(self.relation_count, self.embedding_width).astype(np.float32)
+        relation_initial = np.random.randn(self.shape[0], self.shape[1]).astype(np.float32)
 
         self.W_relation = tf.Variable(relation_initial)
 

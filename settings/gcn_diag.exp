@@ -2,6 +2,8 @@
 	Name=gcn_diag
 	DropoutKeepProbability=1.0
 	InternalEncoderDimension=200
+	NumberOfLayers=1
+	UseOutputTransform=No
 
 [Decoder]
 	Name=bilinear-diag

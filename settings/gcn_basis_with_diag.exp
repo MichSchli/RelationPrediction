@@ -4,9 +4,9 @@
 	InternalEncoderDimension=200
 	NumberOfBasisFunctions=5
 	NumberOfLayers=1
-	UseInputTransform=No
+	UseInputTransform=Yes
 	UseOutputTransform=No
-	AddDiagonal=No
+	AddDiagonal=Yes
 
 [Decoder]
 	Name=bilinear-diag

@@ -61,13 +61,12 @@ class AffineTransform(Model):
         return hidden
 
     def get_all_codes(self, mode='train'):
-        codes = self.next_component.get_all_codes(mode=mode)
-
         if self.onehot_input:
             hidden_subject = self.W
             hidden_object = self.W
             hidden_relation = None
         else:
+            codes = self.next_component.get_all_codes(mode=mode)
             hidden_subject = tf.matmul(codes[0], self.W)
             hidden_object = tf.matmul(codes[2], self.W)
             hidden_relation = codes[1]
