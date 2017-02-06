@@ -9,6 +9,7 @@ from encoders.bipartite_gcn import BipartiteGcn
 from encoders.message_gcns.gcn_diag import DiagGcn
 from encoders.message_gcns.gcn_basis import BasisGcn
 from encoders.message_gcns.gcn_basis_plus_diag import BasisGcnWithDiag
+from encoders.message_gcns.gcn_basis_times_diag import BasisGcnTimesDiag
 
 
 
@@ -120,6 +121,8 @@ def build_encoder(encoder_settings, triples):
 
             if encoder_settings['AddDiagonal'] == "Yes":
                 model = BasisGcnWithDiag
+            elif encoder_settings['DiagonalCoefficients'] == "Yes":
+                model = BasisGcnTimesDiag
             else:
                 model = BasisGcn
 

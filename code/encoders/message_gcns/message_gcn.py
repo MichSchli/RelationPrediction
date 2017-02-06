@@ -58,8 +58,9 @@ class MessageGcn(Model):
                 self_loop_messages = self.compute_self_loop_messages(self.next_component.get_all_codes(mode=mode)[0])
 
             if mode == 'train':
-                forward_messages = tf.nn.dropout(forward_messages, self.dropout_keep_probability)
-                backward_messages = tf.nn.dropout(backward_messages, self.dropout_keep_probability)
+                # We do "permanent" edge dropouts, so between layers only self-loops are dropped
+                #forward_messages = tf.nn.dropout(forward_messages, self.dropout_keep_probability)
+                #backward_messages = tf.nn.dropout(backward_messages, self.dropout_keep_probability)
                 self_loop_messages = tf.nn.dropout(self_loop_messages, self.dropout_keep_probability)
 
             if self.onehot_input:

@@ -24,7 +24,7 @@ class BasisGcnWithDiag(MessageGcn):
         self_matrix_shape = (vertex_feature_dimension, self.shape[1])
         type_diag_shape = (self.relation_count, self.shape[1])
 
-        glorot_var_combined = glorot_variance(vertex_matrix_shape)
+        glorot_var_combined = glorot_variance([vertex_matrix_shape[0], vertex_matrix_shape[2]])
         self.W_forward = make_tf_variable(0, glorot_var_combined, vertex_matrix_shape)
         self.W_backward = make_tf_variable(0, glorot_var_combined, vertex_matrix_shape)
         self.W_self = make_tf_variable(0, glorot_var_combined, self_matrix_shape)

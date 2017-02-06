@@ -5,7 +5,7 @@ from common.shared_functions import dot_or_lookup, glorot_variance, make_tf_vari
 from encoders.message_gcns.message_gcn import MessageGcn
 
 
-class BasisGcn(MessageGcn):
+class BasisGcnTimesDiag(MessageGcn):
 
     def parse_settings(self):
         self.dropout_keep_probability = float(self.settings['DropoutKeepProbability'])
@@ -19,7 +19,7 @@ class BasisGcn(MessageGcn):
 
     def local_initialize_train(self):
         vertex_feature_dimension = self.entity_count if self.onehot_input else self.shape[0]
-        type_matrix_shape = (self.relation_count, self.n_coefficients)
+        type_matrix_shape = (self.relation_count, self.n_coefficients, self.shape[1])
         vertex_matrix_shape = (vertex_feature_dimension, self.n_coefficients, self.shape[1])
         self_matrix_shape = (vertex_feature_dimension, self.shape[1])
 
@@ -45,8 +45,8 @@ class BasisGcn(MessageGcn):
         backward_type_scaling, forward_type_scaling = self.compute_coefficients()
         receiver_terms, sender_terms = self.compute_basis_functions(receiver_features, sender_features)
 
-        forward_messages = tf.reduce_sum(sender_terms * tf.expand_dims(forward_type_scaling,-1), 1)
-        backward_messages = tf.reduce_sum(receiver_terms * tf.expand_dims(backward_type_scaling, -1), 1)
+        forward_messages = tf.reduce_sum(sender_terms * forward_type_scaling, 1)
+        backward_messages = tf.reduce_sum(receiver_terms * backward_type_scaling, 1)
 
         return forward_messages, backward_messages
 

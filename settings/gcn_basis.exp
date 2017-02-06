@@ -1,12 +1,13 @@
 [Encoder]
 	Name=gcn_basis
-	DropoutKeepProbability=1.0
+	DropoutKeepProbability=0.7
 	InternalEncoderDimension=200
-	NumberOfBasisFunctions=5
+	NumberOfBasisFunctions=3
 	NumberOfLayers=1
 	UseInputTransform=No
 	UseOutputTransform=No
 	AddDiagonal=No
+	DiagonalCoefficients=No
 
 [Decoder]
 	Name=bilinear-diag
