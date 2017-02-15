@@ -27,3 +27,6 @@
 [General]
 	NegativeSampleRate=1
 	GraphSplitSize=20000
+
+[Evaluation]
+	Metric=MRR

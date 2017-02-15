@@ -6,7 +6,7 @@
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=50
+	CodeDimension=100
 
 [Optimizer]
 	MaxGradientNorm=1
@@ -21,3 +21,8 @@
 
 [General]
 	NegativeSampleRate=1
+	GraphSplitSize=15000
+
+
+[Evaluation]
+	Metric=Accuracy

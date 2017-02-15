@@ -11,6 +11,8 @@ from encoders.message_gcns.gcn_basis import BasisGcn
 from encoders.message_gcns.gcn_basis_plus_diag import BasisGcnWithDiag
 from encoders.message_gcns.gcn_basis_times_diag import BasisGcnTimesDiag
 
+from extras.residual_layer import ResidualLayer
+from extras.highway_layer import HighwayLayer
 
 
 def build_encoder(encoder_settings, triples):
@@ -126,11 +128,20 @@ def build_encoder(encoder_settings, triples):
             else:
                 model = BasisGcn
 
-            encoding = model(internal_shape,
+            new_encoding = model(internal_shape,
                                encoder_settings,
                                next_component=encoding,
                                onehot_input=onehot_input,
                                use_nonlinearity=use_nonlinearity)
+
+            if encoder_settings['SkipConnections'] == 'Residual' and onehot_input == False:
+                encoding = ResidualLayer(internal_shape, next_component=new_encoding, next_component_2=encoding)
+            if encoder_settings['SkipConnections'] == 'Highway' and onehot_input == False:
+                encoding = HighwayLayer(internal_shape, next_component=new_encoding, next_component_2=encoding)
+            else:
+                encoding = new_encoding
+
+
 
 
         # Output transform if chosen:

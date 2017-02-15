@@ -8,6 +8,7 @@
 	UseOutputTransform=No
 	AddDiagonal=No
 	DiagonalCoefficients=Yes
+	SkipConnections=None
 
 [Decoder]
 	Name=bilinear-diag
@@ -31,3 +32,6 @@
 [General]
 	NegativeSampleRate=1
 	GraphSplitSize=20000
+
+[Evaluation]
+	Metric=MRR

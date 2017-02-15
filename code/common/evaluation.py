@@ -1,9 +1,11 @@
 import numpy as np
 
-class Summary():
+
+class MrrSummary():
 
     calculate_hits_at = [1,3,10]
     results = {'Raw':{}, 'Filtered':{}}
+
     
     def __init__(self, raw_ranks, filtered_ranks, in_degrees, out_degrees):
         self.results['Raw'][self.mrr_string()] = self.get_mrr(raw_ranks)
@@ -102,7 +104,7 @@ class Summary():
         out_file.close()
 
 
-class Score():
+class MrrScore():
 
     raw_ranks = []
     filtered_ranks = []
@@ -138,12 +140,46 @@ class Score():
                   file=outfile)
 
     def get_summary(self):
-        return Summary(self.raw_ranks, self.filtered_ranks, self.in_degree, self.out_degree)
+        return MrrSummary(self.raw_ranks, self.filtered_ranks, self.in_degree, self.out_degree)
 
     def summarize(self):
         summary = self.get_summary()
         summary.pretty_print()
-        
+
+
+class AccuracySummary():
+
+    results = {'Filtered':{}, 'Raw':{}}
+
+    def __init__(self, predictions):
+        self.results['Filtered'][self.accuracy_string()] = np.mean(predictions)
+
+    def dump_degrees(self, in_file, out_file):
+        pass
+
+    def accuracy_string(self):
+        return 'Accuracy'
+
+    def pretty_print(self):
+        items = [self.accuracy_string()]
+
+        for item in items:
+            print(item, end='\t')
+            print(str(round(self.results['Filtered'][item],3)), end='\n')
+
+
+class AccuracyScore():
+
+    def append_all(self, evaluations):
+        self.predictions = evaluations
+
+    def summarize(self):
+        summary = self.get_summary()
+        summary.pretty_print()
+
+    def get_summary(self):
+        return AccuracySummary(self.predictions)
+
         
 class Scorer():
 
@@ -153,11 +189,12 @@ class Scorer():
     in_degree = {}
     out_degree = {}
 
-    def __init__(self):
+    def __init__(self, settings):
         self.known_object_triples = {}
         self.known_subject_triples = {}
         self.in_degree = {}
         self.out_degree = {}
+        self.settings = settings
 
     def extend_triple_dict(self, dictionary, triplets, object_list=True):
         for triplet in triplets:
@@ -207,8 +244,31 @@ class Scorer():
     def get_degrees(self, vertex):
         return self.in_degree[vertex], self.out_degree[vertex]
 
+    def compute_accuracy_scores(self, triples, verbose=False):
+        score = AccuracyScore()
+
+        if verbose:
+            print("Evaluating accuracies...")
+
+        score_vector = self.model.score(triples)
+        positives = score_vector[::2]
+        negatives = score_vector[1::2]
+
+        evals = positives > negatives
+
+        score.append_all(evals)
+
+        return score
+
     def compute_scores(self, triples, verbose=False):
-        score = Score(triples)
+        if self.settings['Metric'] == 'MRR':
+            return self.compute_mrr_scores(triples, verbose=verbose)
+        elif self.settings['Metric'] == 'Accuracy':
+            return self.compute_accuracy_scores(triples, verbose=verbose)
+
+
+    def compute_mrr_scores(self, triples, verbose=False):
+        score = MrrScore(triples)
 
         if verbose:
             print("Evaluating subjects...")

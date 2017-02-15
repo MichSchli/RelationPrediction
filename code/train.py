@@ -10,6 +10,11 @@ parser.add_argument("--settings", help="Filepath for settings file.", required=T
 parser.add_argument("--dataset", help="Filepath for dataset.", required=True)
 args = parser.parse_args()
 
+settings = settings_reader.read(args.settings)
+print(settings)
+
+
+
 '''
 Load datasets:
 '''
@@ -22,6 +27,11 @@ train_path = dataset + '/train.txt'
 valid_path = dataset + '/valid.txt'
 test_path = dataset + '/test.txt'
 
+#Extend paths for accuracy evaluation:
+if settings['Evaluation']['Metric'] == 'Accuracy':
+    valid_path = dataset + '/valid_accuracy.txt'
+    test_path = dataset + '/test_accuracy.txt'
+
 train_triplets = io.read_triplets_as_list(train_path, entities_path, relations_path)
 valid_triplets = io.read_triplets_as_list(valid_path, entities_path, relations_path)
 test_triplets = io.read_triplets_as_list(test_path, entities_path, relations_path)
@@ -32,15 +42,13 @@ relations = io.read_dictionary(relations_path)
 '''
 Load general settings
 '''
-settings = settings_reader.read(args.settings)
-
-print(settings)
 
 encoder_settings = settings['Encoder']
 decoder_settings = settings['Decoder']
 shared_settings = settings['Shared']
 general_settings = settings['General']
 optimizer_settings = settings['Optimizer']
+evaluation_settings = settings['Evaluation']
 
 general_settings.put('EntityCount', len(entities))
 general_settings.put('RelationCount', len(relations))
@@ -52,6 +60,8 @@ decoder_settings.merge(shared_settings)
 decoder_settings.merge(general_settings)
 
 optimizer_settings.merge(general_settings)
+evaluation_settings.merge(general_settings)
+
 
 '''
 Construct the encoder-decoder pair:
@@ -66,7 +76,7 @@ Construct the optimizer with validation MRR as early stopping metric:
 opp = optimizer_parameter_parser.Parser(optimizer_settings)
 #opp.set_save_function(model.save) DISABLED SAVING
 
-scorer = evaluation.Scorer()
+scorer = evaluation.Scorer(evaluation_settings)
 scorer.register_data(train_triplets)
 scorer.register_data(valid_triplets)
 scorer.register_data(test_triplets)
@@ -77,23 +87,19 @@ def score_validation_data(validation_data):
     model.set_variable("GraphSplitSize", len(train_triplets))
     score_summary = scorer.compute_scores(validation_data, verbose=False).get_summary()
     score_summary.dump_degrees('dumps/degrees.in', 'dumps/degrees.out')
+    score_summary.pretty_print()
+
     model.set_variable("GraphSplitSize", int(general_settings['GraphSplitSize']))
-    return score_summary.results['Filtered'][score_summary.mrr_string()]
+
+    if evaluation_settings['Metric'] == 'MRR':
+        lookup_string = score_summary.mrr_string()
+    elif evaluation_settings['Metric'] == 'Accuracy':
+        lookup_string = score_summary.accuracy_string()
+
+    return score_summary.results['Filtered'][lookup_string]
 
 
 opp.set_early_stopping_score_function(score_validation_data)
-
-'''
-if 'GraphSplitSize' in general_settings:
-    split_size = int(general_settings['GraphSplitSize'])
-    graph_split_ids = np.random.choice(len(train_triplets), size=split_size, replace=False)
-
-    graph_split = np.array(train_triplets)[graph_split_ids]
-    gradient_split = np.delete(train_triplets, graph_split_ids, axis=0)
-else:
-    graph_split = train_triplets
-    gradient_split = train_triplets
-'''
 
 print(len(train_triplets))
 

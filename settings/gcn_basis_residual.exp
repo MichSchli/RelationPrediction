@@ -1,28 +1,28 @@
 [Encoder]
 	Name=gcn_basis
 	DropoutKeepProbability=1.0
-	InternalEncoderDimension=50
-	NumberOfBasisFunctions=1
-	NumberOfLayers=1
+	InternalEncoderDimension=200
+	NumberOfBasisFunctions=3
+	NumberOfLayers=2
 	UseInputTransform=No
 	UseOutputTransform=No
 	AddDiagonal=No
 	DiagonalCoefficients=No
-	SkipConnections=None
+	SkipConnections=Highway
 
 [Decoder]
 	Name=bilinear-diag
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=50
+	CodeDimension=200
 
 [Optimizer]
 	MaxGradientNorm=1
-	ReportTrainLossEvery=2
+	ReportTrainLossEvery=20
 
 	[EarlyStopping]
-		CheckEvery=4
+		CheckEvery=500
 		BurninPhaseDuration=5000
 
 	[Algorithm]
@@ -31,7 +31,8 @@
 
 [General]
 	NegativeSampleRate=1
-	GraphSplitSize=100
+	GraphSplitSize=15000
+
 
 [Evaluation]
-	Metric=Accuracy
+	Metric=MRR

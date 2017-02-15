@@ -41,6 +41,11 @@ class BilinearDiag(Model):
     def local_get_test_input_variables(self):
         return [self.X]
 
+    def predict(self):
+        e1s, rs, e2s = self.compute_codes(mode='test')
+        energies = tf.reduce_sum(e1s * rs * e2s, 1)
+        return tf.nn.sigmoid(energies)
+
     def predict_all_subject_scores(self):
         e1s, rs, e2s = self.compute_codes(mode='test')
         all_subject_codes = self.next_component.get_all_subject_codes(mode='test')

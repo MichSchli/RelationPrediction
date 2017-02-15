@@ -7,6 +7,7 @@ Class representing an hierarchically organized model to be initialized in a depe
 class Model:
     score_all_subjects_graph = None
     score_all_objects_graph = None
+    score_graph = None
     session = None
     next_component=None
 
@@ -25,6 +26,20 @@ class Model:
     '''
     High-level functions:
     '''
+
+    def score(self, triplets):
+        if self.score_graph is None:
+            self.score_graph = self.predict()
+
+        if self.needs_graph():
+            d = {self.get_test_input_variables()[0]: self.train_triplets,
+                 self.get_test_input_variables()[1]: triplets}
+        else:
+            d = {self.get_test_input_variables()[0]: triplets}
+
+        return self.session.run(self.score_graph, feed_dict=d)
+
+
     def score_all_subjects(self, triplets):
         if self.score_all_subjects_graph is None:
             self.score_all_subjects_graph = self.predict_all_subject_scores()
@@ -85,6 +100,9 @@ class Model:
 
     def get_all_codes(self, mode='train'):
         return self.__delegate__('get_all_codes', mode)
+
+    def predict(self):
+        return self.__delegate__('predict')
 
     def predict_all_subject_scores(self):
         return self.__delegate__('predict_all_subject_scores')
