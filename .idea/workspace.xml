@@ -2,21 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aa2b33e7-0e4c-4368-a8bb-e5268fe13a76" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code/extras/highway_layer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code/extras/residual_layer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings/gcn_basis_residual.exp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/common/evaluation.py" afterPath="$PROJECT_DIR$/code/common/evaluation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/common/model_builder.py" afterPath="$PROJECT_DIR$/code/common/model_builder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/decoders/bilinear_diag.py" afterPath="$PROJECT_DIR$/code/decoders/bilinear_diag.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/model.py" afterPath="$PROJECT_DIR$/code/model.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/common/shared_functions.py" afterPath="$PROJECT_DIR$/code/common/shared_functions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/extras/highway_layer.py" afterPath="$PROJECT_DIR$/code/extras/highway_layer.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/train.py" afterPath="$PROJECT_DIR$/code/train.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run-train.sh" afterPath="$PROJECT_DIR$/run-train.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/distmult.exp" afterPath="$PROJECT_DIR$/settings/distmult.exp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/gcn_basis.exp" afterPath="$PROJECT_DIR$/settings/gcn_basis.exp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/gcn_basis_times_diag.exp" afterPath="$PROJECT_DIR$/settings/gcn_basis_times_diag.exp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/gcn_basis_with_diag.exp" afterPath="$PROJECT_DIR$/settings/gcn_basis_with_diag.exp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/gcn_diag.exp" afterPath="$PROJECT_DIR$/settings/gcn_diag.exp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/gcn_basis_residual.exp" afterPath="$PROJECT_DIR$/settings/gcn_basis_residual.exp" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,8 +24,8 @@
       <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="32" column="41" lean-forward="false" selection-start-line="32" selection-start-column="41" selection-end-line="32" selection-end-column="41" />
+            <state relative-caret-position="375">
+              <caret line="90" column="0" lean-forward="true" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -45,7 +35,7 @@
         <entry file="file://$PROJECT_DIR$/code/common/evaluation.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="388">
-              <caret line="166" column="33" lean-forward="true" selection-start-line="166" selection-start-column="33" selection-end-line="166" selection-end-column="33" />
+              <caret line="166" column="33" lean-forward="false" selection-start-line="166" selection-start-column="33" selection-end-line="166" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -55,37 +45,17 @@
         <entry file="file://$PROJECT_DIR$/run-train.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
-              <caret line="3" column="18" lean-forward="false" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+              <caret line="3" column="28" lean-forward="false" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="distmult.exp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="distmult.exp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings/distmult.exp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="21" lean-forward="false" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gcn_basis_times_diag.exp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings/gcn_basis_times_diag.exp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gcn_basis_with_diag.exp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings/gcn_basis_with_diag.exp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="36" column="14" lean-forward="false" selection-start-line="36" selection-start-column="14" selection-end-line="36" selection-end-column="14" />
+            <state relative-caret-position="150">
+              <caret line="10" column="10" lean-forward="false" selection-start-line="10" selection-start-column="10" selection-end-line="27" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -101,11 +71,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gcn_basis_residual.exp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="gcn_basis_residual.exp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/settings/gcn_basis_residual.exp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+            <state relative-caret-position="405">
+              <caret line="27" column="15" lean-forward="true" selection-start-line="27" selection-start-column="15" selection-end-line="27" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="highway_layer.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/extras/highway_layer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="28" column="51" lean-forward="false" selection-start-line="28" selection-start-column="51" selection-end-line="28" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="shared_functions.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/common/shared_functions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -174,7 +164,6 @@
         <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_no_transform.py" />
         <option value="$PROJECT_DIR$/code/encoders/embedding.py" />
         <option value="$PROJECT_DIR$/code/extras/graph_representations.py" />
-        <option value="$PROJECT_DIR$/code/common/shared_functions.py" />
         <option value="$PROJECT_DIR$/code/encoders/relation_embedding.py" />
         <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag.py" />
         <option value="$PROJECT_DIR$/code/encoders/affine_transform.py" />
@@ -185,18 +174,19 @@
         <option value="$PROJECT_DIR$/code/encoders/residual_layer.py" />
         <option value="$PROJECT_DIR$/code/extras/residual_layer.py" />
         <option value="$PROJECT_DIR$/code/common/model_builder.py" />
-        <option value="$PROJECT_DIR$/code/extras/highway_layer.py" />
         <option value="$PROJECT_DIR$/code/decoders/bilinear_diag.py" />
         <option value="$PROJECT_DIR$/code/model.py" />
-        <option value="$PROJECT_DIR$/settings/gcn_basis_residual.exp" />
         <option value="$PROJECT_DIR$/settings/gcn_basis_times_diag.exp" />
         <option value="$PROJECT_DIR$/settings/gcn_basis_with_diag.exp" />
         <option value="$PROJECT_DIR$/settings/gcn_diag.exp" />
         <option value="$PROJECT_DIR$/settings/gcn_basis.exp" />
         <option value="$PROJECT_DIR$/code/common/evaluation.py" />
-        <option value="$PROJECT_DIR$/run-train.sh" />
-        <option value="$PROJECT_DIR$/code/train.py" />
         <option value="$PROJECT_DIR$/settings/distmult.exp" />
+        <option value="$PROJECT_DIR$/run-train.sh" />
+        <option value="$PROJECT_DIR$/code/extras/highway_layer.py" />
+        <option value="$PROJECT_DIR$/code/common/shared_functions.py" />
+        <option value="$PROJECT_DIR$/code/train.py" />
+        <option value="$PROJECT_DIR$/settings/gcn_basis_residual.exp" />
       </list>
     </option>
   </component>
@@ -847,13 +837,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/common/shared_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="58" lean-forward="false" selection-start-line="25" selection-start-column="58" selection-end-line="25" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/common/settings_reader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -955,16 +938,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/extras/highway_layer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/common/io.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
@@ -993,14 +966,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="22" lean-forward="false" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/gcn_basis_residual.exp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1048,7 +1013,39 @@
     <entry file="file://$PROJECT_DIR$/code/common/evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="388">
-          <caret line="166" column="33" lean-forward="true" selection-start-line="166" selection-start-column="33" selection-end-line="166" selection-end-column="33" />
+          <caret line="166" column="33" lean-forward="false" selection-start-line="166" selection-start-column="33" selection-end-line="166" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/distmult.exp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="10" lean-forward="false" selection-start-line="10" selection-start-column="10" selection-end-line="27" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/extras/highway_layer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="28" column="51" lean-forward="false" selection-start-line="28" selection-start-column="51" selection-end-line="28" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/common/shared_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="90" column="0" lean-forward="true" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1056,23 +1053,15 @@
     <entry file="file://$PROJECT_DIR$/run-train.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
-          <caret line="3" column="18" lean-forward="false" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+          <caret line="3" column="28" lean-forward="false" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/train.py">
+    <entry file="file://$PROJECT_DIR$/settings/gcn_basis_residual.exp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
-          <caret line="32" column="41" lean-forward="false" selection-start-line="32" selection-start-column="41" selection-end-line="32" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/distmult.exp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="21" lean-forward="false" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+          <caret line="27" column="15" lean-forward="true" selection-start-line="27" selection-start-column="15" selection-end-line="27" selection-end-column="15" />
           <folding />
         </state>
       </provider>

@@ -26,7 +26,7 @@ class HighwayLayer(Model):
         variance = glorot_variance(self.shape)
 
         self.W = make_tf_variable(0, variance, self.shape)
-        self.b = make_tf_bias(self.shape[1])
+        self.b = make_tf_bias(self.shape[1], init=1)
 
     def local_get_weights(self):
         return [self.W, self.b]

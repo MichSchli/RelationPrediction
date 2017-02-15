@@ -86,8 +86,8 @@ scorer.register_model(model)
 def score_validation_data(validation_data):
     model.set_variable("GraphSplitSize", len(train_triplets))
     score_summary = scorer.compute_scores(validation_data, verbose=False).get_summary()
-    score_summary.dump_degrees('dumps/degrees.in', 'dumps/degrees.out')
-    score_summary.pretty_print()
+    #score_summary.dump_degrees('dumps/degrees.in', 'dumps/degrees.out')
+    #score_summary.pretty_print()
 
     model.set_variable("GraphSplitSize", int(general_settings['GraphSplitSize']))
 
@@ -96,7 +96,12 @@ def score_validation_data(validation_data):
     elif evaluation_settings['Metric'] == 'Accuracy':
         lookup_string = score_summary.accuracy_string()
 
-    return score_summary.results['Filtered'][lookup_string]
+    early_stopping = score_summary.results['Filtered'][lookup_string]
+
+    score_summary = scorer.compute_scores(test_triplets, verbose=False).get_summary()
+    score_summary.pretty_print()
+
+    return early_stopping
 
 
 opp.set_early_stopping_score_function(score_validation_data)

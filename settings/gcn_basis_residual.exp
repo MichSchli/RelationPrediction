@@ -4,7 +4,7 @@
 	InternalEncoderDimension=200
 	NumberOfBasisFunctions=3
 	NumberOfLayers=2
-	UseInputTransform=No
+	UseInputTransform=Yes
 	UseOutputTransform=No
 	AddDiagonal=No
 	DiagonalCoefficients=No
@@ -22,7 +22,7 @@
 	ReportTrainLossEvery=20
 
 	[EarlyStopping]
-		CheckEvery=500
+		CheckEvery=100
 		BurninPhaseDuration=5000
 
 	[Algorithm]

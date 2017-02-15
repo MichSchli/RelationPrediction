@@ -22,5 +22,8 @@ def make_tf_variable(mean, variance, shape, init="normal"):
     return tf.Variable(initializer)
 
 
-def make_tf_bias(shape):
-    return tf.Variable(np.zeros(shape).astype(np.float32))
+def make_tf_bias(shape, init=0):
+    if init == 0:
+        return tf.Variable(np.zeros(shape).astype(np.float32))
+    elif init == 1:
+        return tf.Variable(np.ones(shape).astype(np.float32))
