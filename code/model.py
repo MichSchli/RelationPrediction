@@ -144,7 +144,9 @@ class Model:
     '''
     Run the function locally if it exists, then compose with the next component through addition:
     '''
-    def __local_expand_delegate__(self, name, *args, base=[]):
+    def __local_expand_delegate__(self, name, *args, base=None):
+        if base is None:
+            base = []
         local_function_name = 'local_'+name
         if hasattr(self, local_function_name):
             local_function = getattr(self, local_function_name)

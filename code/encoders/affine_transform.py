@@ -79,4 +79,5 @@ class AffineTransform(Model):
             hidden_subject = tf.nn.relu(hidden_subject)
             hidden_object = tf.nn.relu(hidden_object)
 
+
         return hidden_subject, hidden_relation, hidden_object

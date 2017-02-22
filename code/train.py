@@ -144,6 +144,7 @@ model.initialize_train()
 optimizer_weights = model.get_weights()
 optimizer_input = model.get_train_input_variables()
 loss = model.get_loss(mode='train') + model.get_regularization()
+print(optimizer_input)
 
 '''
 Train with Converge:

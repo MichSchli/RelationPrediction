@@ -52,8 +52,8 @@ class BasisGcnTimesDiag(MessageGcn):
 
     def compute_coefficients(self):
         message_types = self.get_graph().get_type_indices()
-        forward_type_scaling = tf.nn.embedding_lookup(self.C_forward, message_types)
-        backward_type_scaling = tf.nn.embedding_lookup(self.C_backward, message_types)
+        forward_type_scaling = tf.nn.sigmoid(tf.nn.embedding_lookup(self.C_forward, message_types))
+        backward_type_scaling = tf.nn.sigmoid(tf.nn.embedding_lookup(self.C_backward, message_types))
         return backward_type_scaling, forward_type_scaling
 
     def compute_basis_functions(self, receiver_features, sender_features):

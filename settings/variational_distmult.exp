@@ -1,5 +1,5 @@
 [Encoder]
-	Name=embedding
+	Name=variational_embedding
 
 [Decoder]
 	Name=bilinear-diag
@@ -14,6 +14,7 @@
 
 	[EarlyStopping]
 		CheckEvery=500
+		BurninPhaseDuration=5000
 
 	[Algorithm]
 		Name=Adam
