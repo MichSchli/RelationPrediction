@@ -135,21 +135,6 @@ class Representation(Model):
         self.relation_count = settings['RelationCount']
         self.edge_count = self.triples.shape[0]*2
 
-
-        print("TEMP")
-        neighbors = {i:[] for i in range(self.entity_count)}
-        for triplet in triples:
-            neighbors[triplet[0]].append(triplet[2])
-            neighbors[triplet[2]].append(triplet[0])
-
-        c = 0
-        for nbg in neighbors.values():
-            v = len(nbg)
-            c += (v-1) * v
-
-        print(c)
-
-        exit()
         #self.process(self.triples)
 
         #self.graph = None#MessageGraph(triples, self.entity_count, self.relation_count)
