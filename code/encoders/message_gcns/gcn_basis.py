@@ -32,6 +32,8 @@ class BasisGcn(MessageGcn):
         self.C_forward = make_tf_variable(0, type_init_var, type_matrix_shape)
         self.C_backward = make_tf_variable(0, type_init_var, type_matrix_shape)
 
+        print(self.C_forward)
+
         self.b = make_tf_bias(self.shape[1])
 
 

@@ -89,6 +89,14 @@ def score_validation_data(validation_data):
     #score_summary.dump_degrees('dumps/degrees.in', 'dumps/degrees.out')
     #score_summary.pretty_print()
 
+    f = open('dumps/forward.rels', 'w')
+    for row in model.session.run(model.next_component.next_component.C_forward):
+        print('\t'.join([str(x) for x in row]), file=f)
+
+    f = open('dumps/backward.rels', 'w')
+    for row in model.session.run(model.next_component.next_component.C_forward):
+        print('\t'.join([str(x) for x in row]), file=f)
+
     model.set_variable("GraphSplitSize", int(general_settings['GraphSplitSize']))
 
     if evaluation_settings['Metric'] == 'MRR':

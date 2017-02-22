@@ -2,12 +2,12 @@
 	Name=gcn_basis
 	DropoutKeepProbability=0.8
 	InternalEncoderDimension=200
-	NumberOfBasisFunctions=5
+	NumberOfBasisFunctions=2
 	NumberOfLayers=1
 	UseInputTransform=No
 	UseOutputTransform=No
 	AddDiagonal=No
-	DiagonalCoefficients=Yes
+	DiagonalCoefficients=No
 	SkipConnections=None
 
 [Decoder]
@@ -19,11 +19,11 @@
 
 [Optimizer]
 	MaxGradientNorm=1
-	ReportTrainLossEvery=100
+	ReportTrainLossEvery=10
 
 	[EarlyStopping]
-		CheckEvery=500
-		BurninPhaseDuration=5000
+		CheckEvery=50
+		BurninPhaseDuration=100
 
 	[Algorithm]
 		Name=Adam
@@ -31,7 +31,7 @@
 
 [General]
 	NegativeSampleRate=1
-	GraphSplitSize=20000
+	GraphSplitSize=250000
 
 [Evaluation]
 	Metric=MRR
