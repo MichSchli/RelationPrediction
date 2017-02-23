@@ -82,20 +82,25 @@ scorer.register_data(valid_triplets)
 scorer.register_data(test_triplets)
 scorer.register_degrees(train_triplets)
 scorer.register_model(model)
+scorer.finalize_frequency_computation(train_triplets + valid_triplets + test_triplets)
 
 def score_validation_data(validation_data):
     model.set_variable("GraphSplitSize", len(train_triplets))
     score_summary = scorer.compute_scores(validation_data, verbose=False).get_summary()
-    #score_summary.dump_degrees('dumps/degrees.in', 'dumps/degrees.out')
+    score_summary.dump_degrees('dumps/degrees.in', 'dumps/degrees.out')
+    score_summary.dump_frequencies('dumps/near.freq', 'dumps/target.freq')
     #score_summary.pretty_print()
 
+    '''
     f = open('dumps/forward.rels', 'w')
     for row in model.session.run(model.next_component.next_component.C_forward):
         print('\t'.join([str(x) for x in row]), file=f)
 
     f = open('dumps/backward.rels', 'w')
-    for row in model.session.run(model.next_component.next_component.C_forward):
+    for row in model.session.run(model.next_component.next_component.C_backward):
         print('\t'.join([str(x) for x in row]), file=f)
+
+    '''
 
     model.set_variable("GraphSplitSize", int(general_settings['GraphSplitSize']))
 

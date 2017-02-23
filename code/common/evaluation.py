@@ -7,7 +7,7 @@ class MrrSummary():
     results = {'Raw':{}, 'Filtered':{}}
 
     
-    def __init__(self, raw_ranks, filtered_ranks, in_degrees, out_degrees):
+    def __init__(self, raw_ranks, filtered_ranks, in_degrees, out_degrees, vertex_freqs, relation_freqs):
         self.results['Raw'][self.mrr_string()] = self.get_mrr(raw_ranks)
         self.results['Filtered'][self.mrr_string()] = self.get_mrr(filtered_ranks)
 
@@ -17,6 +17,13 @@ class MrrSummary():
 
         self.results['Raw'][self.degree_string()] = self.get_individual_degree_scores(raw_ranks, in_degrees, out_degrees)
         self.results['Filtered'][self.degree_string()] = self.get_individual_degree_scores(filtered_ranks, in_degrees, out_degrees)
+
+        self.results['Raw'][self.freq_string()] = self.get_individual_freq_scores(raw_ranks, vertex_freqs, relation_freqs)
+        self.results['Filtered'][self.freq_string()] = self.get_individual_freq_scores(filtered_ranks, vertex_freqs, relation_freqs)
+
+    def get_individual_freq_scores(self, ranks, vertex_freqs, relation_freqs):
+        mrrs = [1/r for r in ranks]
+        return zip(mrrs, vertex_freqs, relation_freqs)
 
     def get_individual_degree_scores(self, ranks, in_degrees, out_degrees):
         in_res = [0] * len(in_degrees)
@@ -103,6 +110,22 @@ class MrrSummary():
 
         out_file.close()
 
+    def freq_string(self):
+        return "Frequency"
+
+
+    def dump_frequencies(self, vertex_filename, relation_filename, filter='Filtered'):
+
+        v_file = open(vertex_filename, 'w+')
+        r_file = open(relation_filename, 'w+')
+
+        for mrr, v_freq, r_freq in self.results[filter][self.freq_string()]:
+            v_file.write('\t'.join([str(mrr), str(v_freq)]) + '\n')
+            r_file.write('\t'.join([str(mrr), str(r_freq)]) + '\n')
+
+        v_file.close()
+        r_file.close()
+
 
 class MrrScore():
 
@@ -119,14 +142,19 @@ class MrrScore():
         self.predicted_probabilities = [None]*len(dataset)*2
         self.in_degree = [None]*len(dataset)*2
         self.out_degree = [None]*len(dataset)*2
+        self.vertex_freq = [None]*len(dataset)*2
+        self.relation_freq = [None]*len(dataset)*2
 
-    def append_line(self, evaluations, gold_idx, filter_idxs, in_degree, out_degree):
+    def append_line(self, evaluations, gold_idx, filter_idxs, in_degree, out_degree, vertex_freq, relation_freq):
         score_gold = evaluations[gold_idx]
         self.predicted_probabilities[self.pointer] = score_gold
         self.raw_ranks[self.pointer] = np.sum(evaluations >= score_gold)
         self.filtered_ranks[self.pointer] = np.sum(evaluations >= score_gold) - (np.sum(evaluations[filter_idxs] >= score_gold)) + 1
         self.in_degree[self.pointer] = in_degree
         self.out_degree[self.pointer] = out_degree
+
+        self.vertex_freq[self.pointer] = vertex_freq
+        self.relation_freq[self.pointer] = relation_freq
 
         self.pointer += 1
         
@@ -140,7 +168,7 @@ class MrrScore():
                   file=outfile)
 
     def get_summary(self):
-        return MrrSummary(self.raw_ranks, self.filtered_ranks, self.in_degree, self.out_degree)
+        return MrrSummary(self.raw_ranks, self.filtered_ranks, self.in_degree, self.out_degree, self.vertex_freq, self.relation_freq)
 
     def summarize(self):
         summary = self.get_summary()
@@ -189,11 +217,16 @@ class Scorer():
     in_degree = {}
     out_degree = {}
 
+    relation_freqs = {}
+    avg_freq = {}
+
     def __init__(self, settings):
         self.known_object_triples = {}
         self.known_subject_triples = {}
         self.in_degree = {}
         self.out_degree = {}
+        self.relation_freqs = {}
+        self.avg_freq = {}
         self.settings = settings
 
     def extend_triple_dict(self, dictionary, triplets, object_list=True):
@@ -213,6 +246,7 @@ class Scorer():
     def register_data(self, triples):
         for triplet in triples:
             sub = triplet[0]
+            rel = triplet[1]
             obj = triplet[2]
 
             if sub not in self.in_degree:
@@ -227,6 +261,11 @@ class Scorer():
             if obj not in self.out_degree:
                 self.out_degree[obj] = 0
 
+            if rel not in self.relation_freqs:
+                self.relation_freqs[rel] = 1
+            else:
+                self.relation_freqs[rel] += 1
+
         self.extend_triple_dict(self.known_subject_triples, triples, object_list=False)
         self.extend_triple_dict(self.known_object_triples, triples)
 
@@ -240,6 +279,32 @@ class Scorer():
 
     def register_model(self, model):
         self.model = model
+
+    def finalize_frequency_computation(self, triples):
+        counts = {}
+        for triplet in triples:
+            sub = triplet[0]
+            rel = triplet[1]
+            obj = triplet[2]
+
+            if sub not in self.avg_freq:
+                self.avg_freq[sub] = 0
+                counts[sub] = 0
+
+            if obj not in self.avg_freq:
+                self.avg_freq[obj] = 0
+                counts[obj] = 0
+
+            self.avg_freq[sub] += self.relation_freqs[rel]
+            self.avg_freq[obj] += self.relation_freqs[rel]
+
+            counts[sub] += 1
+            counts[obj] += 1
+
+        for k in counts:
+            self.avg_freq[k] /= float(counts[k])
+
+
 
     def get_degrees(self, vertex):
         return self.in_degree[vertex], self.out_degree[vertex]
@@ -282,9 +347,13 @@ class Scorer():
                 i += 1
 
             degrees = self.get_degrees(triplet[2])
+
+            avg_freq = self.avg_freq[triplet[2]]
+            rel_freq = self.relation_freqs[triplet[1]]
+
             known_subject_idxs = self.known_subject_triples[(triplet[2],triplet[1])]
             gold_idx = triplet[0]            
-            score.append_line(evaluations, gold_idx, known_subject_idxs, degrees[0], degrees[1])
+            score.append_line(evaluations, gold_idx, known_subject_idxs, degrees[0], degrees[1], avg_freq, rel_freq)
 
         if verbose:
             print("\nEvaluating objects...")
@@ -298,9 +367,13 @@ class Scorer():
                 i += 1
 
             degrees = self.get_degrees(triplet[0])
+
+            avg_freq = self.avg_freq[triplet[0]]
+            rel_freq = self.relation_freqs[triplet[1]]
+
             known_object_idxs = self.known_object_triples[(triplet[0],triplet[1])]
             gold_idx = triplet[2]
-            score.append_line(evaluations, gold_idx, known_object_idxs, degrees[0], degrees[1])
+            score.append_line(evaluations, gold_idx, known_object_idxs, degrees[0], degrees[1], avg_freq, rel_freq)
 
         print("")
         return score

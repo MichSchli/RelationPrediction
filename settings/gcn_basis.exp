@@ -1,6 +1,6 @@
 [Encoder]
 	Name=gcn_basis
-	DropoutKeepProbability=0.8
+	DropoutKeepProbability=0.9
 	InternalEncoderDimension=200
 	NumberOfBasisFunctions=2
 	NumberOfLayers=1
@@ -19,10 +19,10 @@
 
 [Optimizer]
 	MaxGradientNorm=1
-	ReportTrainLossEvery=10
+	ReportTrainLossEvery=2
 
 	[EarlyStopping]
-		CheckEvery=50
+		CheckEvery=4
 		BurninPhaseDuration=100
 
 	[Algorithm]
@@ -31,7 +31,7 @@
 
 [General]
 	NegativeSampleRate=1
-	GraphSplitSize=250000
+	GraphSplitSize=3500
 
 [Evaluation]
 	Metric=MRR
