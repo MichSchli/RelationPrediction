@@ -305,7 +305,6 @@ class Scorer():
             self.avg_freq[k] /= float(counts[k])
 
 
-
     def get_degrees(self, vertex):
         return self.in_degree[vertex], self.out_degree[vertex]
 
@@ -377,3 +376,25 @@ class Scorer():
 
         print("")
         return score
+
+    def dump_all_scores(self, triples, subject_file, object_file):
+        pred_s = self.model.score_all_subjects(triples)
+        f = open(subject_file, 'w')
+        for prediction, triplet in zip(pred_s, triples):
+            known_subject_idxs = self.known_subject_triples[(triplet[2],triplet[1])]
+            target_score = prediction[triplet[0]]
+            other_scores = np.delete(prediction, known_subject_idxs)
+
+            print(str(target_score) + " | "+'\t'.join([str(score) for score in other_scores]), file=f)
+
+        pred_o = self.model.score_all_objects(triples)
+        f = open(object_file, 'w')
+        for prediction, triplet in zip(pred_o, triples):
+            known_object_idxs = self.known_object_triples[(triplet[0],triplet[1])]
+            target_score = prediction[triplet[2]]
+            other_scores = np.delete(prediction, known_object_idxs)
+
+            print(str(target_score) + " | "+'\t'.join([str(score) for score in other_scores]), file=f)
+
+
+

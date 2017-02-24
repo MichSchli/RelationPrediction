@@ -1,7 +1,7 @@
 [Encoder]
 	Name=gcn_basis
 	DropoutKeepProbability=0.9
-	InternalEncoderDimension=200
+	InternalEncoderDimension=50
 	NumberOfBasisFunctions=2
 	NumberOfLayers=1
 	UseInputTransform=No
@@ -15,14 +15,14 @@
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=200
+	CodeDimension=50
 
 [Optimizer]
 	MaxGradientNorm=1
-	ReportTrainLossEvery=2
+	ReportTrainLossEvery=50
 
 	[EarlyStopping]
-		CheckEvery=4
+		CheckEvery=250
 		BurninPhaseDuration=100
 
 	[Algorithm]

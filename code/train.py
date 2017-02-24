@@ -168,3 +168,5 @@ optimizer = build_tensorflow(loss, optimizer_weights, optimizer_parameters, opti
 optimizer.set_session(model.session)
 
 optimizer.fit(train_triplets, validation_data=valid_triplets)
+scorer.dump_all_scores(valid_triplets, 'dumps/subjects.valid', 'dumps/objects.valid')
+scorer.dump_all_scores(test_triplets, 'dumps/subjects.test', 'dumps/objects.test')
