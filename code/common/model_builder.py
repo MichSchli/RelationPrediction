@@ -4,6 +4,7 @@ from decoders.bilinear_diag import BilinearDiag
 from extras.graph_representations import Representation
 
 from decoders.nonlinear_transform import NonlinearTransform
+from decoders.complex import Complex
 
 from encoders.bipartite_gcn import BipartiteGcn
 from encoders.message_gcns.gcn_diag import DiagGcn
@@ -283,6 +284,8 @@ def apply_basis_gcn(encoder_settings, encoding, internal_shape, layers):
 def build_decoder(encoder, decoder_settings):
     if decoder_settings['Name'] == "bilinear-diag":
         return BilinearDiag(encoder, decoder_settings)
+    elif decoder_settings['Name'] == "complex":
+        return Complex(int(decoder_settings['CodeDimension']), decoder_settings, next_component=encoder)
     elif decoder_settings['Name'] == "nonlinear-transform":
         return NonlinearTransform(encoder, decoder_settings)
     else:

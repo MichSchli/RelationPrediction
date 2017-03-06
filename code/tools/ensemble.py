@@ -70,14 +70,26 @@ class WeightEnsemble():
             others[i] = self.weight * left[1][i] + (1 - self.weight) * right[1][i]
         rank = np.sum(np.array(others) >= target) + 1
 
-        return 1 / rank
+        return rank
 
     def combined_mrr(self):
-        return np.mean(list(self.combine()))
+        return np.mean(1 / self.ranks)
+
+    def compute_ranks(self):
+        self.ranks = np.array(list(self.combine()))
+
+    def hits_at(self, threshold):
+        hits = self.ranks[self.ranks <= threshold]
+        return len(hits) / len(self.ranks)
 
 if args.method == 'cutoff':
     model = CutoffEnsemble(1000, args.p1, args.p2)
 elif args.method == 'weighted_sum':
     model = WeightEnsemble(0.5, args.p1, args.p2)
 
+model.compute_ranks()
+
 print(model.combined_mrr())
+print(model.hits_at(1))
+print(model.hits_at(3))
+print(model.hits_at(10))

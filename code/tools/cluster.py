@@ -59,7 +59,11 @@ for t in source_triplets:
 
 plt.get_cmap('plasma')
 
-t = [np.log(d[name]) for name in names]
+t = [d[name] for name in names]
+
+print(names[np.argmax(t)])
+print(np.max(t))
+print(X[np.argmax(t)])
 
 
 ax.scatter(X[:,0], X[:,1], t, marker='o', alpha=1, s=5)

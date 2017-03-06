@@ -1,0 +1,28 @@
+[Encoder]
+	Name=embedding
+
+[Decoder]
+	Name=complex
+	RegularizationParameter=0.01
+
+[Shared]
+	CodeDimension=200
+
+[Optimizer]
+	MaxGradientNorm=1
+	ReportTrainLossEvery=100
+
+	[EarlyStopping]
+		CheckEvery=500
+
+	[Algorithm]
+		Name=Adam
+		learning_rate=0.01
+
+[General]
+	NegativeSampleRate=1
+	GraphSplitSize=15000
+
+
+[Evaluation]
+	Metric=MRR
