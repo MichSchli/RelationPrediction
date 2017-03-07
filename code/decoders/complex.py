@@ -32,7 +32,15 @@ class Complex(Model):
     def get_loss(self, mode='train'):
         e1s, rs, e2s = self.compute_codes(mode=mode)
 
-        energies = tf.reduce_sum(e1s * rs * e2s, 1)
+        e1s_r, e1s_i = self.extract_real_and_imaginary(e1s)
+        e2s_r, e2s_i = self.extract_real_and_imaginary(e2s)
+        rs_r, rs_i = self.extract_real_and_imaginary(rs)
+
+        energies = tf.reduce_sum(e1s_r * rs_r * e2s_r, 1) \
+                   + tf.reduce_sum(e1s_i * rs_r * e2s_i, 1) \
+                   + tf.reduce_sum(e1s_r * rs_i * e2s_i, 1) \
+                   - tf.reduce_sum(e1s_i * rs_i * e2s_r, 1)
+
         return tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(energies, self.Y))
 
     def local_initialize_train(self):
@@ -52,10 +60,10 @@ class Complex(Model):
         e2s_r, e2s_i = self.extract_real_and_imaginary(e2s)
         rs_r, rs_i = self.extract_real_and_imaginary(rs)
 
-        energies = tf.reduce_sum(e1s_r * rs_r * e2s_r) \
-                   + tf.reduce_sum(e1s_i * rs_r * e2s_i) \
-                   + tf.reduce_sum(e1s_r * rs_i * e2s_i) \
-                   - tf.reduce_sum(e1s_i * rs_i * e2s_r)
+        energies = tf.reduce_sum(e1s_r * rs_r * e2s_r, 1) \
+                   + tf.reduce_sum(e1s_i * rs_r * e2s_i, 1) \
+                   + tf.reduce_sum(e1s_r * rs_i * e2s_i, 1) \
+                   - tf.reduce_sum(e1s_i * rs_i * e2s_r, 1)
 
         return tf.nn.sigmoid(energies)
 
