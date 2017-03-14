@@ -1,5 +1,5 @@
 import numpy as np
-
+import math
 
 class MrrSummary():
 
@@ -334,15 +334,27 @@ class Scorer():
     def compute_mrr_scores(self, triples, verbose=False):
         score = MrrScore(triples)
 
+        chunk_size = 52
+        n_chunks = math.ceil(len(triples) / chunk_size)
+
+        for chunk in range(n_chunks):
+            i_b = chunk * chunk_size
+            i_e = i_b + chunk_size
+
+            triple_chunk = triples[i_b:i_e]
+            self.evaluate_mrr(score, triple_chunk, verbose)
+
+        return score
+
+    def evaluate_mrr(self, score, triples, verbose):
         if verbose:
             print("Evaluating subjects...")
             i = 1
-            
-        pred_s = self.model.score_all_subjects(triples)
 
+        pred_s = self.model.score_all_subjects(triples)
         for evaluations, triplet in zip(pred_s, triples):
             if verbose:
-                print("Computing ranks: "+str(i)+" of "+str(len(triples)), end='\r')
+                print("Computing ranks: " + str(i) + " of " + str(len(triples)), end='\r')
                 i += 1
 
             degrees = self.get_degrees(triplet[2])
@@ -350,19 +362,18 @@ class Scorer():
             avg_freq = self.avg_freq[triplet[2]]
             rel_freq = self.relation_freqs[triplet[1]]
 
-            known_subject_idxs = self.known_subject_triples[(triplet[2],triplet[1])]
-            gold_idx = triplet[0]            
+            known_subject_idxs = self.known_subject_triples[(triplet[2], triplet[1])]
+            gold_idx = triplet[0]
             score.append_line(evaluations, gold_idx, known_subject_idxs, degrees[0], degrees[1], avg_freq, rel_freq)
 
         if verbose:
             print("\nEvaluating objects...")
             i = 1
-            
-        pred_o = self.model.score_all_objects(triples)
 
+        pred_o = self.model.score_all_objects(triples)
         for evaluations, triplet in zip(pred_o, triples):
             if verbose:
-                print("Computing ranks: "+str(i)+" of "+str(len(triples)), end='\r')
+                print("Computing ranks: " + str(i) + " of " + str(len(triples)), end='\r')
                 i += 1
 
             degrees = self.get_degrees(triplet[0])
@@ -370,12 +381,12 @@ class Scorer():
             avg_freq = self.avg_freq[triplet[0]]
             rel_freq = self.relation_freqs[triplet[1]]
 
-            known_object_idxs = self.known_object_triples[(triplet[0],triplet[1])]
+            known_object_idxs = self.known_object_triples[(triplet[0], triplet[1])]
             gold_idx = triplet[2]
             score.append_line(evaluations, gold_idx, known_object_idxs, degrees[0], degrees[1], avg_freq, rel_freq)
 
-        print("")
-        return score
+        if verbose:
+            print("")
 
     def dump_all_scores(self, triples, subject_file, object_file):
         pred_s = self.model.score_all_subjects(triples)
