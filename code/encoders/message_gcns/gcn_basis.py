@@ -85,7 +85,7 @@ class BasisGcn(MessageGcn):
         collected_messages_f = tf.sparse_tensor_dense_matmul(mtr_f, forward_messages)
         collected_messages_b = tf.sparse_tensor_dense_matmul(mtr_b, backward_messages)
 
-        if mode=='train':
+        if False: #mode=='train':
             choice = tf.select(tf.random_uniform([50,1]) > 0.5, tf.ones([50,1], dtype=tf.int32), tf.zeros([50,1], dtype=tf.int32))
             options = tf.constant([[2., 0.], [0., 2.]])
             mixer = tf.nn.embedding_lookup(options, choice)
@@ -99,3 +99,10 @@ class BasisGcn(MessageGcn):
             new_embedding = tf.nn.relu(new_embedding)
 
         return new_embedding
+
+    def local_get_regularization(self):
+        regularization = tf.reduce_mean(tf.square(self.W_forward))
+        regularization += tf.reduce_mean(tf.square(self.W_backward))
+        regularization += tf.reduce_mean(tf.square(self.W_self))
+
+        return 0.0 * regularization

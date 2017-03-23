@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aa2b33e7-0e4c-4368-a8bb-e5268fe13a76" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/decoders/bilinear_diag.py" afterPath="$PROJECT_DIR$/code/decoders/bilinear_diag.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/decoders/complex.py" afterPath="$PROJECT_DIR$/code/decoders/complex.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py" afterPath="$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run-train.sh" afterPath="$PROJECT_DIR$/run-train.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/distmult.exp" afterPath="$PROJECT_DIR$/settings/distmult.exp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/gcn_basis.exp" afterPath="$PROJECT_DIR$/settings/gcn_basis.exp" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,8 +26,8 @@
       <file leaf-file-name="run-train.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run-train.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="17" lean-forward="false" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+            <state relative-caret-position="30">
+              <caret line="2" column="21" lean-forward="false" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -30,18 +36,8 @@
       <file leaf-file-name="distmult.exp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings/distmult.exp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="20" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gcn_basis.exp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings/gcn_basis.exp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="21" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+            <state relative-caret-position="210">
+              <caret line="14" column="19" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -50,7 +46,7 @@
       <file leaf-file-name="model_builder.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="463">
+            <state relative-caret-position="4050">
               <caret line="287" column="103" lean-forward="false" selection-start-line="287" selection-start-column="103" selection-end-line="287" selection-end-column="103" />
               <folding>
                 <element signature="e#0#57#0" expanded="true" />
@@ -59,63 +55,73 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ensemble.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/tools/ensemble.py">
+      <file leaf-file-name="gcn_basis.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1290">
-              <caret line="87" column="30" lean-forward="false" selection-start-line="87" selection-start-column="30" selection-end-line="87" selection-end-column="30" />
+            <state relative-caret-position="514">
+              <caret line="107" column="18" lean-forward="false" selection-start-line="107" selection-start-column="18" selection-end-line="107" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="begin_job.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/begin_job.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="evaluation.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/common/evaluation.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="199">
+              <caret line="363" column="0" lean-forward="true" selection-start-line="363" selection-start-column="0" selection-end-line="363" selection-end-column="0" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#0#18#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gcn_basis.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1290">
-              <caret line="90" column="45" lean-forward="false" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="message_gcn.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/message_gcn.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="14" column="4" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="18" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2190">
-              <caret line="146" column="62" lean-forward="false" selection-start-line="146" selection-start-column="62" selection-end-line="146" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="complex.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="complex.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/decoders/complex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="65" column="58" lean-forward="false" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="58" />
+            <state relative-caret-position="298">
+              <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="complex.exp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings/complex.exp">
+      <file leaf-file-name="bilinear_diag.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/decoders/bilinear_diag.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="22" lean-forward="false" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+            <state relative-caret-position="439">
+              <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="33" selection-end-column="97" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="auxilliaries.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/common/auxilliaries.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="675">
+              <caret line="49" column="44" lean-forward="false" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nonlinear_transform.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code/decoders/nonlinear_transform.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="825">
+              <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -166,7 +172,6 @@
         <option value="$PROJECT_DIR$/code/extras/highway_layer.py" />
         <option value="$PROJECT_DIR$/code/common/shared_functions.py" />
         <option value="$PROJECT_DIR$/settings/gcn_basis_residual.exp" />
-        <option value="$PROJECT_DIR$/code/decoders/bilinear_diag.py" />
         <option value="$PROJECT_DIR$/code/encoders/affine_transform.py" />
         <option value="$PROJECT_DIR$/settings/variational_distmult.exp" />
         <option value="$PROJECT_DIR$/settings/variational_gcn_basis.exp" />
@@ -176,17 +181,18 @@
         <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis_times_diag.py" />
         <option value="$PROJECT_DIR$/code/extras/graph_representations.py" />
         <option value="$PROJECT_DIR$/code/encoders/direct_message_gcn.py" />
-        <option value="$PROJECT_DIR$/code/common/evaluation.py" />
-        <option value="$PROJECT_DIR$/settings/distmult.exp" />
         <option value="$PROJECT_DIR$/code/tools/cluster.py" />
-        <option value="$PROJECT_DIR$/code/train.py" />
         <option value="$PROJECT_DIR$/code/tools/ensemble.py" />
-        <option value="$PROJECT_DIR$/settings/gcn_basis.exp" />
-        <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py" />
-        <option value="$PROJECT_DIR$/run-train.sh" />
         <option value="$PROJECT_DIR$/code/common/model_builder.py" />
         <option value="$PROJECT_DIR$/settings/complex.exp" />
+        <option value="$PROJECT_DIR$/settings/gcn_basis.exp" />
+        <option value="$PROJECT_DIR$/code/train.py" />
+        <option value="$PROJECT_DIR$/code/common/evaluation.py" />
+        <option value="$PROJECT_DIR$/run-train.sh" />
+        <option value="$PROJECT_DIR$/settings/distmult.exp" />
+        <option value="$PROJECT_DIR$/code/decoders/bilinear_diag.py" />
         <option value="$PROJECT_DIR$/code/decoders/complex.py" />
+        <option value="$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py" />
       </list>
     </option>
   </component>
@@ -211,6 +217,107 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="code">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="code">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="tools">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="code">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="experts">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="code">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="evaluation">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="code">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="common">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -311,24 +418,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="extras" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LinkPrediction" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LinkPrediction" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="encoders" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -389,107 +478,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="code">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="code">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="tools">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="code">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="experts">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="code">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="evaluation">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="LinkPrediction">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="code">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="common">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -765,14 +753,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25272927" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925585" sideWeight="0.5018868" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32881" sideWeight="0.49811321" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3382046" sideWeight="0.49811321" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -802,7 +790,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/code/encoders/gcn.py" />
     <entry file="file://$PROJECT_DIR$/code/encoders/gated_basis_gcn.py" />
     <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -815,13 +802,6 @@
     <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_sigmoid_gate.py" />
     <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_diag_self_sigmoid.py" />
     <entry file="file://$PROJECT_DIR$/code/encoders/embedding.py" />
-    <entry file="file://$PROJECT_DIR$/code/common/auxilliaries.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-377">
-          <caret line="49" column="44" lean-forward="false" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/common/settings_reader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -941,13 +921,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/decoders/nonlinear_transform.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis_times_diag.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="750">
@@ -1025,37 +998,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/decoders/bilinear_diag.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="21" column="42" lean-forward="false" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/tools/cluster.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
           <caret line="61" column="12" lean-forward="false" selection-start-line="61" selection-start-column="12" selection-end-line="61" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2490">
-          <caret line="171" column="1" lean-forward="false" selection-start-line="171" selection-start-column="1" selection-end-line="171" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/common/evaluation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2265">
-          <caret line="151" column="77" lean-forward="false" selection-start-line="151" selection-start-column="44" selection-end-line="151" selection-end-column="77" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1063,40 +1009,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1290">
           <caret line="87" column="30" lean-forward="false" selection-start-line="87" selection-start-column="30" selection-end-line="87" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/run-train.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="17" lean-forward="false" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/distmult.exp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="20" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1290">
-          <caret line="90" column="45" lean-forward="false" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/message_gcn.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="14" column="4" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="18" selection-end-column="26" />
+          <caret line="14" column="4" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="18" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -1105,25 +1024,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2190">
           <caret line="146" column="62" lean-forward="false" selection-start-line="146" selection-start-column="62" selection-end-line="146" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="287" column="103" lean-forward="false" selection-start-line="287" selection-start-column="103" selection-end-line="287" selection-end-column="103" />
-          <folding>
-            <element signature="e#0#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/gcn_basis.exp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="21" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1135,10 +1035,102 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/code/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1515">
+          <caret line="106" column="34" lean-forward="false" selection-start-line="106" selection-start-column="34" selection-end-line="106" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/gcn_basis.exp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="22" lean-forward="false" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/common/model_builder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4050">
+          <caret line="287" column="103" lean-forward="false" selection-start-line="287" selection-start-column="103" selection-end-line="287" selection-end-column="103" />
+          <folding>
+            <element signature="e#0#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/begin_job.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run-train.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="21" lean-forward="false" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/decoders/nonlinear_transform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="825">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/common/evaluation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="363" column="0" lean-forward="true" selection-start-line="363" selection-start-column="0" selection-end-line="363" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/common/auxilliaries.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="49" column="44" lean-forward="false" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/distmult.exp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="19" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/decoders/bilinear_diag.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="33" selection-end-column="97" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/code/decoders/complex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="65" column="58" lean-forward="false" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="58" />
+        <state relative-caret-position="298">
+          <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/encoders/message_gcns/gcn_basis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="107" column="18" lean-forward="false" selection-start-line="107" selection-start-column="18" selection-end-line="107" selection-end-column="18" />
           <folding />
         </state>
       </provider>

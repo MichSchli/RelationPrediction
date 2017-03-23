@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-DATASET="DegreeData"
-SETTINGS="complex.exp"
+DATASET="FB-Toutanova"
+SETTINGS="distmult.exp"
 
 SCRIPT_DIR=$(dirname $(readlink -f $0))
 
