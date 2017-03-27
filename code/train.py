@@ -121,6 +121,37 @@ opp.set_early_stopping_score_function(score_validation_data)
 
 print(len(train_triplets))
 
+def sample_edge_neighborhood(triplets, sample_size):
+    print("Sampling neighborhood...")
+
+    #initialize
+    initial_idx = np.random.choice(np.arange(triplets.shape[0]))
+    choice = triplets[initial_idx]
+    selected_edges = np.array([initial_idx])
+
+    neighborhood = np.array([], dtype=np.int32)
+
+    for _ in range(1,sample_size):
+        neighborhood_additions = np.where(
+            np.logical_or(
+                np.logical_or(
+                    np.logical_or(
+                        triplets[:, 0] == choice[0],
+                        triplets[:, 2] == choice[0]),
+                    triplets[:, 0] == choice[2]),
+                triplets[:, 2] == choice[2])
+        )[0]
+
+        neighborhood_additions = np.setdiff1d(neighborhood_additions, selected_edges, assume_unique=True)
+        neighborhood = np.union1d(neighborhood, neighborhood_additions)
+
+        choice_idx = np.random.choice(neighborhood)
+        choice = triplets[choice_idx]
+        selected_edges = np.concatenate((selected_edges, [choice_idx]))
+
+    print("Done!")
+    return selected_edges
+
 if 'NegativeSampleRate' in general_settings:
     ns = auxilliaries.NegativeSampler(int(general_settings['NegativeSampleRate']), general_settings['EntityCount'])
     ns.set_known_positives(train_triplets)
@@ -131,13 +162,18 @@ if 'NegativeSampleRate' in general_settings:
             return ns.transform(arr)
         else:
             split_size = int(general_settings['GraphSplitSize'])
-            graph_split_ids = np.random.choice(len(train_triplets), size=split_size, replace=False)
+            sampled_indices = sample_edge_neighborhood(arr, 1000)
 
-            graph_split = np.array(train_triplets)[graph_split_ids]
+            subgraph = np.array(train_triplets)[sampled_indices]
+            #print(subgraph)
+            #exit()
+            #graph_split_ids = np.random.choice(len(train_triplets), size=split_size, replace=False)
+
+            #graph_split = np.array(train_triplets)[graph_split_ids]
             #gradient_split = np.delete(train_triplets, graph_split_ids, axis=0)
 
-            t = ns.transform(arr)
-            return (graph_split, t[0], t[1])
+            t = ns.transform(subgraph)
+            return (subgraph, t[0], t[1])
 
     opp.set_sample_transform_function(t_func)
 

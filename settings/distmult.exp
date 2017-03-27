@@ -10,12 +10,12 @@
 
 [Optimizer]
 	MaxGradientNorm=1
-	ReportTrainLossEvery=5
+	ReportTrainLossEvery=100
 	BatchSize=5000
 	Minibatches=Yes
 
 	[EarlyStopping]
-		CheckEvery=10
+		CheckEvery=1000
 
 	[Algorithm]
 		Name=Adam

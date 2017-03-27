@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-DATASET="FB-Toutanova"
-SETTINGS="distmult.exp"
+DATASET="FB15k"
+SETTINGS="gcn_basis.exp"
 
 SCRIPT_DIR=$(dirname $(readlink -f $0))
 
