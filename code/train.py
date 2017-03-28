@@ -121,11 +121,75 @@ opp.set_early_stopping_score_function(score_validation_data)
 
 print(len(train_triplets))
 
+adj_list = [[] for _ in entities]
+for i,triplet in enumerate(train_triplets):
+    adj_list[triplet[0]].append([i, triplet[2]])
+    adj_list[triplet[2]].append([i, triplet[0]])
+
+degrees = np.array([len(a) for a in adj_list])
+adj_list = [np.array(a) for a in adj_list]
+
 def sample_edge_neighborhood(triplets, sample_size):
     print("Sampling neighborhood...")
 
+    edges = np.zeros((sample_size), dtype=np.int32)
+
     #initialize
-    initial_idx = np.random.choice(np.arange(triplets.shape[0]))
+    sample_counts = np.array([d for d in degrees])
+    picked = np.array([False for _ in triplets])
+    seen = np.array([False for _ in degrees])
+
+    '''
+    chosen_vertex = np.random.choice(np.arange(degrees.shape[0]))
+    chosen_adj_list = adj_list[chosen_vertex]
+
+    seen[chosen_vertex] = True
+
+    chosen_edge = np.random.choice(np.arange(chosen_adj_list.shape[0]))
+    chosen_edge = chosen_adj_list[chosen_edge]
+    other_vertex = chosen_edge[1]
+    edge_number = chosen_edge[0]
+    edges[0] = triplets[edge_number]
+
+    picked[edge_number] = True
+    sample_counts[chosen_vertex] -= 1
+    sample_counts[other_vertex] -= 1
+    seen[other_vertex] = True
+    '''
+
+    for i in range(0, sample_size):
+        # Pick next:
+        weights = sample_counts * seen
+
+        if np.sum(weights) == 0:
+            weights = np.ones_like(weights)[np.where(sample_counts > 0)]
+
+        probabilities = (weights) / np.sum(weights)
+        chosen_vertex = np.random.choice(np.arange(degrees.shape[0]), p=probabilities)
+        chosen_adj_list = adj_list[chosen_vertex]
+        seen[chosen_vertex] = True
+
+        chosen_edge = np.random.choice(np.arange(chosen_adj_list.shape[0]))
+        chosen_edge = chosen_adj_list[chosen_edge]
+        edge_number = chosen_edge[0]
+        while picked[edge_number]:
+            chosen_edge = np.random.choice(np.arange(chosen_adj_list.shape[0]))
+            chosen_edge = chosen_adj_list[chosen_edge]
+            edge_number = chosen_edge[0]
+
+        edges[i] = edge_number
+        other_vertex = chosen_edge[1]
+        picked[edge_number] = True
+        sample_counts[chosen_vertex] -= 1
+        sample_counts[other_vertex] -= 1
+        seen[other_vertex] = True
+
+    return edges
+
+    '''
+
+    # Sample edge uniformly, rejecting picked
+
     choice = triplets[initial_idx]
     selected_edges = np.array([initial_idx])
 
@@ -151,6 +215,7 @@ def sample_edge_neighborhood(triplets, sample_size):
 
     print("Done!")
     return selected_edges
+    '''
 
 if 'NegativeSampleRate' in general_settings:
     ns = auxilliaries.NegativeSampler(int(general_settings['NegativeSampleRate']), general_settings['EntityCount'])
@@ -162,7 +227,8 @@ if 'NegativeSampleRate' in general_settings:
             return ns.transform(arr)
         else:
             split_size = int(general_settings['GraphSplitSize'])
-            sampled_indices = sample_edge_neighborhood(arr, 1000)
+            sampled_indices = sample_edge_neighborhood(arr, 5000)
+            print("doner")
 
             subgraph = np.array(train_triplets)[sampled_indices]
             #print(subgraph)
