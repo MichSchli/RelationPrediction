@@ -227,7 +227,7 @@ if 'NegativeSampleRate' in general_settings:
             return ns.transform(arr)
         else:
             split_size = int(general_settings['GraphSplitSize'])
-            sampled_indices = sample_edge_neighborhood(arr, 5000)
+            sampled_indices = sample_edge_neighborhood(arr, split_size)
             print("doner")
 
             subgraph = np.array(train_triplets)[sampled_indices]
