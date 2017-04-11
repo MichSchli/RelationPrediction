@@ -85,24 +85,10 @@ scorer.register_model(model)
 scorer.finalize_frequency_computation(train_triplets + valid_triplets + test_triplets)
 
 def score_validation_data(validation_data):
-    model.set_variable("GraphSplitSize", len(train_triplets))
     score_summary = scorer.compute_scores(validation_data, verbose=False).get_summary()
     score_summary.dump_degrees('dumps/degrees.in', 'dumps/degrees.out')
     score_summary.dump_frequencies('dumps/near.freq', 'dumps/target.freq')
     #score_summary.pretty_print()
-
-    '''
-    f = open('dumps/forward.rels', 'w')
-    for row in model.session.run(model.next_component.next_component.C_forward):
-        print('\t'.join([str(x) for x in row]), file=f)
-
-    f = open('dumps/backward.rels', 'w')
-    for row in model.session.run(model.next_component.next_component.C_backward):
-        print('\t'.join([str(x) for x in row]), file=f)
-
-    '''
-
-    model.set_variable("GraphSplitSize", int(general_settings['GraphSplitSize']))
 
     if evaluation_settings['Metric'] == 'MRR':
         lookup_string = score_summary.mrr_string()
@@ -139,30 +125,14 @@ def sample_edge_neighborhood(triplets, sample_size):
     picked = np.array([False for _ in triplets])
     seen = np.array([False for _ in degrees])
 
-    '''
-    chosen_vertex = np.random.choice(np.arange(degrees.shape[0]))
-    chosen_adj_list = adj_list[chosen_vertex]
-
-    seen[chosen_vertex] = True
-
-    chosen_edge = np.random.choice(np.arange(chosen_adj_list.shape[0]))
-    chosen_edge = chosen_adj_list[chosen_edge]
-    other_vertex = chosen_edge[1]
-    edge_number = chosen_edge[0]
-    edges[0] = triplets[edge_number]
-
-    picked[edge_number] = True
-    sample_counts[chosen_vertex] -= 1
-    sample_counts[other_vertex] -= 1
-    seen[other_vertex] = True
-    '''
 
     for i in range(0, sample_size):
         # Pick next:
         weights = sample_counts * seen
 
         if np.sum(weights) == 0:
-            weights = np.ones_like(weights)[np.where(sample_counts > 0)]
+            weights = np.ones_like(weights)
+            weights[np.where(sample_counts == 0)] = 0
 
         probabilities = (weights) / np.sum(weights)
         chosen_vertex = np.random.choice(np.arange(degrees.shape[0]), p=probabilities)
@@ -186,36 +156,6 @@ def sample_edge_neighborhood(triplets, sample_size):
 
     return edges
 
-    '''
-
-    # Sample edge uniformly, rejecting picked
-
-    choice = triplets[initial_idx]
-    selected_edges = np.array([initial_idx])
-
-    neighborhood = np.array([], dtype=np.int32)
-
-    for _ in range(1,sample_size):
-        neighborhood_additions = np.where(
-            np.logical_or(
-                np.logical_or(
-                    np.logical_or(
-                        triplets[:, 0] == choice[0],
-                        triplets[:, 2] == choice[0]),
-                    triplets[:, 0] == choice[2]),
-                triplets[:, 2] == choice[2])
-        )[0]
-
-        neighborhood_additions = np.setdiff1d(neighborhood_additions, selected_edges, assume_unique=True)
-        neighborhood = np.union1d(neighborhood, neighborhood_additions)
-
-        choice_idx = np.random.choice(neighborhood)
-        choice = triplets[choice_idx]
-        selected_edges = np.concatenate((selected_edges, [choice_idx]))
-
-    print("Done!")
-    return selected_edges
-    '''
 
 if 'NegativeSampleRate' in general_settings:
     ns = auxilliaries.NegativeSampler(int(general_settings['NegativeSampleRate']), general_settings['EntityCount'])
@@ -226,24 +166,30 @@ if 'NegativeSampleRate' in general_settings:
         if not encoder.needs_graph():
             return ns.transform(arr)
         else:
-            split_size = int(general_settings['GraphSplitSize'])
-            sampled_indices = sample_edge_neighborhood(arr, split_size)
-            print("doner")
+            if 'GraphBatchSize' in general_settings:
+                graph_batch_size = int(general_settings['GraphBatchSize'])
+                graph_batch_ids = sample_edge_neighborhood(arr, graph_batch_size)
+            else:
+                graph_batch_size = arr.shape[0]
+                graph_batch_ids = np.arange(graph_batch_size)
 
-            subgraph = np.array(train_triplets)[sampled_indices]
-            #print(subgraph)
-            #exit()
-            #graph_split_ids = np.random.choice(len(train_triplets), size=split_size, replace=False)
+            graph_batch = np.array(train_triplets)[graph_batch_ids]
 
-            #graph_split = np.array(train_triplets)[graph_split_ids]
-            #gradient_split = np.delete(train_triplets, graph_split_ids, axis=0)
+            # Apply dropouts:
+            graph_percentage = float(general_settings['GraphSplitSize'])
+            split_size = int(graph_percentage * graph_batch_size)
+            graph_split_ids = np.random.choice(graph_batch_ids, size=split_size, replace=False)
+            graph_split = np.array(train_triplets)[graph_split_ids]
 
-            t = ns.transform(subgraph)
-            return (subgraph, t[0], t[1])
+            t = ns.transform(graph_batch)
+
+            if 'StoreEdgeData' in encoder_settings and encoder_settings['StoreEdgeData'] == "Yes":
+                return (graph_split, graph_split_ids, t[0], t[1])
+            else:
+                return (graph_split, t[0], t[1])
 
     opp.set_sample_transform_function(t_func)
 
-optimizer_parameters = opp.get_parametrization()
 
 '''
 Initialize for training:
@@ -260,6 +206,15 @@ optimizer_weights = model.get_weights()
 optimizer_input = model.get_train_input_variables()
 loss = model.get_loss(mode='train') + model.get_regularization()
 print(optimizer_input)
+
+'''
+Clean this shit up:
+'''
+
+for add_op in model.get_additional_ops():
+    opp.additional_ops.append(add_op)
+
+optimizer_parameters = opp.get_parametrization()
 
 '''
 Train with Converge:

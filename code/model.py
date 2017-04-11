@@ -1,3 +1,4 @@
+import tensorflow as tf
 
 """
 Class representing an hierarchically organized model to be initialized in a dependency injection-like manner.
@@ -17,6 +18,7 @@ class Model:
 
         self.entity_count = int(self.settings['EntityCount'])
         self.relation_count = int(self.settings['RelationCount'])
+        self.edge_count = int(self.settings['EdgeCount'])
 
         self.parse_settings()
 
@@ -112,6 +114,9 @@ class Model:
 
     def get_graph(self):
         return self.__delegate__('get_graph')
+
+    def get_additional_ops(self):
+        return self.__local_expand_delegate__('get_additional_ops')
 
     def needs_graph(self):
         if self.next_component is None:

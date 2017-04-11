@@ -21,5 +21,5 @@ class RelationEmbedding(Model):
         return [self.W_relation]
 
     def get_all_codes(self, mode='train'):
-        codes = self.next_component.get_all_codes()
+        codes = self.next_component.get_all_codes(mode=mode)
         return codes[0], self.W_relation, codes[2]

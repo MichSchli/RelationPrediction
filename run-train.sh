@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DATASET="FB15k"
+DATASET="DegreeData"
 SETTINGS="gcn_basis.exp"
 
 SCRIPT_DIR=$(dirname $(readlink -f $0))

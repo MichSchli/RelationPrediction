@@ -9,6 +9,7 @@ from decoders.complex import Complex
 from encoders.bipartite_gcn import BipartiteGcn
 from encoders.message_gcns.gcn_diag import DiagGcn
 from encoders.message_gcns.gcn_basis import BasisGcn
+from encoders.message_gcns.gcn_basis_stored import BasisGcnStore
 from encoders.message_gcns.gcn_basis_plus_diag import BasisGcnWithDiag
 from encoders.message_gcns.gcn_basis_times_diag import BasisGcnTimesDiag
 
@@ -262,6 +263,8 @@ def apply_basis_gcn(encoder_settings, encoding, internal_shape, layers):
             model = BasisGcnWithDiag
         elif encoder_settings['DiagonalCoefficients'] == "Yes":
             model = BasisGcnTimesDiag
+        elif encoder_settings['StoreEdgeData'] == "Yes":
+            model = BasisGcnStore
         else:
             model = BasisGcn
 

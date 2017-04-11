@@ -5,7 +5,7 @@ from common.shared_functions import dot_or_lookup, glorot_variance, make_tf_vari
 from encoders.message_gcns.message_gcn import MessageGcn
 
 
-class BasisGcn(MessageGcn):
+class BasisGcnStore(MessageGcn):
 
     def parse_settings(self):
         self.dropout_keep_probability = float(self.settings['DropoutKeepProbability'])
@@ -30,6 +30,14 @@ class BasisGcn(MessageGcn):
 
         self.b = make_tf_bias(self.shape[1])
 
+        self.cached_vertex_embeddings = tf.Variable(np.zeros(self_matrix_shape, dtype=np.float32))
+        self.cached_messages_f = tf.Variable(np.zeros((self.edge_count, self.shape[1]), dtype=np.float32))
+        self.cached_messages_b = tf.Variable(np.zeros((self.edge_count, self.shape[1]), dtype=np.float32))
+
+        self.I = tf.placeholder(tf.int32, shape=[None], name="batch_indices")
+
+    def local_get_train_input_variables(self):
+        return [self.I]
 
     def local_get_weights(self):
         return [self.W_forward, self.W_backward,
@@ -72,14 +80,36 @@ class BasisGcn(MessageGcn):
         return dot_or_lookup(vertex_features, self.W_self, onehot_input=self.onehot_input)
 
 
+    def get_additional_ops(self):
+        return [self.f_upd, self.b_upd, self.v_upd]
+
     def combine_messages(self, forward_messages, backward_messages, self_loop_messages, previous_code, mode='train'):
-        mtr_f = self.get_graph().forward_incidence_matrix(normalization=('global', 'recalculated'))
-        mtr_b = self.get_graph().backward_incidence_matrix(normalization=('global', 'recalculated'))
+        mtr_f = self.get_graph().forward_incidence_matrix(normalization=('none', 'recalculated'))
+        mtr_b = self.get_graph().backward_incidence_matrix(normalization=('none', 'recalculated'))
 
-        collected_messages_f = tf.sparse_tensor_dense_matmul(mtr_f, forward_messages)
-        collected_messages_b = tf.sparse_tensor_dense_matmul(mtr_b, backward_messages)
+        if mode == 'train':
+            forward_messages_comp = forward_messages - tf.nn.embedding_lookup(self.cached_messages_f, self.I)
+            backward_messages_comp = backward_messages - tf.nn.embedding_lookup(self.cached_messages_b, self.I)
 
-        updated_vertex_embeddings = collected_messages_f + collected_messages_b
+            with tf.control_dependencies([forward_messages, backward_messages]):
+                self.f_upd = tf.scatter_update(self.cached_messages_f, self.I, forward_messages)
+                self.b_upd = tf.scatter_update(self.cached_messages_b, self.I, backward_messages)
+
+            collected_messages_f = tf.sparse_tensor_dense_matmul(mtr_f, forward_messages_comp)
+            collected_messages_b = tf.sparse_tensor_dense_matmul(mtr_b, backward_messages_comp)
+
+            new_embedding = collected_messages_f + collected_messages_b
+            updated_vertex_embeddings = new_embedding + self.cached_vertex_embeddings
+
+            with tf.control_dependencies([updated_vertex_embeddings]):
+                self.v_upd = tf.assign(self.cached_vertex_embeddings, updated_vertex_embeddings)
+        else:
+            collected_messages_f = tf.sparse_tensor_dense_matmul(mtr_f, forward_messages)
+            collected_messages_b = tf.sparse_tensor_dense_matmul(mtr_b, backward_messages)
+
+            new_embedding = collected_messages_f + collected_messages_b
+            updated_vertex_embeddings = new_embedding
+
 
         if self.use_nonlinearity:
             activated = tf.nn.relu(updated_vertex_embeddings + self_loop_messages)

@@ -9,6 +9,7 @@
 	AddDiagonal=No
 	DiagonalCoefficients=No
 	SkipConnections=None
+	StoreEdgeData=Yes
 
 [Decoder]
 	Name=bilinear-diag
@@ -19,19 +20,20 @@
 
 [Optimizer]
 	MaxGradientNorm=1
-	ReportTrainLossEvery=50
+	ReportTrainLossEvery=100
 
 	[EarlyStopping]
 		CheckEvery=500
-		BurninPhaseDuration=100
+		BurninPhaseDuration=2500
 
 	[Algorithm]
 		Name=Adam
-		learning_rate=0.01
+		learning_rate=0.001
 
 [General]
-	NegativeSampleRate=1
-	GraphSplitSize=2000
+	NegativeSampleRate=3
+	GraphSplitSize=0.5
+	GraphBatchSize=5000
 
 [Evaluation]
 	Metric=MRR
