@@ -334,7 +334,7 @@ class Scorer():
     def compute_mrr_scores(self, triples, verbose=False):
         score = MrrScore(triples)
 
-        chunk_size = 5000
+        chunk_size = 1000
         n_chunks = math.ceil(len(triples) / chunk_size)
 
         for chunk in range(n_chunks):

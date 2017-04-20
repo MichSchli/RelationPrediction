@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DATASET="DegreeData"
+DATASET="FB-Toutanova"
 SETTINGS="gcn_basis.exp"
 
 SCRIPT_DIR=$(dirname $(readlink -f $0))

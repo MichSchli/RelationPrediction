@@ -13,6 +13,8 @@ from encoders.message_gcns.gcn_basis_stored import BasisGcnStore
 from encoders.message_gcns.gcn_basis_plus_diag import BasisGcnWithDiag
 from encoders.message_gcns.gcn_basis_times_diag import BasisGcnTimesDiag
 
+from encoders.random_vertex_embedding import RandomEmbedding
+
 from extras.residual_layer import ResidualLayer
 from extras.highway_layer import HighwayLayer
 
@@ -141,6 +143,10 @@ def build_encoder(encoder_settings, triples):
                                        onehot_input=True,
                                        use_bias=True,
                                        use_nonlinearity=True)
+        elif encoder_settings['RandomInput'] == 'Yes':
+            encoding = RandomEmbedding(input_shape,
+                                       encoder_settings,
+                                       next_component=graph)
         else:
             encoding = graph
 
@@ -254,7 +260,7 @@ def apply_basis_gcn(encoder_settings, encoding, internal_shape, layers):
     for layer in range(layers):
         use_nonlinearity = layer < layers - 1
 
-        if layer == 0 and encoder_settings['UseInputTransform'] == "No":
+        if layer == 0 and encoder_settings['UseInputTransform'] == "No" and encoder_settings['RandomInput'] != "Yes" :
             onehot_input = True
         else:
             onehot_input = False

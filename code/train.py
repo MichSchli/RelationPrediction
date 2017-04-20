@@ -115,8 +115,27 @@ for i,triplet in enumerate(train_triplets):
 degrees = np.array([len(a) for a in adj_list])
 adj_list = [np.array(a) for a in adj_list]
 
+
+def sample_TIES(triplets, n_target_vertices):
+    vertex_set = set([])
+
+    edge_indices = np.arange(triplets.shape[0])
+    while len(vertex_set) < n_target_vertices:
+        edge = triplets[np.random.choice(edge_indices)]
+        new_vertices = [edge[0], edge[1]]
+        vertex_set = vertex_set.union(new_vertices)
+
+    sampled = [False]*triplets.shape[0]
+
+    for i in edge_indices:
+        edge = triplets[i]
+        if edge[0] in vertex_set and edge[2] in vertex_set:
+            sampled[i] = True
+
+    return edge_indices[sampled]
+
+
 def sample_edge_neighborhood(triplets, sample_size):
-    print("Sampling neighborhood...")
 
     edges = np.zeros((sample_size), dtype=np.int32)
 
@@ -125,9 +144,7 @@ def sample_edge_neighborhood(triplets, sample_size):
     picked = np.array([False for _ in triplets])
     seen = np.array([False for _ in degrees])
 
-
     for i in range(0, sample_size):
-        # Pick next:
         weights = sample_counts * seen
 
         if np.sum(weights) == 0:
@@ -142,6 +159,7 @@ def sample_edge_neighborhood(triplets, sample_size):
         chosen_edge = np.random.choice(np.arange(chosen_adj_list.shape[0]))
         chosen_edge = chosen_adj_list[chosen_edge]
         edge_number = chosen_edge[0]
+
         while picked[edge_number]:
             chosen_edge = np.random.choice(np.arange(chosen_adj_list.shape[0]))
             chosen_edge = chosen_adj_list[chosen_edge]
@@ -168,6 +186,21 @@ if 'NegativeSampleRate' in general_settings:
         else:
             if 'GraphBatchSize' in general_settings:
                 graph_batch_size = int(general_settings['GraphBatchSize'])
+
+                '''
+                n = np.zeros(100)
+                for i in range(100):
+                    if i % 20 == 0:
+                        print(i)
+                    n[i] = sample_TIES(arr, 1000).shape[0]
+
+                print(n.mean())
+                print(n.std())
+                exit()
+                '''
+
+
+                #graph_batch_ids = sample_TIES(arr, 1000) #sample_edge_neighborhood(arr, graph_batch_size)
                 graph_batch_ids = sample_edge_neighborhood(arr, graph_batch_size)
             else:
                 graph_batch_size = arr.shape[0]
@@ -177,7 +210,7 @@ if 'NegativeSampleRate' in general_settings:
 
             # Apply dropouts:
             graph_percentage = float(general_settings['GraphSplitSize'])
-            split_size = int(graph_percentage * graph_batch_size)
+            split_size = int(graph_percentage * graph_batch.shape[0])
             graph_split_ids = np.random.choice(graph_batch_ids, size=split_size, replace=False)
             graph_split = np.array(train_triplets)[graph_split_ids]
 
