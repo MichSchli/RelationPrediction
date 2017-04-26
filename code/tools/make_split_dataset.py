@@ -12,9 +12,9 @@ parser.add_argument("--folder", help="Folder for dataset.", required=True)
 args = parser.parse_args()
 
 
-source_triplets = list(io.read_triplets('data/FB15k/train.txt'))
-source_triplets_valid = list(io.read_triplets('data/FB15k/valid.txt'))
-source_triplets_test = list(io.read_triplets('data/FB15k/test.txt'))
+source_triplets = list(io.read_triplets('data/Toutanova-Split/train.txt'))
+source_triplets_valid = list(io.read_triplets('data/Toutanova-Split/valid.txt'))
+source_triplets_test = list(io.read_triplets('data/Toutanova-Split/test.txt'))
 
 source_entities = io.read_dictionary('data/FB15k/entities.dict')
 reversed_entities = {v: k for k, v in source_entities.items()}
@@ -61,7 +61,7 @@ def shrink_graph(triplets, target_entities, target_edges, n_target_edges):
     return shrink_graph(triplets, new_target_entities, new_target_edges, n_target_edges)
 
 
-subgraph = shrink_graph(np.array(source_triplets), np.array([random.choice(list(reversed_entities.keys()))]), np.array([]), 40000)
+#subgraph = shrink_graph(np.array(source_triplets), np.array([random.choice(list(reversed_entities.keys()))]), np.array([]), 40000)
 print("Subgraph isolated.")
 
 def split_entities(source_triplets, entities, max_edges=20000):
@@ -104,8 +104,8 @@ def split_entities(source_triplets, entities, max_edges=20000):
 #rem, valid_edges = split_entities(rem, reversed_entities, max_edges=5000)
 #rem, test_edges = split_entities(rem, reversed_entities, max_edges=5000)
 
-train_edges, valid_edges = split_entities(subgraph, reversed_entities, max_edges=5000)
-train_edges, test_edges = split_entities(train_edges, reversed_entities, max_edges=5000)
+train_edges, valid_edges = split_entities(source_triplets, reversed_entities, max_edges=10000)
+train_edges, test_edges = split_entities(train_edges, reversed_entities, max_edges=10000)
 
 print(train_edges.shape)
 print(valid_edges.shape)

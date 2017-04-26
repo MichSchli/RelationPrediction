@@ -1,21 +1,23 @@
 [Encoder]
 	Name=variational_gcn_basis
 	DropoutKeepProbability=1.0
-	InternalEncoderDimension=50
-	NumberOfBasisFunctions=1
-	NumberOfLayers=1
+	InternalEncoderDimension=100
+	NumberOfBasisFunctions=2
+	NumberOfLayers=2
 	UseInputTransform=No
 	UseOutputTransform=No
 	AddDiagonal=No
 	DiagonalCoefficients=No
 	SkipConnections=None
+	StoreEdgeData=No
+	RandomInput=No
 
 [Decoder]
 	Name=bilinear-diag
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=50
+	CodeDimension=100
 
 [Optimizer]
 	MaxGradientNorm=1
@@ -27,11 +29,12 @@
 
 	[Algorithm]
 		Name=Adam
-		learning_rate=0.01
+		learning_rate=0.001
 
 [General]
-	NegativeSampleRate=1
-	GraphSplitSize=20000
+	NegativeSampleRate=3
+	GraphSplitSize=0.5
+	GraphBatchSize=10000
 
 [Evaluation]
 	Metric=MRR

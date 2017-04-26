@@ -18,7 +18,7 @@ class VariationalEncoding(SplitModel):
             sigma = tf.exp(log_sigma)
 
             epsilon = tf.random_normal(self.shape, name='epsilon')
-            z = mu + tf.mul(sigma, epsilon)
+            z = mu + tf.multiply(sigma, epsilon)
 
             self.vertex_embedding_function[mode] = z
 
@@ -28,7 +28,7 @@ class VariationalEncoding(SplitModel):
         mu = self.mu_network.get_all_codes(mode='train')[0]
         log_sigma = self.sigma_network.get_all_codes(mode='train')[0]
 
-        return -0.0000000005 * tf.reduce_sum(1 + 2*log_sigma - tf.pow(mu, 2) - tf.exp(2*log_sigma))
+        return -0.0005 * tf.reduce_sum(1 + 2*log_sigma - tf.pow(mu, 2) - tf.exp(2*log_sigma))
 
     def get_all_codes(self, mode='train'):
         collected_messages = self.compute_vertex_embeddings(mode=mode)

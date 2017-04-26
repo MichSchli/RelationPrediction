@@ -9,6 +9,7 @@ from decoders.complex import Complex
 from encoders.bipartite_gcn import BipartiteGcn
 from encoders.message_gcns.gcn_diag import DiagGcn
 from encoders.message_gcns.gcn_basis import BasisGcn
+from encoders.message_gcns.gcn_basis_concat import ConcatGcn
 from encoders.message_gcns.gcn_basis_stored import BasisGcnStore
 from encoders.message_gcns.gcn_basis_plus_diag import BasisGcnWithDiag
 from encoders.message_gcns.gcn_basis_times_diag import BasisGcnTimesDiag
@@ -117,7 +118,6 @@ def build_encoder(encoder_settings, triples):
         return full_encoder
 
     elif encoder_settings['Name'] == "gcn_basis":
-        graph = Representation(triples, encoder_settings)
 
         # Define graph representation:
         graph = Representation(triples, encoder_settings)
@@ -271,6 +271,8 @@ def apply_basis_gcn(encoder_settings, encoding, internal_shape, layers):
             model = BasisGcnTimesDiag
         elif encoder_settings['StoreEdgeData'] == "Yes":
             model = BasisGcnStore
+        elif 'Concatenation' in encoder_settings and encoder_settings['Concatenation'] == "Yes":
+            model = ConcatGcn
         else:
             model = BasisGcn
 

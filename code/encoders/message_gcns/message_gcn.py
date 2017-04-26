@@ -13,10 +13,10 @@ class MessageGcn(Model):
     vertex_embedding_function = {'train': None, 'test': None}
 
     def __init__(self, shape, settings, next_component=None, onehot_input=False, use_nonlinearity=True):
-        Model.__init__(self, next_component, settings)
         self.onehot_input = onehot_input
         self.use_nonlinearity = use_nonlinearity
         self.shape = shape
+        Model.__init__(self, next_component, settings)
 
     def needs_graph(self):
         return True
