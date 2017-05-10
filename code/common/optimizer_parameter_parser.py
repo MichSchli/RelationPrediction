@@ -90,10 +90,7 @@ class Parser():
             'burnin': b})
 
     def model_saving(self):
-        if 'ModelPath' in self.settings:
-            n = 0
-        else:
-            return None
+        n=1
 
         if 'SaveEveryN' in self.settings:
             n = int(self.settings['SaveEveryN'])
@@ -102,7 +99,7 @@ class Parser():
         
         return ('ModelSaver', {
             'save_function': self.save_function,
-            'model_path': self.settings['ModelPath'],
+            'model_path': self.settings['ExperimentName'],
             'save_every_n': n})
 
 

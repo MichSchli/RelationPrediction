@@ -12,6 +12,7 @@ class Model:
     session = None
     next_component=None
     save_iter=0
+    saver=None
 
     def __init__(self, next_component, settings):
         self.next_component = next_component
@@ -26,13 +27,15 @@ class Model:
     def parse_settings(self):
         pass
 
-    def save(self):
+    def save(self, save_path):
         variables_to_save = self.get_weights()
 
         if self.saver is None:
             self.saver = tf.train.Saver(var_list=variables_to_save)
 
-        self.saver.save(self.session, self.settings['ExperimentName'], global_step=self.save_iter)
+        print("saving...")
+        self.saver.save(self.session, save_path, global_step=self.save_iter)
+        self.saver.restore(self.session, save_path+"-"+str(self.save_iter))
         self.save_iter += 1
 
 

@@ -37,7 +37,7 @@
 	NegativeSampleRate=1
 	GraphBatchSize=30000
 	GraphSplitSize=0.5
-	ExperimentName=GcnTest
+	ExperimentName=models/GcnTest
 
 [Evaluation]
 	Metric=MRR
