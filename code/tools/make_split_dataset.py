@@ -12,9 +12,9 @@ parser.add_argument("--folder", help="Folder for dataset.", required=True)
 args = parser.parse_args()
 
 
-source_triplets = list(io.read_triplets('data/Toutanova-Split/train.txt'))
-source_triplets_valid = list(io.read_triplets('data/Toutanova-Split/valid.txt'))
-source_triplets_test = list(io.read_triplets('data/Toutanova-Split/test.txt'))
+source_triplets = list(io.read_triplets('data/FB-Toutanova/train.txt'))
+source_triplets_valid = list(io.read_triplets('data/FB-Toutanova/valid.txt'))
+source_triplets_test = list(io.read_triplets('data/FB-Toutanova/test.txt'))
 
 source_entities = io.read_dictionary('data/FB15k/entities.dict')
 reversed_entities = {v: k for k, v in source_entities.items()}

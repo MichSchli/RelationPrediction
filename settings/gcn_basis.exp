@@ -1,8 +1,8 @@
 [Encoder]
 	Name=gcn_basis
-	DropoutKeepProbability=0.8
-	InternalEncoderDimension=500
-	NumberOfBasisFunctions=125
+	DropoutKeepProbability=1.0
+	InternalEncoderDimension=100
+	NumberOfBasisFunctions=50
 	NumberOfLayers=1
 	UseInputTransform=Yes
 	UseOutputTransform=No
@@ -11,6 +11,7 @@
 	SkipConnections=Highway
 	StoreEdgeData=No
 	RandomInput=No
+	PartiallyRandomInput=No
 	Concatenation=Yes
 
 [Decoder]
@@ -18,14 +19,14 @@
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=500
+	CodeDimension=100
 
 [Optimizer]
 	MaxGradientNorm=1
-	ReportTrainLossEvery=50
+	ReportTrainLossEvery=20
 
 	[EarlyStopping]
-		CheckEvery=200
+		CheckEvery=100
 		BurninPhaseDuration=2500
 
 	[Algorithm]
@@ -33,9 +34,10 @@
 		learning_rate=0.01
 
 [General]
-	NegativeSampleRate=10
+	NegativeSampleRate=1
+	GraphBatchSize=30000
 	GraphSplitSize=0.5
-	GraphBatchSize=10000
+	ExperimentName=GcnTest
 
 [Evaluation]
 	Metric=MRR

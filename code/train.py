@@ -1,4 +1,6 @@
 import argparse
+import random
+
 import tensorflow as tf
 from Converge.optimize import build_tensorflow
 from common import settings_reader, io, model_builder, optimizer_parameter_parser, evaluation, auxilliaries
@@ -33,11 +35,32 @@ if settings['Evaluation']['Metric'] == 'Accuracy':
     test_path = dataset + '/test_accuracy.txt'
 
 train_triplets = io.read_triplets_as_list(train_path, entities_path, relations_path)
+
 valid_triplets = io.read_triplets_as_list(valid_path, entities_path, relations_path)
 test_triplets = io.read_triplets_as_list(test_path, entities_path, relations_path)
 
+
+train_triplets = np.array(train_triplets)
+valid_triplets = np.array(valid_triplets)
+test_triplets = np.array(test_triplets)
+
 entities = io.read_dictionary(entities_path)
 relations = io.read_dictionary(relations_path)
+
+'''
+shuffled_rels = np.arange(len(relations))
+np.random.shuffle(shuffled_rels)
+
+known_rels = shuffled_rels[:int(len(relations)/2)]
+target_rels = shuffled_rels[int(len(relations)/2):]
+
+known_train = train_triplets[np.where(np.in1d(train_triplets[:,1], known_rels))]
+target_train = train_triplets[np.where(np.in1d(train_triplets[:,1], target_rels))]
+known_valid = valid_triplets[np.where(np.in1d(valid_triplets[:,1], known_rels))]
+target_valid = valid_triplets[np.where(np.in1d(valid_triplets[:,1], target_rels))]
+known_test = test_triplets[np.where(np.in1d(test_triplets[:,1], known_rels))]
+target_test = test_triplets[np.where(np.in1d(test_triplets[:,1], target_rels))]
+'''
 
 '''
 Load general settings
@@ -74,7 +97,7 @@ Construct the optimizer with validation MRR as early stopping metric:
 '''
 
 opp = optimizer_parameter_parser.Parser(optimizer_settings)
-#opp.set_save_function(model.save) DISABLED SAVING
+opp.set_save_function(model.save)
 
 scorer = evaluation.Scorer(evaluation_settings)
 scorer.register_data(train_triplets)
@@ -82,7 +105,7 @@ scorer.register_data(valid_triplets)
 scorer.register_data(test_triplets)
 scorer.register_degrees(train_triplets)
 scorer.register_model(model)
-scorer.finalize_frequency_computation(train_triplets + valid_triplets + test_triplets)
+scorer.finalize_frequency_computation(np.concatenate((train_triplets, valid_triplets, test_triplets), axis=0))
 
 def score_validation_data(validation_data):
     score_summary = scorer.compute_scores(validation_data, verbose=False).get_summary()
@@ -228,10 +251,9 @@ if 'NegativeSampleRate' in general_settings:
 Initialize for training:
 '''
 
-graph = np.array(train_triplets)
-
 # Hack for validation evaluation:
-model.preprocess(graph)
+model.preprocess(train_triplets)
+model.register_for_test(train_triplets)
 
 model.initialize_train()
 

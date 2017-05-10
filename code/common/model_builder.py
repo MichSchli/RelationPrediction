@@ -18,6 +18,7 @@ from encoders.random_vertex_embedding import RandomEmbedding
 
 from extras.residual_layer import ResidualLayer
 from extras.highway_layer import HighwayLayer
+from extras.dropover import DropoverLayer
 
 from extras.variational_encoding import VariationalEncoding
 
@@ -147,6 +148,19 @@ def build_encoder(encoder_settings, triples):
             encoding = RandomEmbedding(input_shape,
                                        encoder_settings,
                                        next_component=graph)
+        elif encoder_settings['PartiallyRandomInput'] == 'Yes':
+            encoding1 = AffineTransform(input_shape,
+                                       encoder_settings,
+                                       next_component=graph,
+                                       onehot_input=True,
+                                       use_bias=True,
+                                       use_nonlinearity=False)
+            encoding2 = RandomEmbedding(input_shape,
+                                       encoder_settings,
+                                       next_component=graph)
+            encoding = DropoverLayer(input_shape,
+                                     next_component=encoding1,
+                                     next_component_2=encoding2)
         else:
             encoding = graph
 
@@ -260,7 +274,10 @@ def apply_basis_gcn(encoder_settings, encoding, internal_shape, layers):
     for layer in range(layers):
         use_nonlinearity = layer < layers - 1
 
-        if layer == 0 and encoder_settings['UseInputTransform'] == "No" and encoder_settings['RandomInput'] != "Yes" :
+        if layer == 0 \
+                and encoder_settings['UseInputTransform'] == "No" \
+                and encoder_settings['RandomInput'] == "No"  \
+                and encoder_settings['PartiallyRandomInput'] == "No" :
             onehot_input = True
         else:
             onehot_input = False

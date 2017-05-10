@@ -11,6 +11,7 @@ class Model:
     score_graph = None
     session = None
     next_component=None
+    save_iter=0
 
     def __init__(self, next_component, settings):
         self.next_component = next_component
@@ -24,6 +25,16 @@ class Model:
 
     def parse_settings(self):
         pass
+
+    def save(self):
+        variables_to_save = self.get_weights()
+
+        if self.saver is None:
+            self.saver = tf.train.Saver(var_list=variables_to_save)
+
+        self.saver.save(self.session, self.settings['ExperimentName'], global_step=self.save_iter)
+        self.save_iter += 1
+
 
     '''
     High-level functions:
@@ -47,7 +58,7 @@ class Model:
             self.score_all_subjects_graph = self.predict_all_subject_scores()
 
         if self.needs_graph():
-            d = {self.get_test_input_variables()[0]: self.train_triplets,
+            d = {self.get_test_input_variables()[0]: self.test_graph,
                  self.get_test_input_variables()[1]: triplets}
         else:
             d = {self.get_test_input_variables()[0]: triplets}
@@ -59,7 +70,7 @@ class Model:
             self.score_all_objects_graph = self.predict_all_object_scores()
 
         if self.needs_graph():
-            d = {self.get_test_input_variables()[0]: self.train_triplets,
+            d = {self.get_test_input_variables()[0]: self.test_graph,
                  self.get_test_input_variables()[1]: triplets}
         else:
             d = {self.get_test_input_variables()[0]: triplets}
@@ -68,6 +79,9 @@ class Model:
 
     '''
     '''
+
+    def register_for_test(self, triplets):
+        self.test_graph = triplets
 
     def preprocess(self, triplets):
         self.train_triplets = triplets
