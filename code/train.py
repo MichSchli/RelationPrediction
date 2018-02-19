@@ -2,7 +2,7 @@ import argparse
 import random
 
 import tensorflow as tf
-from Converge.optimize import build_tensorflow
+from optimization.optimize import build_tensorflow
 from common import settings_reader, io, model_builder, optimizer_parameter_parser, evaluation, auxilliaries
 from model import Model
 import numpy as np
@@ -109,8 +109,8 @@ scorer.finalize_frequency_computation(np.concatenate((train_triplets, valid_trip
 
 def score_validation_data(validation_data):
     score_summary = scorer.compute_scores(validation_data, verbose=False).get_summary()
-    score_summary.dump_degrees('dumps/degrees.in', 'dumps/degrees.out')
-    score_summary.dump_frequencies('dumps/near.freq', 'dumps/target.freq')
+    #score_summary.dump_degrees('dumps/degrees.in', 'dumps/degrees.out')
+    #score_summary.dump_frequencies('dumps/near.freq', 'dumps/target.freq')
     #score_summary.pretty_print()
 
     if evaluation_settings['Metric'] == 'MRR':

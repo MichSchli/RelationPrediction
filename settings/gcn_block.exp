@@ -35,7 +35,6 @@
 
 [General]
 	NegativeSampleRate=1
-	GraphBatchSize=30000
 	GraphSplitSize=0.5
 	ExperimentName=models/GcnTest
 
