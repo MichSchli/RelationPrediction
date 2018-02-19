@@ -12,7 +12,7 @@ This repository contains a TensorFlow implementation of Relational Graph Convolu
 
 We provide a bash script to run a demo of our code. In the folder *settings*, a collection of configuration files can be found. The block diagonal model used in our paper is represented through the configuration file *settings/gcn_block.exp*. To run a given experiment, execute our bash script as follows:
 
-> bash run-train.sh <configuration>
+> bash run-train.sh \[configuration\]
 
 We advise running the model on a modern GPU, as training can take up to several hours.
 
