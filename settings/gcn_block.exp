@@ -34,10 +34,10 @@
 		learning_rate=0.01
 
 [General]
-	NegativeSampleRate=1
+	NegativeSampleRate=10
 	GraphSplitSize=0.5
 	ExperimentName=models/GcnTest
-	GraphBatchSize=30000
+	GraphBatchSize=10000
 
 [Evaluation]
 	Metric=MRR
