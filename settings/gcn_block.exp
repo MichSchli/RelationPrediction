@@ -8,7 +8,7 @@
 	UseOutputTransform=No
 	AddDiagonal=No
 	DiagonalCoefficients=No
-	SkipConnections=Highway
+	SkipConnections=None
 	StoreEdgeData=No
 	RandomInput=No
 	PartiallyRandomInput=No
@@ -23,11 +23,11 @@
 
 [Optimizer]
 	MaxGradientNorm=1
-	ReportTrainLossEvery=20
+	ReportTrainLossEvery=100
 
 	[EarlyStopping]
-		CheckEvery=100
-		BurninPhaseDuration=2500
+		CheckEvery=2000
+		BurninPhaseDuration=6000
 
 	[Algorithm]
 		Name=Adam
@@ -36,8 +36,8 @@
 [General]
 	NegativeSampleRate=10
 	GraphSplitSize=0.5
-	ExperimentName=models/GcnTest
-	GraphBatchSize=10000
+	ExperimentName=models/GcnBlock
+	GraphBatchSize=30000
 
 [Evaluation]
 	Metric=MRR

@@ -24,7 +24,7 @@ dumps/
 
 # Ignore models and data
 models/
-data/
+#data/
 
 # Distribution / packaging
 .Python

@@ -6,23 +6,25 @@
 	RegularizationParameter=0.01
 
 [Shared]
-	CodeDimension=200
+	CodeDimension=500
 
 [Optimizer]
 	MaxGradientNorm=1
 	ReportTrainLossEvery=100
 
 	[EarlyStopping]
-		CheckEvery=500
+		CheckEvery=2000
+		BurninPhaseDuration=6000
 
 	[Algorithm]
 		Name=Adam
 		learning_rate=0.01
 
 [General]
-	NegativeSampleRate=1
-	GraphSplitSize=15000
-
+	NegativeSampleRate=10
+	GraphSplitSize=0.5
+	ExperimentName=models/Distmult
+	GraphBatchSize=30000
 
 [Evaluation]
 	Metric=MRR

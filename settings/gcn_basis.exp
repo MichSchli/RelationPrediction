@@ -1,0 +1,43 @@
+[Encoder]
+	Name=gcn_basis
+	DropoutKeepProbability=0.8
+	InternalEncoderDimension=500
+	NumberOfBasisFunctions=5
+	NumberOfLayers=2
+	UseInputTransform=Yes
+	UseOutputTransform=No
+	AddDiagonal=No
+	DiagonalCoefficients=No
+	SkipConnections=None
+	StoreEdgeData=No
+	RandomInput=No
+	PartiallyRandomInput=No
+	Concatenation=No
+
+[Decoder]
+	Name=bilinear-diag
+	RegularizationParameter=0.01
+
+[Shared]
+	CodeDimension=500
+
+[Optimizer]
+	MaxGradientNorm=1
+	ReportTrainLossEvery=100
+
+	[EarlyStopping]
+		CheckEvery=2000
+		BurninPhaseDuration=6000
+
+	[Algorithm]
+		Name=Adam
+		learning_rate=0.01
+
+[General]
+	NegativeSampleRate=10
+	GraphSplitSize=0.5
+	ExperimentName=models/GcnBlock
+	GraphBatchSize=30000
+
+[Evaluation]
+	Metric=MRR
