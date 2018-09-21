@@ -263,7 +263,7 @@ loss = model.get_loss(mode='train') + model.get_regularization()
 print(optimizer_input)
 
 '''
-Clean this shit up:
+Clean this up:
 '''
 
 for add_op in model.get_additional_ops():
