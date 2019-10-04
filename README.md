@@ -16,7 +16,7 @@ We provide a bash script to run a demo of our code. In the folder *settings*, a 
 bash run-train.sh \[configuration\]
 ```
 
-We advise running the model on a modern GPU, as training can take up to several hours.
+We advise that training can take up to several hours and require a significant amount of memory.
 
 **Citation**
 
