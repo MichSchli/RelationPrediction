@@ -6,7 +6,7 @@ This repository contains a TensorFlow implementation of Relational Graph Convolu
 
 **Requirements**
 
-* TensorFlow (>1.0)
+* TensorFlow (1.4)
 
 **Running demo**
 
