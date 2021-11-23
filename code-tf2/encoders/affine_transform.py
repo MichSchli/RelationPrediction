@@ -72,8 +72,11 @@ class AffineTransform(Model):
             hidden_relation = codes[1]
 
         if self.use_bias:
-            hidden_subject += self.b
-            hidden_object += self.b
+            # hidden_subject += self.b
+            # hidden_object += self.b
+            # Manas - changed for TF2 compatibility
+            hidden_subject = hidden_subject + self.b
+            hidden_object = hidden_object + self.b
 
         if self.use_nonlinearity:
             hidden_subject = tf.nn.relu(hidden_subject)

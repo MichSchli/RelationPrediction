@@ -31,7 +31,7 @@ class Model:
         variables_to_save = self.get_weights()
 
         if self.saver is None:
-            self.saver = tf.train.Saver(var_list=variables_to_save)
+            self.saver = tf.compat.v1.train.Saver(var_list=variables_to_save)
 
         print("saving...")
         self.saver.save(self.session, save_path, global_step=self.save_iter)

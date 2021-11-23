@@ -115,4 +115,4 @@ class BaseOptimizer(IOptimizer):
         return data
 
     def process_gradient_function(self, loss_function, parameters_to_optimize):
-        return tf.gradients(loss_function, parameters_to_optimize)
+        return tf.gradients(ys=loss_function, xs=parameters_to_optimize)

@@ -7,6 +7,9 @@ from common import settings_reader, io, model_builder, optimizer_parameter_parse
 from model import Model
 import numpy as np
 
+# https://stackoverflow.com/questions/53429896/how-do-i-disable-tensorflows-eager-execution
+tf.compat.v1.disable_eager_execution()
+
 parser = argparse.ArgumentParser(description="Train a model on a given dataset.")
 parser.add_argument("--settings", help="Filepath for settings file.", required=True)
 parser.add_argument("--dataset", help="Filepath for dataset.", required=True)
@@ -275,7 +278,7 @@ optimizer_parameters = opp.get_parametrization()
 Train with Converge:
 '''
 
-model.session = tf.Session()
+model.session = tf.compat.v1.Session()
 optimizer = build_tensorflow(loss, optimizer_weights, optimizer_parameters, optimizer_input)
 optimizer.set_session(model.session)
 

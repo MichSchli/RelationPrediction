@@ -37,7 +37,7 @@ class MessageGcn(Model):
             #At the moment we use message level dropout, so disabled here
             #code = tf.nn.dropout(self.next_component.get_all_codes(mode=mode)[0], self.dropout_keep_probability)
             code = self.next_component.get_all_codes(mode=mode)[0]
-            vertex_codes = tf.nn.embedding_lookup(code, index_vector)
+            vertex_codes = tf.nn.embedding_lookup(params=code, ids=index_vector)
 
             return vertex_codes
 
@@ -61,7 +61,7 @@ class MessageGcn(Model):
                 # We do "permanent" edge dropouts, so between layers only self-loops are dropped
                 #forward_messages = tf.nn.dropout(forward_messages, self.dropout_keep_probability)
                 #backward_messages = tf.nn.dropout(backward_messages, self.dropout_keep_probability)
-                self_loop_messages = tf.nn.dropout(self_loop_messages, self.dropout_keep_probability)
+                self_loop_messages = tf.nn.dropout(self_loop_messages, rate=1 - (self.dropout_keep_probability))
 
             if self.onehot_input:
                 self.vertex_embedding_function[mode] = self.combine_messages(forward_messages,
