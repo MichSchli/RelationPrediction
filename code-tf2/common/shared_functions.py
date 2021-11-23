@@ -4,7 +4,7 @@ import numpy as np
 
 def dot_or_lookup(features, weights, onehot_input=False):
     if onehot_input:
-        return tf.nn.embedding_lookup(weights, features)
+        return tf.nn.embedding_lookup(params=weights, ids=features)
     else:
         return tf.matmul(features, weights)
 

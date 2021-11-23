@@ -55,7 +55,7 @@ class TensorflowOptimizer(Optimizer):
     def loss(self, placeholder_input):
         #self.session = tf.Session()
         placeholder_input = self.stack.process_data(placeholder_input)
-        init_op = tf.initialize_all_variables()
+        init_op = tf.compat.v1.initialize_all_variables()
         self.session.run(init_op)
         
         feed_dict = dict(zip(self.placeholders, placeholder_input))
@@ -65,7 +65,7 @@ class TensorflowOptimizer(Optimizer):
         #self.session = tf.Session()
 
         placeholder_input = self.stack.process_data(placeholder_input)
-        init_op = tf.initialize_all_variables()
+        init_op = tf.compat.v1.initialize_all_variables()
         self.session.run(init_op)
         
         feed_dict = dict(zip(self.placeholders, placeholder_input))
@@ -75,7 +75,7 @@ class TensorflowOptimizer(Optimizer):
         #self.session = tf.Session()
         self.stack.set_session(self.session)
         
-        init_op = tf.initialize_all_variables()
+        init_op = tf.compat.v1.initialize_all_variables()
         self.session.run(init_op)
 
     def update_from_batch(self, processed_batch):        
@@ -236,8 +236,8 @@ def build_tensorflow(loss_function, parameters_to_optimize, settings, placeholde
 
 
 if __name__ == '__main__':
-    X = tf.placeholder(tf.float32, shape=(None,2))
-    Y = tf.placeholder(tf.float32, shape=(None))
+    X = tf.compat.v1.placeholder(tf.float32, shape=(None,2))
+    Y = tf.compat.v1.placeholder(tf.float32, shape=(None))
 
     n_hidden = 10
     
@@ -252,7 +252,7 @@ if __name__ == '__main__':
     output = tf.sigmoid(energy)
 
     #loss = tf.reduce_mean(-Y * tf.log(output+1e-10) - (1- Y) * tf.log(1-output+1e-10))
-    loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(energy, Y))
+    loss = tf.reduce_mean(input_tensor=tf.nn.sigmoid_cross_entropy_with_logits(energy, Y))
     
     parameters = [#('Minibatches', {'batch_size':2, 'contiguous_sampling':False}),
                   ('IterationCounter', {'max_iterations':5000}),

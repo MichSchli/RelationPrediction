@@ -1,0 +1,691 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 51 files
+Detected 35 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: ./code\model.py
+--------------------------------------------------------------------------------
+./code\model.py:37:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+File: ./code\common\shared_functions.py
+--------------------------------------------------------------------------------
+./code\common\shared_functions.py:7:15: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\decoders\bilinear_diag.py
+--------------------------------------------------------------------------------
+./code\decoders\bilinear_diag.py:19:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\decoders\bilinear_diag.py:20:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\decoders\bilinear_diag.py:21:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\decoders\complex.py
+--------------------------------------------------------------------------------
+./code\decoders\complex.py:23:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\decoders\complex.py:24:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\decoders\complex.py:25:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\decoders\nonlinear_transform.py
+--------------------------------------------------------------------------------
+./code\decoders\nonlinear_transform.py:48:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\decoders\nonlinear_transform.py:49:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\decoders\nonlinear_transform.py:50:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\encoders\bipartite_gcn.py
+--------------------------------------------------------------------------------
+./code\encoders\bipartite_gcn.py:57:19: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\bipartite_gcn.py:74:29: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\bipartite_gcn.py:75:31: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\bipartite_gcn.py:76:29: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\bipartite_gcn.py:77:31: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\encoders\message_gcns\gcn_basis.py
+--------------------------------------------------------------------------------
+./code\encoders\message_gcns\gcn_basis.py:50:31: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\message_gcns\gcn_basis.py:51:32: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\encoders\message_gcns\gcn_basis_concat.py
+--------------------------------------------------------------------------------
+./code\encoders\message_gcns\gcn_basis_concat.py:38:29: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\message_gcns\gcn_basis_concat.py:39:30: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\encoders\message_gcns\gcn_basis_plus_diag.py
+--------------------------------------------------------------------------------
+./code\encoders\message_gcns\gcn_basis_plus_diag.py:65:31: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\message_gcns\gcn_basis_plus_diag.py:66:32: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\message_gcns\gcn_basis_plus_diag.py:71:23: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\message_gcns\gcn_basis_plus_diag.py:72:23: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\encoders\message_gcns\gcn_basis_stored.py
+--------------------------------------------------------------------------------
+./code\encoders\message_gcns\gcn_basis_stored.py:59:31: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\message_gcns\gcn_basis_stored.py:60:32: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\message_gcns\gcn_basis_stored.py:91:55: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\message_gcns\gcn_basis_stored.py:92:57: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\encoders\message_gcns\gcn_basis_times_diag.py
+--------------------------------------------------------------------------------
+./code\encoders\message_gcns\gcn_basis_times_diag.py:55:45: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\message_gcns\gcn_basis_times_diag.py:56:46: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\encoders\message_gcns\gcn_diag.py
+--------------------------------------------------------------------------------
+./code\encoders\message_gcns\gcn_diag.py:32:23: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\message_gcns\gcn_diag.py:33:23: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\encoders\message_gcns\gcn_only_bias.py
+--------------------------------------------------------------------------------
+./code\encoders\message_gcns\gcn_only_bias.py:30:27: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+./code\encoders\message_gcns\gcn_only_bias.py:31:28: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+File: ./code\encoders\message_gcns\message_gcn.py
+--------------------------------------------------------------------------------
+./code\encoders\message_gcns\message_gcn.py:40:27: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+================================================================================
+Detailed log follows:
+
+================================================================================
+================================================================================
+Input tree: './code'
+================================================================================
+--------------------------------------------------------------------------------
+Processing file './code\\model.py'
+ outputting to './code-tf2\\model.py'
+--------------------------------------------------------------------------------
+
+34:25: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+37:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\split_model.py'
+ outputting to './code-tf2\\split_model.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\train.py'
+ outputting to './code-tf2\\train.py'
+--------------------------------------------------------------------------------
+
+278:16: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\__init__.py'
+ outputting to './code-tf2\\__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\common\\auxilliaries.py'
+ outputting to './code-tf2\\common\\auxilliaries.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\common\\evaluation.py'
+ outputting to './code-tf2\\common\\evaluation.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\common\\io.py'
+ outputting to './code-tf2\\common\\io.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\common\\model_builder.py'
+ outputting to './code-tf2\\common\\model_builder.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\common\\optimizer_parameter_parser.py'
+ outputting to './code-tf2\\common\\optimizer_parameter_parser.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\common\\settings_reader.py'
+ outputting to './code-tf2\\common\\settings_reader.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\common\\shared_functions.py'
+ outputting to './code-tf2\\common\\shared_functions.py'
+--------------------------------------------------------------------------------
+
+7:15: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+7:15: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\common\\__init__.py'
+ outputting to './code-tf2\\common\\__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\decoders\\bilinear_diag.py'
+ outputting to './code-tf2\\decoders\\bilinear_diag.py'
+--------------------------------------------------------------------------------
+
+19:14: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+19:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+20:13: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+20:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+21:14: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+21:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+30:19: INFO: Added keywords to args of function 'tf.reduce_sum'
+34:15: INFO: Added keywords to args of function 'tf.reduce_mean'
+37:17: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+38:17: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+48:19: INFO: Added keywords to args of function 'tf.reduce_sum'
+54:23: INFO: Added keywords to args of function 'tf.transpose'
+54:65: INFO: Added keywords to args of function 'tf.transpose'
+60:43: INFO: Added keywords to args of function 'tf.transpose'
+65:25: INFO: Added keywords to args of function 'tf.reduce_mean'
+66:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+67:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\decoders\\complex.py'
+ outputting to './code-tf2\\decoders\\complex.py'
+--------------------------------------------------------------------------------
+
+23:14: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+23:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+24:13: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+24:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+25:14: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+25:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+38:19: INFO: Added keywords to args of function 'tf.reduce_sum'
+39:21: INFO: Added keywords to args of function 'tf.reduce_sum'
+40:21: INFO: Added keywords to args of function 'tf.reduce_sum'
+41:21: INFO: Added keywords to args of function 'tf.reduce_sum'
+45:15: INFO: Added keywords to args of function 'tf.reduce_mean'
+48:17: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+49:17: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+64:19: INFO: Added keywords to args of function 'tf.reduce_sum'
+65:21: INFO: Added keywords to args of function 'tf.reduce_sum'
+66:21: INFO: Added keywords to args of function 'tf.reduce_sum'
+67:21: INFO: Added keywords to args of function 'tf.reduce_sum'
+85:40: INFO: Added keywords to args of function 'tf.transpose'
+86:42: INFO: Added keywords to args of function 'tf.transpose'
+87:42: INFO: Added keywords to args of function 'tf.transpose'
+88:42: INFO: Added keywords to args of function 'tf.transpose'
+90:23: INFO: Added keywords to args of function 'tf.transpose'
+101:47: INFO: Added keywords to args of function 'tf.transpose'
+102:45: INFO: Added keywords to args of function 'tf.transpose'
+103:45: INFO: Added keywords to args of function 'tf.transpose'
+104:45: INFO: Added keywords to args of function 'tf.transpose'
+110:25: INFO: Added keywords to args of function 'tf.reduce_mean'
+111:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+112:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\decoders\\nonlinear_transform.py'
+ outputting to './code-tf2\\decoders\\nonlinear_transform.py'
+--------------------------------------------------------------------------------
+
+37:17: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+38:17: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+48:14: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+48:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+49:13: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+49:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+50:14: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+50:14: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+64:15: INFO: Added keywords to args of function 'tf.reduce_mean'
+77:23: INFO: Added keywords to args of function 'tf.transpose'
+77:65: INFO: Added keywords to args of function 'tf.transpose'
+83:43: INFO: Added keywords to args of function 'tf.transpose'
+88:25: INFO: Added keywords to args of function 'tf.reduce_mean'
+89:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+90:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\decoders\\__init__.py'
+ outputting to './code-tf2\\decoders\\__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\affine_transform.py'
+ outputting to './code-tf2\\encoders\\affine_transform.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\bipartite_gcn.py'
+ outputting to './code-tf2\\encoders\\bipartite_gcn.py'
+--------------------------------------------------------------------------------
+
+57:19: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+57:19: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+71:21: INFO: Changing keep_prob arg of tf.nn.dropout to rate, and recomputing value.
+
+72:21: INFO: Changing keep_prob arg of tf.nn.dropout to rate, and recomputing value.
+
+74:29: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+74:29: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+75:31: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+75:31: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+76:29: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+76:29: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+77:31: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+77:31: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+108:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+109:32: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+110:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+111:32: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\direct_message_gcn.py'
+ outputting to './code-tf2\\encoders\\direct_message_gcn.py'
+--------------------------------------------------------------------------------
+
+35:49: INFO: Added keywords to args of function 'tf.transpose'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\random_vertex_embedding.py'
+ outputting to './code-tf2\\encoders\\random_vertex_embedding.py'
+--------------------------------------------------------------------------------
+
+23:28: INFO: Renamed 'tf.random_uniform' to 'tf.random.uniform'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\relation_embedding.py'
+ outputting to './code-tf2\\encoders\\relation_embedding.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\__init__.py'
+ outputting to './code-tf2\\encoders\\__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\message_gcns\\gcn_basis.py'
+ outputting to './code-tf2\\encoders\\message_gcns\\gcn_basis.py'
+--------------------------------------------------------------------------------
+
+43:27: INFO: Added keywords to args of function 'tf.reduce_sum'
+44:28: INFO: Added keywords to args of function 'tf.reduce_sum'
+50:31: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+50:31: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+51:32: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+51:32: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+61:23: INFO: Added keywords to args of function 'tf.shape'
+78:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+79:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+91:25: INFO: Added keywords to args of function 'tf.reduce_mean'
+92:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+93:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\message_gcns\\gcn_basis_concat.py'
+ outputting to './code-tf2\\encoders\\message_gcns\\gcn_basis_concat.py'
+--------------------------------------------------------------------------------
+
+38:29: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+38:29: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+39:30: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+39:30: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+56:23: INFO: Added keywords to args of function 'tf.shape'
+73:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+74:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+86:25: INFO: Added keywords to args of function 'tf.reduce_mean'
+87:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+88:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\message_gcns\\gcn_basis_plus_diag.py'
+ outputting to './code-tf2\\encoders\\message_gcns\\gcn_basis_plus_diag.py'
+--------------------------------------------------------------------------------
+
+53:27: INFO: Added keywords to args of function 'tf.reduce_sum'
+54:28: INFO: Added keywords to args of function 'tf.reduce_sum'
+65:31: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+65:31: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+66:32: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+66:32: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+71:23: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+71:23: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+72:23: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+72:23: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+82:23: INFO: Added keywords to args of function 'tf.shape'
+99:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+100:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\message_gcns\\gcn_basis_stored.py'
+ outputting to './code-tf2\\encoders\\message_gcns\\gcn_basis_stored.py'
+--------------------------------------------------------------------------------
+
+37:17: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+52:27: INFO: Added keywords to args of function 'tf.reduce_sum'
+53:28: INFO: Added keywords to args of function 'tf.reduce_sum'
+59:31: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+59:31: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+60:32: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+60:32: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+70:23: INFO: Added keywords to args of function 'tf.shape'
+91:55: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+91:55: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+92:57: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+92:57: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+95:29: INFO: Renamed 'tf.scatter_update' to 'tf.compat.v1.scatter_update'
+96:29: INFO: Renamed 'tf.scatter_update' to 'tf.compat.v1.scatter_update'
+98:35: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+99:35: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+105:29: INFO: Renamed 'tf.assign' to 'tf.compat.v1.assign'
+107:35: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+108:35: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+122:25: INFO: Added keywords to args of function 'tf.reduce_mean'
+123:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+124:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\message_gcns\\gcn_basis_times_diag.py'
+ outputting to './code-tf2\\encoders\\message_gcns\\gcn_basis_times_diag.py'
+--------------------------------------------------------------------------------
+
+48:27: INFO: Added keywords to args of function 'tf.reduce_sum'
+49:28: INFO: Added keywords to args of function 'tf.reduce_sum'
+55:45: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+55:45: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+56:46: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+56:46: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+66:23: INFO: Added keywords to args of function 'tf.shape'
+83:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+84:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\message_gcns\\gcn_diag.py'
+ outputting to './code-tf2\\encoders\\message_gcns\\gcn_diag.py'
+--------------------------------------------------------------------------------
+
+32:23: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+32:23: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+33:23: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+33:23: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+47:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+48:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\message_gcns\\gcn_only_bias.py'
+ outputting to './code-tf2\\encoders\\message_gcns\\gcn_only_bias.py'
+--------------------------------------------------------------------------------
+
+30:27: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+30:27: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+31:28: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+31:28: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+42:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+43:31: INFO: Renamed 'tf.sparse_tensor_dense_matmul' to 'tf.sparse.sparse_dense_matmul'
+55:25: INFO: Added keywords to args of function 'tf.reduce_mean'
+56:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\message_gcns\\message_gcn.py'
+ outputting to './code-tf2\\encoders\\message_gcns\\message_gcn.py'
+--------------------------------------------------------------------------------
+
+40:27: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+40:27: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+64:37: INFO: Changing keep_prob arg of tf.nn.dropout to rate, and recomputing value.
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\encoders\\message_gcns\\__init__.py'
+ outputting to './code-tf2\\encoders\\message_gcns\\__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\extras\\dropover.py'
+ outputting to './code-tf2\\extras\\dropover.py'
+--------------------------------------------------------------------------------
+
+18:21: INFO: Renamed 'tf.random_uniform' to 'tf.random.uniform'
+20:51: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\extras\\graph_representations.py'
+ outputting to './code-tf2\\extras\\graph_representations.py'
+--------------------------------------------------------------------------------
+
+22:19: INFO: Added keywords to args of function 'tf.transpose'
+27:26: INFO: Added keywords to args of function 'tf.shape'
+71:25: INFO: Changed tf.to_float call to tf.cast(..., dtype=tf.float32).
+74:26: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+74:38: INFO: Added keywords to args of function 'tf.transpose'
+75:24: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+83:25: INFO: Changed tf.to_float call to tf.cast(..., dtype=tf.float32).
+86:26: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+86:38: INFO: Added keywords to args of function 'tf.transpose'
+87:24: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+89:21: INFO: Renamed 'tf.sparse_softmax' to 'tf.sparse.softmax'
+95:25: INFO: Changed tf.to_float call to tf.cast(..., dtype=tf.float32).
+98:26: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+98:38: INFO: Added keywords to args of function 'tf.transpose'
+99:24: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+101:21: INFO: Renamed 'tf.sparse_softmax' to 'tf.sparse.softmax'
+105:21: INFO: Renamed 'tf.sparse_reduce_sum_sparse' to 'tf.compat.v1.sparse_reduce_sum_sparse'
+111:25: INFO: Changed tf.to_float call to tf.cast(..., dtype=tf.float32).
+114:26: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+114:38: INFO: Added keywords to args of function 'tf.transpose'
+115:24: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+123:25: INFO: Changed tf.to_float call to tf.cast(..., dtype=tf.float32).
+126:26: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+126:38: INFO: Added keywords to args of function 'tf.transpose'
+127:24: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+129:21: INFO: Renamed 'tf.sparse_softmax' to 'tf.sparse.softmax'
+135:25: INFO: Changed tf.to_float call to tf.cast(..., dtype=tf.float32).
+138:26: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+138:38: INFO: Added keywords to args of function 'tf.transpose'
+139:24: INFO: Changed tf.to_int64 call to tf.cast(..., dtype=tf.int64).
+141:21: INFO: Renamed 'tf.sparse_softmax' to 'tf.sparse.softmax'
+145:21: INFO: Renamed 'tf.sparse_reduce_sum_sparse' to 'tf.compat.v1.sparse_reduce_sum_sparse'
+174:17: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\extras\\highway_layer.py'
+ outputting to './code-tf2\\extras\\highway_layer.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\extras\\residual_layer.py'
+ outputting to './code-tf2\\extras\\residual_layer.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\extras\\variational_encoding.py'
+ outputting to './code-tf2\\extras\\variational_encoding.py'
+--------------------------------------------------------------------------------
+
+20:22: INFO: Renamed 'tf.random_normal' to 'tf.random.normal'
+31:25: INFO: Added keywords to args of function 'tf.reduce_sum'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\extras\\__init__.py'
+ outputting to './code-tf2\\extras\\__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\optimization\\abstract.py'
+ outputting to './code-tf2\\optimization\\abstract.py'
+--------------------------------------------------------------------------------
+
+118:15: INFO: Added keywords to args of function 'tf.gradients'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\optimization\\optimize.py'
+ outputting to './code-tf2\\optimization\\optimize.py'
+--------------------------------------------------------------------------------
+
+58:18: INFO: Renamed 'tf.initialize_all_variables' to 'tf.compat.v1.initialize_all_variables'
+68:18: INFO: Renamed 'tf.initialize_all_variables' to 'tf.compat.v1.initialize_all_variables'
+78:18: INFO: Renamed 'tf.initialize_all_variables' to 'tf.compat.v1.initialize_all_variables'
+239:8: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+240:8: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+255:11: INFO: Added keywords to args of function 'tf.reduce_mean'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\optimization\\setup.py'
+ outputting to './code-tf2\\optimization\\setup.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\optimization\\__init__.py'
+ outputting to './code-tf2\\optimization\\__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\optimization\\shared\\algorithms.py'
+ outputting to './code-tf2\\optimization\\shared\\algorithms.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\optimization\\tensorflow_backend\\algorithms.py'
+ outputting to './code-tf2\\optimization\\tensorflow_backend\\algorithms.py'
+--------------------------------------------------------------------------------
+
+13:19: INFO: Renamed 'tf.train.GradientDescentOptimizer' to 'tf.compat.v1.train.GradientDescentOptimizer'
+37:19: INFO: Renamed 'tf.train.AdamOptimizer' to 'tf.compat.v1.train.AdamOptimizer'
+52:19: INFO: Renamed 'tf.train.AdagradOptimizer' to 'tf.compat.v1.train.AdagradOptimizer'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\optimization\\theano_backend\\algorithms.py'
+ outputting to './code-tf2\\optimization\\theano_backend\\algorithms.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\tools\\cluster.py'
+ outputting to './code-tf2\\tools\\cluster.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\tools\\dictionaries.py'
+ outputting to './code-tf2\\tools\\dictionaries.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\tools\\ensemble.py'
+ outputting to './code-tf2\\tools\\ensemble.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\tools\\make_degree_dataset.py'
+ outputting to './code-tf2\\tools\\make_degree_dataset.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\tools\\make_single_label_dataset.py'
+ outputting to './code-tf2\\tools\\make_single_label_dataset.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\tools\\make_split_dataset.py'
+ outputting to './code-tf2\\tools\\make_split_dataset.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './code\\tools\\__init__.py'
+ outputting to './code-tf2\\tools\\__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+

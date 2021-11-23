@@ -5,7 +5,7 @@ from common.shared_functions import dot_or_lookup, glorot_variance, make_tf_vari
 from encoders.message_gcns.message_gcn import MessageGcn
 
 
-class BasisGcnTimesDiag(MessageGcn):
+class BasisGcnWithDiag(MessageGcn):
 
     def parse_settings(self):
         self.dropout_keep_probability = float(self.settings['DropoutKeepProbability'])
@@ -19,9 +19,10 @@ class BasisGcnTimesDiag(MessageGcn):
 
     def local_initialize_train(self):
         vertex_feature_dimension = self.entity_count if self.onehot_input else self.shape[0]
-        type_matrix_shape = (self.relation_count, self.n_coefficients, self.shape[1])
+        type_matrix_shape = (self.relation_count, self.n_coefficients)
         vertex_matrix_shape = (vertex_feature_dimension, self.n_coefficients, self.shape[1])
         self_matrix_shape = (vertex_feature_dimension, self.shape[1])
+        type_diag_shape = (self.relation_count, self.shape[1])
 
         glorot_var_combined = glorot_variance([vertex_matrix_shape[0], vertex_matrix_shape[2]])
         self.W_forward = make_tf_variable(0, glorot_var_combined, vertex_matrix_shape)
@@ -32,12 +33,16 @@ class BasisGcnTimesDiag(MessageGcn):
         self.C_forward = make_tf_variable(0, type_init_var, type_matrix_shape)
         self.C_backward = make_tf_variable(0, type_init_var, type_matrix_shape)
 
+        self.D_types_forward = make_tf_variable(0, type_init_var, type_diag_shape)
+        self.D_types_backward = make_tf_variable(0, type_init_var, type_diag_shape)
+
         self.b = make_tf_bias(self.shape[1])
 
 
     def local_get_weights(self):
         return [self.W_forward, self.W_backward,
                 self.C_forward, self.C_backward,
+                self.D_types_backward, self.D_types_forward,
                 self.W_self,
                 self.b]
 
@@ -45,25 +50,36 @@ class BasisGcnTimesDiag(MessageGcn):
         backward_type_scaling, forward_type_scaling = self.compute_coefficients()
         receiver_terms, sender_terms = self.compute_basis_functions(receiver_features, sender_features)
 
-        forward_messages = tf.reduce_sum(sender_terms * forward_type_scaling, 1)
-        backward_messages = tf.reduce_sum(receiver_terms * backward_type_scaling, 1)
+        forward_messages = tf.reduce_sum(input_tensor=sender_terms * tf.expand_dims(forward_type_scaling,-1), axis=1)
+        backward_messages = tf.reduce_sum(input_tensor=receiver_terms * tf.expand_dims(backward_type_scaling, -1), axis=1)
 
-        return forward_messages, backward_messages
+        diags_forward, diags_backward = self.compute_diags()
+
+        diag_forward_term = sender_features * diags_forward
+        diag_backward_term = receiver_features * diags_backward
+
+        return forward_messages + diag_forward_term, backward_messages + diag_backward_term
 
     def compute_coefficients(self):
         message_types = self.get_graph().get_type_indices()
-        forward_type_scaling = tf.nn.sigmoid(tf.nn.embedding_lookup(self.C_forward, message_types))
-        backward_type_scaling = tf.nn.sigmoid(tf.nn.embedding_lookup(self.C_backward, message_types))
+        forward_type_scaling = tf.nn.embedding_lookup(params=self.C_forward, ids=message_types)
+        backward_type_scaling = tf.nn.embedding_lookup(params=self.C_backward, ids=message_types)
         return backward_type_scaling, forward_type_scaling
+
+    def compute_diags(self):
+        message_types = self.get_graph().get_type_indices()
+        type_diags_f = tf.nn.embedding_lookup(params=self.D_types_forward, ids=message_types)
+        type_diags_b = tf.nn.embedding_lookup(params=self.D_types_backward, ids=message_types)
+        return type_diags_f, type_diags_b
 
     def compute_basis_functions(self, receiver_features, sender_features):
         sender_terms = self.dot_or_tensor_mul(sender_features, self.W_forward)
         receiver_terms = self.dot_or_tensor_mul(receiver_features, self.W_backward)
 
-        return receiver_terms, sender_terms
+        return sender_terms, receiver_terms
 
     def dot_or_tensor_mul(self, features, tensor):
-        tensor_shape = tf.shape(tensor)
+        tensor_shape = tf.shape(input=tensor)
         flat_shape = [tensor_shape[0], tensor_shape[1] * tensor_shape[2]]
 
         flattened_tensor = tf.reshape(tensor, flat_shape)
@@ -80,8 +96,8 @@ class BasisGcnTimesDiag(MessageGcn):
         mtr_f = self.get_graph().forward_incidence_matrix(normalization=('global', 'recalculated'))
         mtr_b = self.get_graph().backward_incidence_matrix(normalization=('global', 'recalculated'))
 
-        collected_messages_f = tf.sparse_tensor_dense_matmul(mtr_f, forward_messages)
-        collected_messages_b = tf.sparse_tensor_dense_matmul(mtr_b, backward_messages)
+        collected_messages_f = tf.sparse.sparse_dense_matmul(mtr_f, forward_messages)
+        collected_messages_b = tf.sparse.sparse_dense_matmul(mtr_b, backward_messages)
 
         new_embedding = self_loop_messages + collected_messages_f + collected_messages_b + self.b
 

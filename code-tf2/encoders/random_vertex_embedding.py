@@ -20,6 +20,6 @@ class RandomEmbedding(Model):
     def get_all_codes(self, mode='train'):
         if self.stored_W is None:
             print("Warning: Vertices embedded as random vectors drawn U(-1,1)")
-            self.stored_W = tf.random_uniform(self.shape, -1, 1, dtype=tf.float32)
+            self.stored_W = tf.random.uniform(self.shape, -1, 1, dtype=tf.float32)
 
         return self.stored_W, None, self.stored_W

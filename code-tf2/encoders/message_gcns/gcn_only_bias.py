@@ -27,8 +27,8 @@ class OnlyBiasGcn(MessageGcn):
     def compute_messages(self, sender_features, receiver_features):
         message_types = self.get_graph().get_type_indices()
 
-        forward_messages = tf.nn.embedding_lookup(self.b_forward, message_types)
-        backward_messages = tf.nn.embedding_lookup(self.b_backward, message_types)
+        forward_messages = tf.nn.embedding_lookup(params=self.b_forward, ids=message_types)
+        backward_messages = tf.nn.embedding_lookup(params=self.b_backward, ids=message_types)
         return forward_messages, backward_messages
 
     def compute_self_loop_messages(self, vertex_features):
@@ -39,8 +39,8 @@ class OnlyBiasGcn(MessageGcn):
         mtr_f = self.get_graph().forward_incidence_matrix(normalization=('global', 'recalculated'))
         mtr_b = self.get_graph().backward_incidence_matrix(normalization=('global', 'recalculated'))
 
-        collected_messages_f = tf.sparse_tensor_dense_matmul(mtr_f, forward_messages)
-        collected_messages_b = tf.sparse_tensor_dense_matmul(mtr_b, backward_messages)
+        collected_messages_f = tf.sparse.sparse_dense_matmul(mtr_f, forward_messages)
+        collected_messages_b = tf.sparse.sparse_dense_matmul(mtr_b, backward_messages)
 
         updated_vertex_embeddings = collected_messages_f + collected_messages_b
 
@@ -52,7 +52,7 @@ class OnlyBiasGcn(MessageGcn):
         return activated
 
     def local_get_regularization(self):
-        regularization = tf.reduce_mean(tf.square(self.b_forward))
-        regularization += tf.reduce_mean(tf.square(self.b_backward))
+        regularization = tf.reduce_mean(input_tensor=tf.square(self.b_forward))
+        regularization += tf.reduce_mean(input_tensor=tf.square(self.b_backward))
 
         return 0.0 * regularization

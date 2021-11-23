@@ -34,8 +34,8 @@ class NonlinearTransform(Model):
         self.W_transform = tf.Variable(post_transform_matrix)
         self.b_post = tf.Variable(np.zeros(1).astype(np.float32))
 
-        self.Y = tf.placeholder(tf.float32, shape=[None])
-        self.X = tf.placeholder(tf.int32, shape=[None, 3])
+        self.Y = tf.compat.v1.placeholder(tf.float32, shape=[None])
+        self.X = tf.compat.v1.placeholder(tf.int32, shape=[None, 3])
 
     def local_get_weights(self):
         return [self.W_e1, self.W_r, self.W_e2, self.b_pre, self.W_transform, self.b_post]
@@ -45,9 +45,9 @@ class NonlinearTransform(Model):
             return self.encoder_cache[mode]
 
         subject_codes, relation_codes, object_codes = self.next_component.get_all_codes(mode=mode)
-        e1s = tf.nn.embedding_lookup(subject_codes, self.X[:, 0])
-        rs = tf.nn.embedding_lookup(relation_codes, self.X[:, 1])
-        e2s = tf.nn.embedding_lookup(object_codes, self.X[:, 2])
+        e1s = tf.nn.embedding_lookup(params=subject_codes, ids=self.X[:, 0])
+        rs = tf.nn.embedding_lookup(params=relation_codes, ids=self.X[:, 1])
+        e2s = tf.nn.embedding_lookup(params=object_codes, ids=self.X[:, 2])
 
         self.encoder_cache[mode] = (e1s, rs, e2s)
         return self.encoder_cache[mode]
@@ -61,7 +61,7 @@ class NonlinearTransform(Model):
 
         energies = tf.squeeze(output)
 
-        return tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(energies, self.Y))
+        return tf.reduce_mean(input_tensor=tf.nn.sigmoid_cross_entropy_with_logits(energies, self.Y))
 
 
     def local_get_train_input_variables(self):
@@ -74,19 +74,19 @@ class NonlinearTransform(Model):
         print("Warning: Testing broken for this decoder")
         e1s, rs, e2s = self.compute_codes(mode='test')
         all_subject_codes = self.next_component.get_all_subject_codes(mode='test')
-        all_energies = tf.transpose(tf.matmul(all_subject_codes, tf.transpose(rs * e2s)))
+        all_energies = tf.transpose(a=tf.matmul(all_subject_codes, tf.transpose(a=rs * e2s)))
         return tf.nn.sigmoid(all_energies)
 
     def predict_all_object_scores(self):
         e1s, rs, e2s = self.compute_codes(mode='test')
         all_object_codes = self.next_component.get_all_object_codes(mode='test')
-        all_energies = tf.matmul(e1s * rs, tf.transpose(all_object_codes))
+        all_energies = tf.matmul(e1s * rs, tf.transpose(a=all_object_codes))
         return tf.nn.sigmoid(all_energies)
 
     def local_get_regularization(self):
         e1s, rs, e2s = self.compute_codes(mode='train')
-        regularization = tf.reduce_mean(tf.square(e1s))
-        regularization += tf.reduce_mean(tf.square(rs))
-        regularization += tf.reduce_mean(tf.square(e2s))
+        regularization = tf.reduce_mean(input_tensor=tf.square(e1s))
+        regularization += tf.reduce_mean(input_tensor=tf.square(rs))
+        regularization += tf.reduce_mean(input_tensor=tf.square(e2s))
 
         return self.regularization_parameter * regularization

@@ -32,7 +32,7 @@ class GatedMessageGcn(Model):
         return [self.G_sender, self.G_receiver]
 
     def calculate_message_to_message_matrix(self):
-        gate_energies = tf.matmul(self.G_sender, tf.transpose(self.G_receiver))
+        gate_energies = tf.matmul(self.G_sender, tf.transpose(a=self.G_receiver))
 
         message_index_pairs = self.get_graph().get_message_pairs()
         relation_indices = self.get_graph().get_message_type_pairs()

@@ -19,12 +19,12 @@ class MessageGraph():
         self.process(self.edges)
 
     def process(self, triplets):
-        triplets = tf.transpose(triplets)
+        triplets = tf.transpose(a=triplets)
         self.sender_indices = triplets[0]
         self.receiver_indices = triplets[2]
         self.message_types = triplets[1]
 
-        self.edge_count = tf.shape(self.sender_indices)[0]
+        self.edge_count = tf.shape(input=self.sender_indices)[0]
 
 
     def get_sender_indices(self):
@@ -68,11 +68,11 @@ class MessageGraph():
 
     def forward_incidence_matrix(self, normalization):
         if normalization[0] == "none":
-            mtr_values = tf.to_float(tf.ones_like(self.receiver_indices))
+            mtr_values = tf.cast(tf.ones_like(self.receiver_indices), dtype=tf.float32)
             message_indices = tf.range(self.edge_count)
 
-            mtr_indices = tf.to_int64(tf.transpose(tf.stack([self.receiver_indices, message_indices])))
-            mtr_shape = tf.to_int64(tf.stack([self.vertex_count, self.edge_count]))
+            mtr_indices = tf.cast(tf.transpose(a=tf.stack([self.receiver_indices, message_indices])), dtype=tf.int64)
+            mtr_shape = tf.cast(tf.stack([self.vertex_count, self.edge_count]), dtype=tf.int64)
 
             tensor = tf.SparseTensor(indices=mtr_indices,
                                      values=mtr_values,
@@ -80,39 +80,39 @@ class MessageGraph():
 
             return tensor
         elif normalization[0] == "global":
-            mtr_values = tf.to_float(tf.ones_like(self.receiver_indices))
+            mtr_values = tf.cast(tf.ones_like(self.receiver_indices), dtype=tf.float32)
             message_indices = tf.range(self.edge_count)
 
-            mtr_indices = tf.to_int64(tf.transpose(tf.stack([self.receiver_indices, message_indices])))
-            mtr_shape = tf.to_int64(tf.stack([self.vertex_count, self.edge_count]))
+            mtr_indices = tf.cast(tf.transpose(a=tf.stack([self.receiver_indices, message_indices])), dtype=tf.int64)
+            mtr_shape = tf.cast(tf.stack([self.vertex_count, self.edge_count]), dtype=tf.int64)
 
-            tensor = tf.sparse_softmax(tf.SparseTensor(indices=mtr_indices,
+            tensor = tf.sparse.softmax(tf.SparseTensor(indices=mtr_indices,
                                    values=mtr_values,
                                                        dense_shape=mtr_shape))
 
             return tensor
         elif normalization[0] == "local":
-            mtr_values = tf.to_float(tf.ones_like(self.receiver_indices))
+            mtr_values = tf.cast(tf.ones_like(self.receiver_indices), dtype=tf.float32)
             message_indices = tf.range(self.edge_count)
 
-            mtr_indices = tf.to_int64(tf.transpose(tf.stack([self.message_types, self.receiver_indices, message_indices])))
-            mtr_shape = tf.to_int64(tf.stack([self.label_count*2, self.vertex_count, self.edge_count]))
+            mtr_indices = tf.cast(tf.transpose(a=tf.stack([self.message_types, self.receiver_indices, message_indices])), dtype=tf.int64)
+            mtr_shape = tf.cast(tf.stack([self.label_count*2, self.vertex_count, self.edge_count]), dtype=tf.int64)
 
-            tensor = tf.sparse_softmax(tf.SparseTensor(indices=mtr_indices,
+            tensor = tf.sparse.softmax(tf.SparseTensor(indices=mtr_indices,
                                    values=mtr_values,
                                                        dense_shape=mtr_shape))
 
-            tensor = tf.sparse_reduce_sum_sparse(tensor, 0)
+            tensor = tf.compat.v1.sparse_reduce_sum_sparse(tensor, 0)
 
             return tensor
 
     def backward_incidence_matrix(self, normalization):
         if normalization[0] == "none":
-            mtr_values = tf.to_float(tf.ones_like(self.sender_indices))
+            mtr_values = tf.cast(tf.ones_like(self.sender_indices), dtype=tf.float32)
             message_indices = tf.range(self.edge_count)
 
-            mtr_indices = tf.to_int64(tf.transpose(tf.stack([self.sender_indices, message_indices])))
-            mtr_shape = tf.to_int64(tf.stack([self.vertex_count, self.edge_count]))
+            mtr_indices = tf.cast(tf.transpose(a=tf.stack([self.sender_indices, message_indices])), dtype=tf.int64)
+            mtr_shape = tf.cast(tf.stack([self.vertex_count, self.edge_count]), dtype=tf.int64)
 
             tensor = tf.SparseTensor(indices=mtr_indices,
                                      values=mtr_values,
@@ -120,29 +120,29 @@ class MessageGraph():
 
             return tensor
         elif normalization[0] == "global":
-            mtr_values = tf.to_float(tf.ones_like(self.sender_indices))
+            mtr_values = tf.cast(tf.ones_like(self.sender_indices), dtype=tf.float32)
             message_indices = tf.range(self.edge_count)
 
-            mtr_indices = tf.to_int64(tf.transpose(tf.stack([self.sender_indices, message_indices])))
-            mtr_shape = tf.to_int64(tf.stack([self.vertex_count, self.edge_count]))
+            mtr_indices = tf.cast(tf.transpose(a=tf.stack([self.sender_indices, message_indices])), dtype=tf.int64)
+            mtr_shape = tf.cast(tf.stack([self.vertex_count, self.edge_count]), dtype=tf.int64)
 
-            tensor = tf.sparse_softmax(tf.SparseTensor(indices=mtr_indices,
+            tensor = tf.sparse.softmax(tf.SparseTensor(indices=mtr_indices,
                                    values=mtr_values,
                                                        dense_shape=mtr_shape))
 
             return tensor
         elif normalization[0] == "local":
-            mtr_values = tf.to_float(tf.ones_like(self.sender_indices))
+            mtr_values = tf.cast(tf.ones_like(self.sender_indices), dtype=tf.float32)
             message_indices = tf.range(self.edge_count)
 
-            mtr_indices = tf.to_int64(tf.transpose(tf.stack([self.message_types, self.sender_indices, message_indices])))
-            mtr_shape = tf.to_int64(tf.stack([self.label_count*2, self.vertex_count, self.edge_count]))
+            mtr_indices = tf.cast(tf.transpose(a=tf.stack([self.message_types, self.sender_indices, message_indices])), dtype=tf.int64)
+            mtr_shape = tf.cast(tf.stack([self.label_count*2, self.vertex_count, self.edge_count]), dtype=tf.int64)
 
-            tensor = tf.sparse_softmax(tf.SparseTensor(indices=mtr_indices,
+            tensor = tf.sparse.softmax(tf.SparseTensor(indices=mtr_indices,
                                    values=mtr_values,
                                    dense_shape=mtr_shape))
 
-            tensor = tf.sparse_reduce_sum_sparse(tensor, 0)
+            tensor = tf.compat.v1.sparse_reduce_sum_sparse(tensor, 0)
 
             return tensor
 
@@ -171,7 +171,7 @@ class Representation(Model):
         return self.graph
 
     def local_initialize_train(self):
-        self.X = tf.placeholder(tf.int32, shape=[None, 3], name='graph_edges')
+        self.X = tf.compat.v1.placeholder(tf.int32, shape=[None, 3], name='graph_edges')
 
     def local_get_train_input_variables(self):
         return [self.X]

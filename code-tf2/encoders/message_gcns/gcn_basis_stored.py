@@ -34,7 +34,7 @@ class BasisGcnStore(MessageGcn):
         self.cached_messages_f = tf.Variable(np.zeros((self.edge_count, self.shape[1]), dtype=np.float32))
         self.cached_messages_b = tf.Variable(np.zeros((self.edge_count, self.shape[1]), dtype=np.float32))
 
-        self.I = tf.placeholder(tf.int32, shape=[None], name="batch_indices")
+        self.I = tf.compat.v1.placeholder(tf.int32, shape=[None], name="batch_indices")
 
     def local_get_train_input_variables(self):
         return [self.I]
@@ -49,15 +49,15 @@ class BasisGcnStore(MessageGcn):
         backward_type_scaling, forward_type_scaling = self.compute_coefficients()
         receiver_terms, sender_terms = self.compute_basis_functions(receiver_features, sender_features)
 
-        forward_messages = tf.reduce_sum(sender_terms * tf.expand_dims(forward_type_scaling,-1), 1)
-        backward_messages = tf.reduce_sum(receiver_terms * tf.expand_dims(backward_type_scaling, -1), 1)
+        forward_messages = tf.reduce_sum(input_tensor=sender_terms * tf.expand_dims(forward_type_scaling,-1), axis=1)
+        backward_messages = tf.reduce_sum(input_tensor=receiver_terms * tf.expand_dims(backward_type_scaling, -1), axis=1)
 
         return forward_messages, backward_messages
 
     def compute_coefficients(self):
         message_types = self.get_graph().get_type_indices()
-        forward_type_scaling = tf.nn.embedding_lookup(self.C_forward, message_types)
-        backward_type_scaling = tf.nn.embedding_lookup(self.C_backward, message_types)
+        forward_type_scaling = tf.nn.embedding_lookup(params=self.C_forward, ids=message_types)
+        backward_type_scaling = tf.nn.embedding_lookup(params=self.C_backward, ids=message_types)
         return backward_type_scaling, forward_type_scaling
 
     def compute_basis_functions(self, receiver_features, sender_features):
@@ -67,7 +67,7 @@ class BasisGcnStore(MessageGcn):
         return receiver_terms, sender_terms
 
     def dot_or_tensor_mul(self, features, tensor):
-        tensor_shape = tf.shape(tensor)
+        tensor_shape = tf.shape(input=tensor)
         flat_shape = [tensor_shape[0], tensor_shape[1] * tensor_shape[2]]
 
         flattened_tensor = tf.reshape(tensor, flat_shape)
@@ -88,24 +88,24 @@ class BasisGcnStore(MessageGcn):
         mtr_b = self.get_graph().backward_incidence_matrix(normalization=('none', 'recalculated'))
 
         if mode == 'train':
-            forward_messages_comp = forward_messages - tf.nn.embedding_lookup(self.cached_messages_f, self.I)
-            backward_messages_comp = backward_messages - tf.nn.embedding_lookup(self.cached_messages_b, self.I)
+            forward_messages_comp = forward_messages - tf.nn.embedding_lookup(params=self.cached_messages_f, ids=self.I)
+            backward_messages_comp = backward_messages - tf.nn.embedding_lookup(params=self.cached_messages_b, ids=self.I)
 
             with tf.control_dependencies([forward_messages, backward_messages]):
-                self.f_upd = tf.scatter_update(self.cached_messages_f, self.I, forward_messages)
-                self.b_upd = tf.scatter_update(self.cached_messages_b, self.I, backward_messages)
+                self.f_upd = tf.compat.v1.scatter_update(self.cached_messages_f, self.I, forward_messages)
+                self.b_upd = tf.compat.v1.scatter_update(self.cached_messages_b, self.I, backward_messages)
 
-            collected_messages_f = tf.sparse_tensor_dense_matmul(mtr_f, forward_messages_comp)
-            collected_messages_b = tf.sparse_tensor_dense_matmul(mtr_b, backward_messages_comp)
+            collected_messages_f = tf.sparse.sparse_dense_matmul(mtr_f, forward_messages_comp)
+            collected_messages_b = tf.sparse.sparse_dense_matmul(mtr_b, backward_messages_comp)
 
             new_embedding = collected_messages_f + collected_messages_b
             updated_vertex_embeddings = new_embedding + self.cached_vertex_embeddings
 
             with tf.control_dependencies([updated_vertex_embeddings]):
-                self.v_upd = tf.assign(self.cached_vertex_embeddings, updated_vertex_embeddings)
+                self.v_upd = tf.compat.v1.assign(self.cached_vertex_embeddings, updated_vertex_embeddings)
         else:
-            collected_messages_f = tf.sparse_tensor_dense_matmul(mtr_f, forward_messages)
-            collected_messages_b = tf.sparse_tensor_dense_matmul(mtr_b, backward_messages)
+            collected_messages_f = tf.sparse.sparse_dense_matmul(mtr_f, forward_messages)
+            collected_messages_b = tf.sparse.sparse_dense_matmul(mtr_b, backward_messages)
 
             new_embedding = collected_messages_f + collected_messages_b
             updated_vertex_embeddings = new_embedding
@@ -119,8 +119,8 @@ class BasisGcnStore(MessageGcn):
         return activated
 
     def local_get_regularization(self):
-        regularization = tf.reduce_mean(tf.square(self.W_forward))
-        regularization += tf.reduce_mean(tf.square(self.W_backward))
-        regularization += tf.reduce_mean(tf.square(self.W_self))
+        regularization = tf.reduce_mean(input_tensor=tf.square(self.W_forward))
+        regularization += tf.reduce_mean(input_tensor=tf.square(self.W_backward))
+        regularization += tf.reduce_mean(input_tensor=tf.square(self.W_self))
 
         return 0.0 * regularization

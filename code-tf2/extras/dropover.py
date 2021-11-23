@@ -15,9 +15,9 @@ class DropoverLayer(Model):
             code_1 = self.next_component.get_all_codes(mode=mode)[0]
             code_2 = self.next_component_2.get_all_codes(mode=mode)[0]
 
-            choice = tf.random_uniform(self.shape, -1, 1, dtype=tf.float32)
+            choice = tf.random.uniform(self.shape, -1, 1, dtype=tf.float32)
 
-            self.vertex_embedding_function[mode] = tf.where(choice > 0, x=code_1, y=code_2)
+            self.vertex_embedding_function[mode] = tf.compat.v1.where(choice > 0, x=code_1, y=code_2)
         elif mode=='test':
             self.vertex_embedding_function[mode] = self.next_component.get_all_codes(mode=mode)[0]
 

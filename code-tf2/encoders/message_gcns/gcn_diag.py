@@ -29,8 +29,8 @@ class DiagGcn(MessageGcn):
 
     def compute_messages(self, sender_features, receiver_features):
         message_types = self.get_graph().get_type_indices()
-        type_diags_f = tf.nn.embedding_lookup(self.D_types_forward, message_types)
-        type_diags_b = tf.nn.embedding_lookup(self.D_types_backward, message_types)
+        type_diags_f = tf.nn.embedding_lookup(params=self.D_types_forward, ids=message_types)
+        type_diags_b = tf.nn.embedding_lookup(params=self.D_types_backward, ids=message_types)
 
         terms_f = tf.mul(sender_features, type_diags_f)
         terms_b = tf.mul(receiver_features, type_diags_b)
@@ -44,8 +44,8 @@ class DiagGcn(MessageGcn):
         mtr_f = self.get_graph().forward_incidence_matrix(normalization=('global', 'recalculated'))
         mtr_b = self.get_graph().backward_incidence_matrix(normalization=('global', 'recalculated'))
 
-        collected_messages_f = tf.sparse_tensor_dense_matmul(mtr_f, forward_messages)
-        collected_messages_b = tf.sparse_tensor_dense_matmul(mtr_b, backward_messages)
+        collected_messages_f = tf.sparse.sparse_dense_matmul(mtr_f, forward_messages)
+        collected_messages_b = tf.sparse.sparse_dense_matmul(mtr_b, backward_messages)
 
         new_embedding = self_loop_messages + collected_messages_f + collected_messages_b + self.b
 

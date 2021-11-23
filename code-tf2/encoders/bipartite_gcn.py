@@ -54,7 +54,7 @@ class BipartiteGcn(Model):
 
     def dot_or_lookup(self, features, weights):
         if self.onehot_input:
-            return tf.nn.embedding_lookup(weights, features)
+            return tf.nn.embedding_lookup(params=weights, ids=features)
         else:
             return tf.matmul(features, weights)
 
@@ -68,13 +68,13 @@ class BipartiteGcn(Model):
             return e_sender_index_vector, e_receiver_index_vector, r_sender_index_vector, r_receiver_index_vector
         else:
             e_code, r_code = self.next_component.compute_bipartite_embeddings(mode=mode)
-            e_code = tf.nn.dropout(e_code, self.dropout_keep_probability)
-            r_code = tf.nn.dropout(r_code, self.dropout_keep_probability)
+            e_code = tf.nn.dropout(e_code, rate=1 - (self.dropout_keep_probability))
+            r_code = tf.nn.dropout(r_code, rate=1 - (self.dropout_keep_probability))
 
-            e_sender_codes = tf.nn.embedding_lookup(e_code, e_sender_index_vector)
-            e_receiver_codes = tf.nn.embedding_lookup(e_code, e_receiver_index_vector)
-            r_sender_codes = tf.nn.embedding_lookup(r_code, r_sender_index_vector)
-            r_receiver_codes = tf.nn.embedding_lookup(r_code, r_receiver_index_vector)
+            e_sender_codes = tf.nn.embedding_lookup(params=e_code, ids=e_sender_index_vector)
+            e_receiver_codes = tf.nn.embedding_lookup(params=e_code, ids=e_receiver_index_vector)
+            r_sender_codes = tf.nn.embedding_lookup(params=r_code, ids=r_sender_index_vector)
+            r_receiver_codes = tf.nn.embedding_lookup(params=r_code, ids=r_receiver_index_vector)
 
             return e_sender_codes, e_receiver_codes, r_sender_codes, r_receiver_codes
 
@@ -105,10 +105,10 @@ class BipartiteGcn(Model):
         r_forward_mtr = self.graph_representation.get_relation_forward_v_by_m(normalized=True)
         r_backward_mtr = self.graph_representation.get_relation_backward_v_by_m(normalized=True)
 
-        collected_e_messages = tf.sparse_tensor_dense_matmul(r_forward_mtr, messages[2])
-        collected_e_messages += tf.sparse_tensor_dense_matmul(r_backward_mtr, messages[3])
-        collected_r_messages = tf.sparse_tensor_dense_matmul(e_forward_mtr, messages[0])
-        collected_r_messages += tf.sparse_tensor_dense_matmul(e_backward_mtr, messages[1])
+        collected_e_messages = tf.sparse.sparse_dense_matmul(r_forward_mtr, messages[2])
+        collected_e_messages += tf.sparse.sparse_dense_matmul(r_backward_mtr, messages[3])
+        collected_r_messages = tf.sparse.sparse_dense_matmul(e_forward_mtr, messages[0])
+        collected_r_messages += tf.sparse.sparse_dense_matmul(e_backward_mtr, messages[1])
 
         return collected_e_messages, collected_r_messages
 

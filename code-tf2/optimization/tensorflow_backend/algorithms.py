@@ -10,7 +10,7 @@ class GradientDescent(IOptimizer):
         return self.learning_rate is not None
 
     def process_update_function(self, gradient_function, parameters_to_optimize):
-        opt_func = tf.train.GradientDescentOptimizer(self.learning_rate)
+        opt_func = tf.compat.v1.train.GradientDescentOptimizer(self.learning_rate)
         optimizer = opt_func.apply_gradients(zip(gradient_function, parameters_to_optimize))
 
         return optimizer
@@ -34,7 +34,7 @@ class Adam(IOptimizer):
         return self.learning_rate is not None
 
     def process_update_function(self, gradient_function, parameters_to_optimize):
-        opt_func = tf.train.AdamOptimizer(learning_rate=self.learning_rate,
+        opt_func = tf.compat.v1.train.AdamOptimizer(learning_rate=self.learning_rate,
                                           beta1=self.historical_moment_weight,
                                           beta2=self.historical_second_moment_weight)
         optimizer = opt_func.apply_gradients(zip(gradient_function, parameters_to_optimize))
@@ -49,7 +49,7 @@ class AdaGrad(IOptimizer):
         return self.learning_rate is not None
 
     def process_update_function(self, gradient_function, parameters_to_optimize):
-        opt_func = tf.train.AdagradOptimizer(learning_rate=self.learning_rate)
+        opt_func = tf.compat.v1.train.AdagradOptimizer(learning_rate=self.learning_rate)
         optimizer = opt_func.apply_gradients(zip(gradient_function, parameters_to_optimize))
 
         return optimizer
