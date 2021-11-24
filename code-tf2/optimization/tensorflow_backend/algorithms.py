@@ -1,4 +1,4 @@
-from abstract import IOptimizer
+from optimization.abstract import IOptimizer
 import numpy as np
 import tensorflow as tf
 
