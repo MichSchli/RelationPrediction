@@ -1,5 +1,22 @@
 # Graph Convolutional Networks for Relational Link Prediction
 
+
+## COMP 550 changes
+### TensorFlow 2 port 
+
+We ported this project to use the TensorFlow 2 API. In particular, the following changes were made:
+* Used rewrite script to generate TF2 code (see https://www.tensorflow.org/guide/migrate/upgrade)
+* Deleted TF1 codebase
+* TF2 code now is in `code-tf2/`
+* Changed code in `encoders/affine_transform.py` to use TF2 API (search for "TF2 compatibility")
+* Disabled eager execution for now (see top of `code-tf2/train.py`)
+
+Example train script:
+`python.exe code-tf2/train.py --settings ../settings/gcn_basis.exp --dataset ../data/FB-Toutanova`
+
+***
+***
+
 This repository contains a TensorFlow implementation of Relational Graph Convolutional Networks (R-GCN), as well as experiments on relational link prediction. The description of the model and the results can be found in out paper:
 
 [Modeling Relational Data with Graph Convolutional Networks](https://arxiv.org/abs/1703.06103). Michael Schlichtkrull, Thomas N. Kipf, Peter Bloem, Rianne van den Berg, Ivan Titov, Max Welling (ArXiv 2017)
