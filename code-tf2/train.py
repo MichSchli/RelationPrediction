@@ -92,7 +92,7 @@ evaluation_settings.merge(general_settings)
 '''
 Construct the encoder-decoder pair:
 '''
-encoder = model_builder.build_encoder(encoder_settings, train_triplets)
+encoder = model_builder.build_encoder(encoder_settings, train_triplets, entities)
 model = model_builder.build_decoder(encoder, decoder_settings)
 
 '''
