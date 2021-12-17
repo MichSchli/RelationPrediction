@@ -23,7 +23,7 @@ from extras.dropover import DropoverLayer
 from extras.variational_encoding import VariationalEncoding
 
 
-def build_encoder(encoder_settings, triples):
+def build_encoder(encoder_settings, triples, entities):
     if encoder_settings['Name'] == "embedding":
         input_shape = [int(encoder_settings['EntityCount']),
                        int(encoder_settings['CodeDimension'])]
@@ -136,7 +136,15 @@ def build_encoder(encoder_settings, triples):
 
         layers = int(encoder_settings['NumberOfLayers'])
 
-        # Initial embedding:
+        # ------------------------------------------------------------------------
+        # TODO insert GraphSAGE embedding
+
+        from extras.graph_sage import GraphSageEmbedder
+        number_of_entities = len(entities)
+        gsage = GraphSageEmbedder(triples, layer_sizes=[number_of_entities, number_of_entities])
+        gsage_embeddings = gsage.generate_feature_embeddings()
+        # ------------------------------------------------------------------------
+
         if encoder_settings['UseInputTransform'] == "Yes":
             encoding = AffineTransform(input_shape,
                                        encoder_settings,
