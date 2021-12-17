@@ -4,7 +4,7 @@
 	InternalEncoderDimension=500
 	NumberOfBasisFunctions=5
 	NumberOfLayers=2
-	UseInputTransform=Yes
+	UseInputTransform=No
 	UseOutputTransform=No
 	AddDiagonal=No
 	DiagonalCoefficients=No
@@ -13,6 +13,7 @@
 	RandomInput=No
 	PartiallyRandomInput=No
 	Concatenation=No
+	UseGraphSage=Yes
 
 [Decoder]
 	Name=bilinear-diag

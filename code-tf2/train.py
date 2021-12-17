@@ -16,7 +16,6 @@ parser.add_argument("--dataset", help="Filepath for dataset.", required=True)
 args = parser.parse_args()
 
 settings = settings_reader.read(args.settings)
-print(settings)
 
 
 
