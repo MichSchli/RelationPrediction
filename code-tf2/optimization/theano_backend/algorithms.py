@@ -1,4 +1,4 @@
-from abstract import IOptimizer
+from optimization.abstract import IOptimizer
 import random
 from theano import tensor as T
 import theano
