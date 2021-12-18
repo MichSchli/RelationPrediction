@@ -282,7 +282,8 @@ def apply_basis_gcn(encoder_settings, encoding, internal_shape, layers):
         if layer == 0 \
                 and encoder_settings['UseInputTransform'] == "No" \
                 and encoder_settings['RandomInput'] == "No"  \
-                and encoder_settings['PartiallyRandomInput'] == "No" :
+                and encoder_settings['PartiallyRandomInput'] == "No" \
+                and encoder_settings['UseGraphSage'] == "No":
             onehot_input = True
         else:
             onehot_input = False

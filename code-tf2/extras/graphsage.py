@@ -13,7 +13,15 @@ Outputs a representation of G after applying the GraphSAGE algorithm on it.
 
 
 class GraphSageEmbedding(Model):
-    def __init__(self, shape, settings, 
+    embedding_width = None
+
+    W = None
+    b = None
+    shape = None
+
+    stored_W = None
+
+    def __init__(self, shape, settings,
                     next_component,
                     batch_size=20, 
                     num_samples_per_hop=None, 
@@ -76,6 +84,6 @@ class GraphSageEmbedding(Model):
         # This function is a function of the class Model that is used to get the weights
         # in the training pipeline. 
         # We overload this function here, and plug in the weights of the edges.
-        g_output = generate_feature_embeddings()
+        g_output = self.generate_feature_embeddings()
         return g_output[0], None, g_output[1]
-        
+        # should return (14541,500) shape
