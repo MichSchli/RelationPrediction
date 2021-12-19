@@ -162,7 +162,7 @@ def build_encoder(encoder_settings, triples, entities):
                                      next_component=encoding1,
                                      next_component_2=encoding2) 
         elif encoder_settings['UseGraphSage'] == 'Yes':
-            encoding = GraphSageEmbedding(input_shape,
+            encoding = GraphSageEmbedding(entities, input_shape,
                                        encoder_settings,
                                        next_component=graph)
         else:
