@@ -153,5 +153,5 @@ class GraphSageEmbedding(Model):
         # in the training pipeline. 
         # We overload this function here, and plug in the weights of the edges.
         g_output = self.generate_feature_embeddings()
-        return g_output[0], None, g_output[0]
+        return g_output, None, g_output
         # should return (14541,500) shape
