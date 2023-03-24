@@ -23,10 +23,12 @@ We advise that training can take up to several hours and require a significant a
 Please cite our paper if you use this code in your own work:
 
 ```
-@article{schlichtkrull2017modeling,
-  title={Modeling Relational Data with Graph Convolutional Networks},
-  author={Schlichtkrull, Michael and Kipf, Thomas N and Bloem, Peter and Berg, Rianne van den and Titov, Ivan and Welling, Max},
-  journal={arXiv preprint arXiv:1703.06103},
-  year={2017}
+@inproceedings{schlichtkrull2018modeling,
+  title={Modeling relational data with graph convolutional networks},
+  author={Schlichtkrull, Michael and Kipf, Thomas N and Bloem, Peter and {van den Berg}, Rianne and Titov, Ivan and Welling, Max},
+  booktitle={The Semantic Web: 15th International Conference, ESWC 2018, Heraklion, Crete, Greece, June 3--7, 2018, Proceedings 15},
+  pages={593--607},
+  year={2018},
+  organization={Springer}
 }
 ```
